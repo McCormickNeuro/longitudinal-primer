@@ -1,14 +1,13 @@
 --- 
-title: 'Longitudinal Primer'
+title: 'The Hitchhiker’s Guide to Longitudinal Models'
 subtitle: 'Code Companion'
 author: '[Ethan M. McCormick](https://mccormickneuro.github.io/), [Michelle L. Byrne](https://research.monash.edu/en/persons/michelle-byrne), [John C. Flournoy](https://johnflournoy.science/), [Katheryn L. Mills](http://devbrainlab.org/), & [Jennifer H. Pfiefer](https://dsn.uoregon.edu/)'
-date: "`r format(Sys.time(), '%d %B, %Y')`"
+date: "Published: `r format(Sys.time(), '%d %B, %Y')`"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 #link-citations: yes
-
 # cover-image: path to the social sharing image like images/cover.jpg
 description: |
   This is a code companion for [title].
@@ -17,31 +16,17 @@ link-citations: yes
 github-repo: 'McCormickNeuro/longitudinal-primer'
 ---
 
-# Introduction {#intro}
-
-The following document is a code companion to [citation](), [doi]().
-
-```{r setup, include = TRUE, warning = FALSE, message = FALSE}
+# About {#about}
+```{r, setup, include = FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-packages =  c('utils', 'tidyverse', 'downloadthis',     # packages for data management
-              'foreign', 'MplusAutomation',             # packages for writing data         
-              'ggplot2', 'sjPlot', 'broom',             # packages for visualization
-              'nlme', 'lme4', 'lmerTest',               # packages for MLMs
-              'mgcv', 'gamm4',                          # packages for GAMMs
-              'lavaan', 'semPlot')                      # packages for SEMs
+```
 
-if (length(setdiff(packages, rownames(installed.packages()))) > 0) {
-  install.packages(setdiff(packages, 
-                           rownames(installed.packages())), 
-                   repos = 'http://cran.us.r-project.org')
-}
-invisible(lapply(packages, 
-                 library, 
-                 character.only = TRUE))
-```
-```{r include=FALSE}
-# automatically create a bib database for R packages
-knitr::write_bib(c(
-  .packages(), 'bookdown', 'knitr', 'rmarkdown'
-), 'packages.bib')
-```
+The following document is a code companion to [citation](), [doi](). 
+
+Some general notes about this code companion:
+
+- Given the nature of R, there are likely several ways to accomplish what we outline here. This code should not be taken as the *definitive* one way that data manipulation or model fitting can be accomplished, but rather as a standard pipeline that should hopefully be accessible to new users of R and longitudinal methods more generally.
+
+- In general, we will include the code used to generate the results. However, in the interest of spending more time on the models and associated syntax, we may not include an in-depth explanation of every function or syntax option. The rmarkdown source files are available in a public [github repository](https://github.com/McCormickNeuro/longitudinal-primer) for those interested.
+
+- While the contents of this primer and code companion will focus on implementation in the R environment, links will be provided to other programs where possible. **A fair warning: code in other languages will be provided in an arbitrary and capricious manner. This policy should be familiar to the reader, given their experience with the text of the manuscript (and if very unlucky, the first author).**

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Introduction | The Hitchhiker’s Guide to Longitudinal Models</title>
+  <meta name="description" content="This is a code companion for [title]." />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Introduction | The Hitchhiker’s Guide to Longitudinal Models" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a code companion for [title]." />
+  <meta name="github-repo" content="McCormickNeuro/longitudinal-primer" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Introduction | The Hitchhiker’s Guide to Longitudinal Models" />
+  
+  <meta name="twitter:description" content="This is a code companion for [title]." />
+  
+
+<meta name="author" content="Ethan M. McCormick, Michelle L. Byrne, John C. Flournoy, Katheryn L. Mills, &amp; Jennifer H. Pfiefer" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="02-canonical.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/font-awesome-5.13.0/js/script.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">The Hitchhiker’s Guide to Longitudinal Models</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a></li>
+<li class="chapter" data-level="" data-path="01-introduction.html"><a href="01-introduction.html"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html"><i class="fa fa-check"></i>Canonical Models</a>
+<ul>
+<li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#multilevel-model"><i class="fa fa-check"></i>Multilevel Model</a></li>
+<li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#generalized-additive-mixed-model"><i class="fa fa-check"></i>Generalized Additive Mixed Model</a></li>
+<li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#latent-curve-model"><i class="fa fa-check"></i>Latent Curve Model</a></li>
+<li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#latent-change-score-model"><i class="fa fa-check"></i>Latent Change Score Model</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="03-time.html"><a href="03-time.html"><i class="fa fa-check"></i>Time Structure</a>
+<ul>
+<li class="chapter" data-level="" data-path="03-time.html"><a href="03-time.html#assessment-schedules"><i class="fa fa-check"></i>Assessment Schedules</a>
+<ul>
+<li class="chapter" data-level="" data-path="03-time.html"><a href="03-time.html#single-cohort-data"><i class="fa fa-check"></i>Single Cohort Data</a></li>
+<li class="chapter" data-level="" data-path="03-time.html"><a href="03-time.html#multiple-cohort-data"><i class="fa fa-check"></i>Multiple Cohort Data</a></li>
+<li class="chapter" data-level="" data-path="03-time.html"><a href="03-time.html#accelerated-design"><i class="fa fa-check"></i>Accelerated Design</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="03-time.html"><a href="03-time.html#time-coding"><i class="fa fa-check"></i>Time Coding</a></li>
+<li class="chapter" data-level="" data-path="03-time.html"><a href="03-time.html#additional-considerations"><i class="fa fa-check"></i>Additional Considerations</a>
+<ul>
+<li class="chapter" data-level="" data-path="03-time.html"><a href="03-time.html#alternative-metrics-of-time"><i class="fa fa-check"></i>Alternative Metrics of Time</a></li>
+<li class="chapter" data-level="" data-path="03-time.html"><a href="03-time.html#residual-estimates"><i class="fa fa-check"></i>Residual Estimates</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">The Hitchhiker’s Guide to Longitudinal Models</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="intro" class="section level1">
+<h1>Introduction</h1>
+<p>The first thing we can do is run a function that will load the R packages needed to run this code companion, and install them to our machine if they are not already.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="01-introduction.html#cb1-1" aria-hidden="true" tabindex="-1"></a>packages <span class="ot">=</span>  <span class="fu">c</span>(<span class="st">&#39;utils&#39;</span>, <span class="st">&#39;tidyverse&#39;</span>, <span class="st">&#39;downloadthis&#39;</span>,     <span class="co"># packages for data management</span></span>
+<span id="cb1-2"><a href="01-introduction.html#cb1-2" aria-hidden="true" tabindex="-1"></a>              <span class="st">&#39;foreign&#39;</span>, <span class="st">&#39;MplusAutomation&#39;</span>,             <span class="co"># packages for writing data         </span></span>
+<span id="cb1-3"><a href="01-introduction.html#cb1-3" aria-hidden="true" tabindex="-1"></a>              <span class="st">&#39;ggplot2&#39;</span>, <span class="st">&#39;sjPlot&#39;</span>, <span class="st">&#39;broom&#39;</span>,             <span class="co"># packages for visualization</span></span>
+<span id="cb1-4"><a href="01-introduction.html#cb1-4" aria-hidden="true" tabindex="-1"></a>              <span class="st">&#39;nlme&#39;</span>, <span class="st">&#39;lme4&#39;</span>, <span class="st">&#39;lmerTest&#39;</span>,               <span class="co"># packages for MLMs</span></span>
+<span id="cb1-5"><a href="01-introduction.html#cb1-5" aria-hidden="true" tabindex="-1"></a>              <span class="st">&#39;mgcv&#39;</span>, <span class="st">&#39;gamm4&#39;</span>,                          <span class="co"># packages for GAMMs</span></span>
+<span id="cb1-6"><a href="01-introduction.html#cb1-6" aria-hidden="true" tabindex="-1"></a>              <span class="st">&#39;lavaan&#39;</span>, <span class="st">&#39;semPlot&#39;</span>)                      <span class="co"># packages for SEMs</span></span>
+<span id="cb1-7"><a href="01-introduction.html#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="01-introduction.html#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">length</span>(<span class="fu">setdiff</span>(packages, <span class="fu">rownames</span>(<span class="fu">installed.packages</span>()))) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb1-9"><a href="01-introduction.html#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">install.packages</span>(<span class="fu">setdiff</span>(packages, </span>
+<span id="cb1-10"><a href="01-introduction.html#cb1-10" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">rownames</span>(<span class="fu">installed.packages</span>())), </span>
+<span id="cb1-11"><a href="01-introduction.html#cb1-11" aria-hidden="true" tabindex="-1"></a>                   <span class="at">repos =</span> <span class="st">&#39;http://cran.us.r-project.org&#39;</span>)</span>
+<span id="cb1-12"><a href="01-introduction.html#cb1-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-13"><a href="01-introduction.html#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">invisible</span>(<span class="fu">lapply</span>(packages, </span>
+<span id="cb1-14"><a href="01-introduction.html#cb1-14" aria-hidden="true" tabindex="-1"></a>                 library, </span>
+<span id="cb1-15"><a href="01-introduction.html#cb1-15" aria-hidden="true" tabindex="-1"></a>                 <span class="at">character.only =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<p>We have automatically generated a downloadable bibliography of the R package versions used in this companion for later reproducibility.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="01-introduction.html#cb2-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">write_bib</span>(<span class="fu">c</span>(</span>
+<span id="cb2-2"><a href="01-introduction.html#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">.packages</span>(), <span class="st">&#39;bookdown&#39;</span>, <span class="st">&#39;knitr&#39;</span>, <span class="st">&#39;rmarkdown&#39;</span></span>
+<span id="cb2-3"><a href="01-introduction.html#cb2-3" aria-hidden="true" tabindex="-1"></a>), <span class="st">&#39;external/hitchhikers-guide-packages.bib&#39;</span>)</span></code></pre></div>
+<a href="data:text/x-bibtex;base64,QE1hbnVhbHtSLWJhc2UsCiAgdGl0bGUgPSB7UjogQSBMYW5ndWFnZSBhbmQgRW52aXJvbm1lbnQgZm9yIFN0YXRpc3RpY2FsIENvbXB1dGluZ30sCiAgYXV0aG9yID0ge3tSIENvcmUgVGVhbX19LAogIG9yZ2FuaXphdGlvbiA9IHtSIEZvdW5kYXRpb24gZm9yIFN0YXRpc3RpY2FsIENvbXB1dGluZ30sCiAgYWRkcmVzcyA9IHtWaWVubmEsIEF1c3RyaWF9LAogIHllYXIgPSB7MjAyMX0sCiAgdXJsID0ge2h0dHBzOi8vd3d3LlItcHJvamVjdC5vcmcvfSwKfQoKQE1hbnVhbHtSLWJvb2tkb3duLAogIHRpdGxlID0ge2Jvb2tkb3duOiBBdXRob3JpbmcgQm9va3MgYW5kIFRlY2huaWNhbCBEb2N1bWVudHMgd2l0aCBSIE1hcmtkb3dufSwKICBhdXRob3IgPSB7WWlodWkgWGllfSwKICB5ZWFyID0gezIwMjF9LAogIG5vdGUgPSB7UiBwYWNrYWdlIHZlcnNpb24gMC4yNH0sCiAgdXJsID0ge2h0dHBzOi8vQ1JBTi5SLXByb2plY3Qub3JnL3BhY2thZ2U9Ym9va2Rvd259LAp9CgpATWFudWFse1ItYnJvb20sCiAgdGl0bGUgPSB7YnJvb206IENvbnZlcnQgU3RhdGlzdGljYWwgT2JqZWN0cyBpbnRvIFRpZHkgVGliYmxlc30sCiAgYXV0aG9yID0ge0RhdmlkIFJvYmluc29uIGFuZCBBbGV4IEhheWVzIGFuZCBTaW1vbiBDb3VjaH0sCiAgeWVhciA9IHsyMDIxfSwKICBub3RlID0ge1IgcGFja2FnZSB2ZXJzaW9uIDAuNy4xMH0sCiAgdXJsID0ge2h0dHBzOi8vQ1JBTi5SLXByb2plY3Qub3JnL3BhY2thZ2U9YnJvb219LAp9CgpATWFudWFse1ItZG93bmxvYWR0aGlzLAogIHRpdGxlID0ge2Rvd25sb2FkdGhpczogSW1wbGVtZW50IERvd25sb2FkIEJ1dHRvbnMgaW4gcm1hcmtkb3dufSwKICBhdXRob3IgPSB7RmVsaXBlIHtNYXR0aW9uaSBNYXR1cmFuYX19LAogIHllYXIgPSB7MjAyMH0sCiAgbm90ZSA9IHtSIHBhY2thZ2UgdmVyc2lvbiAwLjIuMX0sCiAgdXJsID0ge2h0dHBzOi8vZ2l0aHViLmNvbS9mbW1hdHRpb25pL2Rvd25sb2FkdGhpc30sCn0KCkBNYW51YWx7Ui1kcGx5ciwKICB0aXRsZSA9IHtkcGx5cjogQSBHcmFtbWFyIG9mIERhdGEgTWFuaXB1bGF0aW9ufSwKICBhdXRob3IgPSB7SGFkbGV5IFdpY2toYW0gYW5kIFJvbWFpbiBGcmFuw6dvaXMgYW5kIExpb25lbCBIZW5yeSBhbmQgS2lyaWxsIE3DvGxsZXJ9LAogIHllYXIgPSB7MjAyMX0sCiAgbm90ZSA9IHtSIHBhY2thZ2UgdmVyc2lvbiAxLjAuN30sCiAgdXJsID0ge2h0dHBzOi8vQ1JBTi5SLXByb2plY3Qub3JnL3BhY2thZ2U9ZHBseXJ9LAp9CgpATWFudWFse1ItZm9yY2F0cywKICB0aXRsZSA9IHtmb3JjYXRzOiBUb29scyBmb3IgV29ya2luZyB3aXRoIENhdGVnb3JpY2FsIFZhcmlhYmxlcyAoRmFjdG9ycyl9LAogIGF1dGhvciA9IHtIYWRsZXkgV2lja2hhbX0sCiAgeWVhciA9IHsyMDIxfSwKICBub3RlID0ge1IgcGFja2FnZSB2ZXJzaW9uIDAuNS4xfSwKICB1cmwgPSB7aHR0cHM6Ly9DUkFOLlItcHJvamVjdC5vcmcvcGFja2FnZT1mb3JjYXRzfSwKfQoKQE1hbnVhbHtSLWZvcmVpZ24sCiAgdGl0bGUgPSB7Zm9yZWlnbjogUmVhZCBEYXRhIFN0b3JlZCBieSBNaW5pdGFiLCBTLCBTQVMsIFNQU1MsIFN0YXRhLApTeXN0YXQsIFdla2EsIGRCYXNlLCAuLi59LAogIGF1dGhvciA9IHt7UiBDb3JlIFRlYW19fSwKICB5ZWFyID0gezIwMjB9LAogIG5vdGUgPSB7UiBwYWNrYWdlIHZlcnNpb24gMC44LTgxfSwKICB1cmwgPSB7aHR0cHM6Ly9zdm4uci1wcm9qZWN0Lm9yZy9SLXBhY2thZ2VzL3RydW5rL2ZvcmVpZ24vfSwKfQoKQE1hbnVhbHtSLWdhbW00LAogIHRpdGxlID0ge2dhbW00OiBHZW5lcmFsaXplZCBBZGRpdGl2ZSBNaXhlZCBNb2RlbHMgdXNpbmcgbWdjdiBhbmQgbG1lNH0sCiAgYXV0aG9yID0ge1NpbW9uIFdvb2QgYW5kIEZhYmlhbiBTY2hlaXBsfSwKICB5ZWFyID0gezIwMjB9LAogIG5vdGUgPSB7UiBwYWNrYWdlIHZlcnNpb24gMC4yLTZ9LAogIHVybCA9IHtodHRwczovL0NSQU4uUi1wcm9qZWN0Lm9yZy9wYWNrYWdlPWdhbW00fSwKfQoKQE1hbnVhbHtSLWdncGxvdDIsCiAgdGl0bGUgPSB7Z2dwbG90MjogQ3JlYXRlIEVsZWdhbnQgRGF0YSBWaXN1YWxpc2F0aW9ucyBVc2luZyB0aGUgR3JhbW1hciBvZiBHcmFwaGljc30sCiAgYXV0aG9yID0ge0hhZGxleSBXaWNraGFtIGFuZCBXaW5zdG9uIENoYW5nIGFuZCBMaW9uZWwgSGVucnkgYW5kIFRob21hcyBMaW4gUGVkZXJzZW4gYW5kIEtvaHNrZSBUYWthaGFzaGkgYW5kIENsYXVzIFdpbGtlIGFuZCBLYXJhIFdvbyBhbmQgSGlyb2FraSBZdXRhbmkgYW5kIERld2V5IER1bm5pbmd0b259LAogIHllYXIgPSB7MjAyMX0sCiAgbm90ZSA9IHtSIHBhY2thZ2UgdmVyc2lvbiAzLjMuNX0sCiAgdXJsID0ge2h0dHBzOi8vQ1JBTi5SLXByb2plY3Qub3JnL3BhY2thZ2U9Z2dwbG90Mn0sCn0KCkBNYW51YWx7Ui1rbml0ciwKICB0aXRsZSA9IHtrbml0cjogQSBHZW5lcmFsLVB1cnBvc2UgUGFja2FnZSBmb3IgRHluYW1pYyBSZXBvcnQgR2VuZXJhdGlvbiBpbiBSfSwKICBhdXRob3IgPSB7WWlodWkgWGllfSwKICB5ZWFyID0gezIwMjF9LAogIG5vdGUgPSB7UiBwYWNrYWdlIHZlcnNpb24gMS4zNn0sCiAgdXJsID0ge2h0dHBzOi8veWlodWkub3JnL2tuaXRyL30sCn0KCkBNYW51YWx7Ui1sYXZhYW4sCiAgdGl0bGUgPSB7bGF2YWFuOiBMYXRlbnQgVmFyaWFibGUgQW5hbHlzaXN9LAogIGF1dGhvciA9IHtZdmVzIFJvc3NlZWwgYW5kIFRlcnJlbmNlIEQuIEpvcmdlbnNlbiBhbmQgTmljaG9sYXMgUm9ja3dvb2R9LAogIHllYXIgPSB7MjAyMX0sCiAgbm90ZSA9IHtSIHBhY2thZ2UgdmVyc2lvbiAwLjYtOX0sCiAgdXJsID0ge2h0dHBzOi8vbGF2YWFuLnVnZW50LmJlfSwKfQoKQE1hbnVhbHtSLWxtZTQsCiAgdGl0bGUgPSB7bG1lNDogTGluZWFyIE1peGVkLUVmZmVjdHMgTW9kZWxzIHVzaW5nIEVpZ2VuIGFuZCBTNH0sCiAgYXV0aG9yID0ge0RvdWdsYXMgQmF0ZXMgYW5kIE1hcnRpbiBNYWVjaGxlciBhbmQgQmVuIEJvbGtlciBhbmQgU3RldmVuIFdhbGtlcn0sCiAgeWVhciA9IHsyMDIxfSwKICBub3RlID0ge1IgcGFja2FnZSB2ZXJzaW9uIDEuMS0yNy4xfSwKICB1cmwgPSB7aHR0cHM6Ly9naXRodWIuY29tL2xtZTQvbG1lNC99LAp9CgpATWFudWFse1ItbG1lclRlc3QsCiAgdGl0bGUgPSB7bG1lclRlc3Q6IFRlc3RzIGluIExpbmVhciBNaXhlZCBFZmZlY3RzIE1vZGVsc30sCiAgYXV0aG9yID0ge0FsZXhhbmRyYSBLdXpuZXRzb3ZhIGFuZCBQZXIge0JydXVuIEJyb2NraG9mZn0gYW5kIFJ1bmUge0hhdWJvIEJvamVzZW4gQ2hyaXN0ZW5zZW59fSwKICB5ZWFyID0gezIwMjB9LAogIG5vdGUgPSB7UiBwYWNrYWdlIHZlcnNpb24gMy4xLTN9LAogIHVybCA9IHtodHRwczovL2dpdGh1Yi5jb20vcnVuZWhhdWJvL2xtZXJUZXN0Un0sCn0KCkBNYW51YWx7Ui1NYXRyaXgsCiAgdGl0bGUgPSB7TWF0cml4OiBTcGFyc2UgYW5kIERlbnNlIE1hdHJpeCBDbGFzc2VzIGFuZCBNZXRob2RzfSwKICBhdXRob3IgPSB7RG91Z2xhcyBCYXRlcyBhbmQgTWFydGluIE1hZWNobGVyfSwKICB5ZWFyID0gezIwMjF9LAogIG5vdGUgPSB7UiBwYWNrYWdlIHZlcnNpb24gMS4zLTR9LAogIHVybCA9IHtodHRwOi8vTWF0cml4LlItZm9yZ2UuUi1wcm9qZWN0Lm9yZy99LAp9CgpATWFudWFse1ItbWdjdiwKICB0aXRsZSA9IHttZ2N2OiBNaXhlZCBHQU0gQ29tcHV0YXRpb24gVmVoaWNsZSB3aXRoIEF1dG9tYXRpYyBTbW9vdGhuZXNzCkVzdGltYXRpb259LAogIGF1dGhvciA9IHtTaW1vbiBXb29kfSwKICB5ZWFyID0gezIwMjF9LAogIG5vdGUgPSB7UiBwYWNrYWdlIHZlcnNpb24gMS44LTM4fSwKICB1cmwgPSB7aHR0cHM6Ly9DUkFOLlItcHJvamVjdC5vcmcvcGFja2FnZT1tZ2N2fSwKfQoKQE1hbnVhbHtSLU1wbHVzQXV0b21hdGlvbiwKICB0aXRsZSA9IHtNcGx1c0F1dG9tYXRpb246IEFuIFIgUGFja2FnZSBmb3IgRmFjaWxpdGF0aW5nIExhcmdlLVNjYWxlIExhdGVudCBWYXJpYWJsZQpBbmFseXNlcyBpbiBNcGx1c30sCiAgYXV0aG9yID0ge01pY2hhZWwgSGFsbHF1aXN0IGFuZCBKb3NodWEgV2lsZXl9LAogIHllYXIgPSB7MjAyMX0sCiAgbm90ZSA9IHtSIHBhY2thZ2UgdmVyc2lvbiAxLjAuMH0sCiAgdXJsID0ge2h0dHBzOi8vZ2l0aHViLmNvbS9taWNoYWVsaGFsbHF1aXN0L01wbHVzQXV0b21hdGlvbn0sCn0KCkBNYW51YWx7Ui1ubG1lLAogIHRpdGxlID0ge25sbWU6IExpbmVhciBhbmQgTm9ubGluZWFyIE1peGVkIEVmZmVjdHMgTW9kZWxzfSwKICBhdXRob3IgPSB7Sm9zw6kgUGluaGVpcm8gYW5kIERvdWdsYXMgQmF0ZXMgYW5kIHtSLWNvcmV9fSwKICB5ZWFyID0gezIwMjF9LAogIG5vdGUgPSB7UiBwYWNrYWdlIHZlcnNpb24gMy4xLTE1M30sCiAgdXJsID0ge2h0dHBzOi8vc3ZuLnItcHJvamVjdC5vcmcvUi1wYWNrYWdlcy90cnVuay9ubG1lL30sCn0KCkBNYW51YWx7Ui1wdXJyciwKICB0aXRsZSA9IHtwdXJycjogRnVuY3Rpb25hbCBQcm9ncmFtbWluZyBUb29sc30sCiAgYXV0aG9yID0ge0xpb25lbCBIZW5yeSBhbmQgSGFkbGV5IFdpY2toYW19LAogIHllYXIgPSB7MjAyMH0sCiAgbm90ZSA9IHtSIHBhY2thZ2UgdmVyc2lvbiAwLjMuNH0sCiAgdXJsID0ge2h0dHBzOi8vQ1JBTi5SLXByb2plY3Qub3JnL3BhY2thZ2U9cHVycnJ9LAp9CgpATWFudWFse1ItcmVhZHIsCiAgdGl0bGUgPSB7cmVhZHI6IFJlYWQgUmVjdGFuZ3VsYXIgVGV4dCBEYXRhfSwKICBhdXRob3IgPSB7SGFkbGV5IFdpY2toYW0gYW5kIEppbSBIZXN0ZXJ9LAogIHllYXIgPSB7MjAyMX0sCiAgbm90ZSA9IHtSIHBhY2thZ2UgdmVyc2lvbiAyLjAuMn0sCiAgdXJsID0ge2h0dHBzOi8vQ1JBTi5SLXByb2plY3Qub3JnL3BhY2thZ2U9cmVhZHJ9LAp9CgpATWFudWFse1Itcm1hcmtkb3duLAogIHRpdGxlID0ge3JtYXJrZG93bjogRHluYW1pYyBEb2N1bWVudHMgZm9yIFJ9LAogIGF1dGhvciA9IHtKSiBBbGxhaXJlIGFuZCBZaWh1aSBYaWUgYW5kIEpvbmF0aGFuIE1jUGhlcnNvbiBhbmQgSmF2aWVyIEx1cmFzY2hpIGFuZCBLZXZpbiBVc2hleSBhbmQgQXJvbiBBdGtpbnMgYW5kIEhhZGxleSBXaWNraGFtIGFuZCBKb2UgQ2hlbmcgYW5kIFdpbnN0b24gQ2hhbmcgYW5kIFJpY2hhcmQgSWFubm9uZX0sCiAgeWVhciA9IHsyMDIxfSwKICBub3RlID0ge1IgcGFja2FnZSB2ZXJzaW9uIDIuMTF9LAogIHVybCA9IHtodHRwczovL0NSQU4uUi1wcm9qZWN0Lm9yZy9wYWNrYWdlPXJtYXJrZG93bn0sCn0KCkBNYW51YWx7Ui1zZW1QbG90LAogIHRpdGxlID0ge3NlbVBsb3Q6IFBhdGggRGlhZ3JhbXMgYW5kIFZpc3VhbCBBbmFseXNpcyBvZiBWYXJpb3VzIFNFTSBQYWNrYWdlcycKT3V0cHV0fSwKICBhdXRob3IgPSB7U2FjaGEgRXBza2FtcH0sCiAgeWVhciA9IHsyMDE5fSwKICBub3RlID0ge1IgcGFja2FnZSB2ZXJzaW9uIDEuMS4yfSwKICB1cmwgPSB7aHR0cHM6Ly9naXRodWIuY29tL1NhY2hhRXBza2FtcC9zZW1QbG90fSwKfQoKQE1hbnVhbHtSLXNqUGxvdCwKICB0aXRsZSA9IHtzalBsb3Q6IERhdGEgVmlzdWFsaXphdGlvbiBmb3IgU3RhdGlzdGljcyBpbiBTb2NpYWwgU2NpZW5jZX0sCiAgYXV0aG9yID0ge0RhbmllbCBMw7xkZWNrZX0sCiAgeWVhciA9IHsyMDIxfSwKICBub3RlID0ge1IgcGFja2FnZSB2ZXJzaW9uIDIuOC45fSwKICB1cmwgPSB7aHR0cHM6Ly9zdHJlbmdlamFja2UuZ2l0aHViLmlvL3NqUGxvdC99LAp9CgpATWFudWFse1Itc3RyaW5nciwKICB0aXRsZSA9IHtzdHJpbmdyOiBTaW1wbGUsIENvbnNpc3RlbnQgV3JhcHBlcnMgZm9yIENvbW1vbiBTdHJpbmcgT3BlcmF0aW9uc30sCiAgYXV0aG9yID0ge0hhZGxleSBXaWNraGFtfSwKICB5ZWFyID0gezIwMTl9LAogIG5vdGUgPSB7UiBwYWNrYWdlIHZlcnNpb24gMS40LjB9LAogIHVybCA9IHtodHRwczovL0NSQU4uUi1wcm9qZWN0Lm9yZy9wYWNrYWdlPXN0cmluZ3J9LAp9CgpATWFudWFse1ItdGliYmxlLAogIHRpdGxlID0ge3RpYmJsZTogU2ltcGxlIERhdGEgRnJhbWVzfSwKICBhdXRob3IgPSB7S2lyaWxsIE3DvGxsZXIgYW5kIEhhZGxleSBXaWNraGFtfSwKICB5ZWFyID0gezIwMjF9LAogIG5vdGUgPSB7UiBwYWNrYWdlIHZlcnNpb24gMy4xLjZ9LAogIHVybCA9IHtodHRwczovL0NSQU4uUi1wcm9qZWN0Lm9yZy9wYWNrYWdlPXRpYmJsZX0sCn0KCkBNYW51YWx7Ui10aWR5ciwKICB0aXRsZSA9IHt0aWR5cjogVGlkeSBNZXNzeSBEYXRhfSwKICBhdXRob3IgPSB7SGFkbGV5IFdpY2toYW19LAogIHllYXIgPSB7MjAyMX0sCiAgbm90ZSA9IHtSIHBhY2thZ2UgdmVyc2lvbiAxLjEuNH0sCiAgdXJsID0ge2h0dHBzOi8vQ1JBTi5SLXByb2plY3Qub3JnL3BhY2thZ2U9dGlkeXJ9LAp9CgpATWFudWFse1ItdGlkeXZlcnNlLAogIHRpdGxlID0ge3RpZHl2ZXJzZTogRWFzaWx5IEluc3RhbGwgYW5kIExvYWQgdGhlIFRpZHl2ZXJzZX0sCiAgYXV0aG9yID0ge0hhZGxleSBXaWNraGFtfSwKICB5ZWFyID0gezIwMjF9LAogIG5vdGUgPSB7UiBwYWNrYWdlIHZlcnNpb24gMS4zLjF9LAogIHVybCA9IHtodHRwczovL0NSQU4uUi1wcm9qZWN0Lm9yZy9wYWNrYWdlPXRpZHl2ZXJzZX0sCn0KCkBCb29re2Jvb2tkb3duMjAxNiwKICB0aXRsZSA9IHtib29rZG93bjogQXV0aG9yaW5nIEJvb2tzIGFuZCBUZWNobmljYWwgRG9jdW1lbnRzIHdpdGgge1J9IE1hcmtkb3dufSwKICBhdXRob3IgPSB7WWlodWkgWGllfSwKICBwdWJsaXNoZXIgPSB7Q2hhcG1hbiBhbmQgSGFsbC9DUkN9LAogIGFkZHJlc3MgPSB7Qm9jYSBSYXRvbiwgRmxvcmlkYX0sCiAgeWVhciA9IHsyMDE2fSwKICBub3RlID0ge0lTQk4gOTc4LTExMzg3MDAxMDl9LAogIHVybCA9IHtodHRwczovL2Jvb2tkb3duLm9yZy95aWh1aS9ib29rZG93bn0sCn0KCkBCb29re2dncGxvdDIyMDE2LAogIGF1dGhvciA9IHtIYWRsZXkgV2lja2hhbX0sCiAgdGl0bGUgPSB7Z2dwbG90MjogRWxlZ2FudCBHcmFwaGljcyBmb3IgRGF0YSBBbmFseXNpc30sCiAgcHVibGlzaGVyID0ge1NwcmluZ2VyLVZlcmxhZyBOZXcgWW9ya30sCiAgeWVhciA9IHsyMDE2fSwKICBpc2JuID0gezk3OC0zLTMxOS0yNDI3Ny00fSwKICB1cmwgPSB7aHR0cHM6Ly9nZ3Bsb3QyLnRpZHl2ZXJzZS5vcmd9LAp9CgpAQm9va3trbml0cjIwMTUsCiAgdGl0bGUgPSB7RHluYW1pYyBEb2N1bWVudHMgd2l0aCB7Un0gYW5kIGtuaXRyfSwKICBhdXRob3IgPSB7WWlodWkgWGllfSwKICBwdWJsaXNoZXIgPSB7Q2hhcG1hbiBhbmQgSGFsbC9DUkN9LAogIGFkZHJlc3MgPSB7Qm9jYSBSYXRvbiwgRmxvcmlkYX0sCiAgeWVhciA9IHsyMDE1fSwKICBlZGl0aW9uID0gezJuZH0sCiAgbm90ZSA9IHtJU0JOIDk3OC0xNDk4NzE2OTYzfSwKICB1cmwgPSB7aHR0cHM6Ly95aWh1aS5vcmcva25pdHIvfSwKfQoKQEluQ29sbGVjdGlvbntrbml0cjIwMTQsCiAgYm9va3RpdGxlID0ge0ltcGxlbWVudGluZyBSZXByb2R1Y2libGUgQ29tcHV0YXRpb25hbCBSZXNlYXJjaH0sCiAgZWRpdG9yID0ge1ZpY3RvcmlhIFN0b2RkZW4gYW5kIEZyaWVkcmljaCBMZWlzY2ggYW5kIFJvZ2VyIEQuIFBlbmd9LAogIHRpdGxlID0ge2tuaXRyOiBBIENvbXByZWhlbnNpdmUgVG9vbCBmb3IgUmVwcm9kdWNpYmxlIFJlc2VhcmNoIGluIHtSfX0sCiAgYXV0aG9yID0ge1lpaHVpIFhpZX0sCiAgcHVibGlzaGVyID0ge0NoYXBtYW4gYW5kIEhhbGwvQ1JDfSwKICB5ZWFyID0gezIwMTR9LAogIG5vdGUgPSB7SVNCTiA5NzgtMTQ2NjU2MTU5NX0sCiAgdXJsID0ge2h0dHA6Ly93d3cuY3JjcHJlc3MuY29tL3Byb2R1Y3QvaXNibi85NzgxNDY2NTYxNTk1fSwKfQoKQEFydGljbGV7bGF2YWFuMjAxMiwKICB0aXRsZSA9IHt7bGF2YWFufTogQW4ge1J9IFBhY2thZ2UgZm9yIFN0cnVjdHVyYWwgRXF1YXRpb24gTW9kZWxpbmd9LAogIGF1dGhvciA9IHtZdmVzIFJvc3NlZWx9LAogIGpvdXJuYWwgPSB7Sm91cm5hbCBvZiBTdGF0aXN0aWNhbCBTb2Z0d2FyZX0sCiAgeWVhciA9IHsyMDEyfSwKICB2b2x1bWUgPSB7NDh9LAogIG51bWJlciA9IHsyfSwKICBwYWdlcyA9IHsxLS0zNn0sCiAgdXJsID0ge2h0dHBzOi8vd3d3LmpzdGF0c29mdC5vcmcvdjQ4L2kwMi99LAp9CgpAQXJ0aWNsZXtsbWU0MjAxNSwKICB0aXRsZSA9IHtGaXR0aW5nIExpbmVhciBNaXhlZC1FZmZlY3RzIE1vZGVscyBVc2luZyB7bG1lNH19LAogIGF1dGhvciA9IHtEb3VnbGFzIEJhdGVzIGFuZCBNYXJ0aW4gTXtcImF9Y2hsZXIgYW5kIEJlbiBCb2xrZXIgYW5kIFN0ZXZlIFdhbGtlcn0sCiAgam91cm5hbCA9IHtKb3VybmFsIG9mIFN0YXRpc3RpY2FsIFNvZnR3YXJlfSwKICB5ZWFyID0gezIwMTV9LAogIHZvbHVtZSA9IHs2N30sCiAgbnVtYmVyID0gezF9LAogIHBhZ2VzID0gezEtLTQ4fSwKICBkb2kgPSB7MTAuMTg2MzcvanNzLnYwNjcuaTAxfSwKfQoKQEFydGljbGV7bG1lclRlc3QyMDE3LAogIHRpdGxlID0ge3tsbWVyVGVzdH0gUGFja2FnZTogVGVzdHMgaW4gTGluZWFyIE1peGVkIEVmZmVjdHMgTW9kZWxzfSwKICBhdXRob3IgPSB7QWxleGFuZHJhIEt1em5ldHNvdmEgYW5kIFBlciBCLiBCcm9ja2hvZmYgYW5kIFJ1bmUgSC4gQi4gQ2hyaXN0ZW5zZW59LAogIGpvdXJuYWwgPSB7Sm91cm5hbCBvZiBTdGF0aXN0aWNhbCBTb2Z0d2FyZX0sCiAgeWVhciA9IHsyMDE3fSwKICB2b2x1bWUgPSB7ODJ9LAogIG51bWJlciA9IHsxM30sCiAgcGFnZXMgPSB7MS0tMjZ9LAogIGRvaSA9IHsxMC4xODYzNy9qc3MudjA4Mi5pMTN9LAp9CgpAQXJ0aWNsZXttZ2N2MjAxMSwKICB0aXRsZSA9IHtGYXN0IHN0YWJsZSByZXN0cmljdGVkIG1heGltdW0gbGlrZWxpaG9vZCBhbmQgbWFyZ2luYWwgCmxpa2VsaWhvb2QgZXN0aW1hdGlvbiBvZiBzZW1pcGFyYW1ldHJpYyBnZW5lcmFsaXplZCBsaW5lYXIgbW9kZWxzfSwKICBqb3VybmFsID0ge0pvdXJuYWwgb2YgdGhlIFJveWFsIFN0YXRpc3RpY2FsIFNvY2lldHkgKEIpfSwKICB2b2x1bWUgPSB7NzN9LAogIG51bWJlciA9IHsxfSwKICBwYWdlcyA9IHszLTM2fSwKICB5ZWFyID0gezIwMTF9LAogIGF1dGhvciA9IHtTLiBOLiBXb29kfSwKfQoKQEFydGljbGV7bWdjdjIwMTYsCiAgdGl0bGUgPSB7U21vb3RoaW5nIHBhcmFtZXRlciBhbmQgbW9kZWwgc2VsZWN0aW9uIGZvciBnZW5lcmFsIHNtb290aCBtb2RlbHMgKHdpdGggZGlzY3Vzc2lvbil9LAogIGF1dGhvciA9IHtTLk4uIFdvb2QgYW5kIHtOLn0gYW5kIHtQeWF9IGFuZCBCLiBTeyJhfWZrZW59LAogIGpvdXJuYWwgPSB7Sm91cm5hbCBvZiB0aGUgQW1lcmljYW4gU3RhdGlzdGljYWwgQXNzb2NpYXRpb259LAogIHllYXIgPSB7MjAxNn0sCiAgcGFnZXMgPSB7MTU0OC0xNTc1fSwKICB2b2x1bWUgPSB7MTExfSwKfQoKQEFydGljbGV7bWdjdjIwMDQsCiAgdGl0bGUgPSB7U3RhYmxlIGFuZCBlZmZpY2llbnQgbXVsdGlwbGUgc21vb3RoaW5nIHBhcmFtZXRlciBlc3RpbWF0aW9uIGZvciAKICAgICAgICAgZ2VuZXJhbGl6ZWQgYWRkaXRpdmUgbW9kZWxzfSwKICBqb3VybmFsID0ge0pvdXJuYWwgb2YgdGhlIEFtZXJpY2FuIFN0YXRpc3RpY2FsIEFzc29jaWF0aW9ufSwKICB2b2x1bWUgPSB7OTl9LAogIG51bWJlciA9IHs0Njd9LAogIHBhZ2VzID0gezY3My02ODZ9LAogIHllYXIgPSB7MjAwNH0sCiAgYXV0aG9yID0ge1MuIE4uIFdvb2R9LAp9CgpAQm9va3ttZ2N2MjAxNywKICB0aXRsZSA9IHtHZW5lcmFsaXplZCBBZGRpdGl2ZSBNb2RlbHM6IEFuIEludHJvZHVjdGlvbiB3aXRoIFJ9LAogIHllYXIgPSB7MjAxN30sCiAgYXV0aG9yID0ge1MuTiBXb29kfSwKICBlZGl0aW9uID0gezJ9LAogIHB1Ymxpc2hlciA9IHtDaGFwbWFuIGFuZCBIYWxsL0NSQ30sCn0KCkBBcnRpY2xle21nY3YyMDAzLAogIHRpdGxlID0ge1RoaW4tcGxhdGUgcmVncmVzc2lvbiBzcGxpbmVzfSwKICBqb3VybmFsID0ge0pvdXJuYWwgb2YgdGhlIFJveWFsIFN0YXRpc3RpY2FsIFNvY2lldHkgKEIpfSwKICB2b2x1bWUgPSB7NjV9LAogIG51bWJlciA9IHsxfSwKICBwYWdlcyA9IHs5NS0xMTR9LAogIHllYXIgPSB7MjAwM30sCiAgYXV0aG9yID0ge1MuIE4uIFdvb2R9LAp9CgpAQXJ0aWNsZXtNcGx1c0F1dG9tYXRpb24yMDE4LAogIHRpdGxlID0ge3tNcGx1c0F1dG9tYXRpb259OiBBbiB7Un0gUGFja2FnZSBmb3IgRmFjaWxpdGF0aW5nIExhcmdlLVNjYWxlIExhdGVudCBWYXJpYWJsZSBBbmFseXNlcyBpbiB7TXBsdXN9fSwKICBhdXRob3IgPSB7TWljaGFlbCBOLiBIYWxscXVpc3QgYW5kIEpvc2h1YSBGLiBXaWxleX0sCiAgam91cm5hbCA9IHtTdHJ1Y3R1cmFsIEVxdWF0aW9uIE1vZGVsaW5nfSwKICB5ZWFyID0gezIwMTh9LAogIHBhZ2VzID0gezEtLTE4fSwKICBkb2kgPSB7MTAuMTA4MC8xMDcwNTUxMS4yMDE3LjE0MDIzMzR9LAogIHVybCA9IHtodHRwczovL3d3dy50YW5kZm9ubGluZS5jb20vZG9pL2Z1bGwvMTAuMTA4MC8xMDcwNTUxMS4yMDE3LjE0MDIzMzR9LAp9CgpAQm9va3tybWFya2Rvd24yMDE4LAogIHRpdGxlID0ge1IgTWFya2Rvd246IFRoZSBEZWZpbml0aXZlIEd1aWRlfSwKICBhdXRob3IgPSB7WWlodWkgWGllIGFuZCBKLkouIEFsbGFpcmUgYW5kIEdhcnJldHQgR3JvbGVtdW5kfSwKICBwdWJsaXNoZXIgPSB7Q2hhcG1hbiBhbmQgSGFsbC9DUkN9LAogIGFkZHJlc3MgPSB7Qm9jYSBSYXRvbiwgRmxvcmlkYX0sCiAgeWVhciA9IHsyMDE4fSwKICBub3RlID0ge0lTQk4gOTc4MTEzODM1OTMzOH0sCiAgdXJsID0ge2h0dHBzOi8vYm9va2Rvd24ub3JnL3lpaHVpL3JtYXJrZG93bn0sCn0KCkBCb29re3JtYXJrZG93bjIwMjAsCiAgdGl0bGUgPSB7UiBNYXJrZG93biBDb29rYm9va30sCiAgYXV0aG9yID0ge1lpaHVpIFhpZSBhbmQgQ2hyaXN0b3BoZSBEZXJ2aWV1eCBhbmQgRW1pbHkgUmllZGVyZXJ9LAogIHB1Ymxpc2hlciA9IHtDaGFwbWFuIGFuZCBIYWxsL0NSQ30sCiAgYWRkcmVzcyA9IHtCb2NhIFJhdG9uLCBGbG9yaWRhfSwKICB5ZWFyID0gezIwMjB9LAogIG5vdGUgPSB7SVNCTiA5NzgwMzY3NTYzODM3fSwKICB1cmwgPSB7aHR0cHM6Ly9ib29rZG93bi5vcmcveWlodWkvcm1hcmtkb3duLWNvb2tib29rfSwKfQoKQEFydGljbGV7dGlkeXZlcnNlMjAxOSwKICB0aXRsZSA9IHtXZWxjb21lIHRvIHRoZSB7dGlkeXZlcnNlfX0sCiAgYXV0aG9yID0ge0hhZGxleSBXaWNraGFtIGFuZCBNYXJhIEF2ZXJpY2sgYW5kIEplbm5pZmVyIEJyeWFuIGFuZCBXaW5zdG9uIENoYW5nIGFuZCBMdWN5IEQnQWdvc3Rpbm8gTWNHb3dhbiBhbmQgUm9tYWluIEZyYW7Dp29pcyBhbmQgR2FycmV0dCBHcm9sZW11bmQgYW5kIEFsZXggSGF5ZXMgYW5kIExpb25lbCBIZW5yeSBhbmQgSmltIEhlc3RlciBhbmQgTWF4IEt1aG4gYW5kIFRob21hcyBMaW4gUGVkZXJzZW4gYW5kIEV2YW4gTWlsbGVyIGFuZCBTdGVwaGFuIE1pbHRvbiBCYWNoZSBhbmQgS2lyaWxsIE3DvGxsZXIgYW5kIEplcm9lbiBPb21zIGFuZCBEYXZpZCBSb2JpbnNvbiBhbmQgRGFuYSBQYWlnZSBTZWlkZWwgYW5kIFZpdGFsaWUgU3BpbnUgYW5kIEtvaHNrZSBUYWthaGFzaGkgYW5kIERhdmlzIFZhdWdoYW4gYW5kIENsYXVzIFdpbGtlIGFuZCBLYXJhIFdvbyBhbmQgSGlyb2FraSBZdXRhbml9LAogIHllYXIgPSB7MjAxOX0sCiAgam91cm5hbCA9IHtKb3VybmFsIG9mIE9wZW4gU291cmNlIFNvZnR3YXJlfSwKICB2b2x1bWUgPSB7NH0sCiAgbnVtYmVyID0gezQzfSwKICBwYWdlcyA9IHsxNjg2fSwKICBkb2kgPSB7MTAuMjExMDUvam9zcy4wMTY4Nn0sCn0KCg==" download="hitchhikers-guide-packages.bib">
+<button class="btn btn-default"><i class="fa fa-save"></i> Download Bibliography file</button>
+</a>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="02-canonical.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": false,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["twitter", "facebook", "linkedin", "google", "weibo", "instapaper"],
+"google": false,
+"instapper": false
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/McCormickNeuro/longitudinal-primer/edit/main/01-introduction.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section",
+"depth": 2,
+"scroll_highlight": true
+}
+});
+});
+</script>
+
+</body>
+
+</html>

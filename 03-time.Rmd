@@ -2,7 +2,7 @@
 
 Thinking more deeply about time in longitudinal models
 
-```{r read data 02}
+```{r read data 03}
 single.cohort = read.csv('data/02-single-cohort.csv')
 
 multiple.cohort = read.csv('data/02-multiple-cohort.csv')
@@ -12,7 +12,7 @@ accelerated = read.csv('data/02-accelerated.csv')
 
 ## Assessment Schedules
 ### Single Cohort Data
-```{r single cohort 01}
+```{r single cohort 03}
 set.seed(12345)
 ggplot2::ggplot(single.cohort %>% filter(id %in% sample(id, 50)) %>%
                   pivot_longer(cols=starts_with('age'),

@@ -1,10 +1,10 @@
 # Canonical Models {#canon}
 
-What follows are canonical versions of growth models in each of the four different frameworks. These models represent basic implementations of a linear growth trajectory with random effects for both the intercept and slope, with the exception of the GAMM, where a non-linear spline model is implemented (otherwise it would just re-capitulate the MLM results). While the contents of this primer and code companion will focus on implementation in the R environment, links will be provided to other programs where possible.
+What follows are canonical versions of growth models in each of the four different frameworks. These models represent basic implementations of a linear growth trajectory with random effects for both the intercept and slope, with the exception of the GAMM, where a non-linear spline model is implemented (otherwise it would just re-capitulate the MLM results).
 
-**A fair warning: code in other languages will be provided in an arbitrary and capricious manner. This policy should be familiar to the reader, given their experience with the text of the manuscript (and if very unlucky, the first author).**
+We can start by reading in the datasets we will use in this chapter.
 
-```{r read data 01}
+```{r, read data 02, message = FALSE, warning = FALSE, error = FALSE}
 canonical.wide = utils::read.csv('data/01-canonical.csv',
                                  header = TRUE)
 
@@ -19,19 +19,22 @@ canonical.gamm = read.csv('data/01-canonical-gamm.csv')
 
 *talk briefly about datasets and show code to output them to mplus*
 
-```{r write data 01}
+```{r, write to mplus 02, message = FALSE, warning = FALSE, error = FALSE}
 filename = '01-canonical'
 capture.output(
   MplusAutomation::prepareMplusData(canonical.wide, 
                                     paste0('external/',filename,'.dat')),
   file=paste0('external/',filename,'_MplusAutomation.txt'))
+```
 
+```{r, write to sas 02, message = FALSE, warning = FALSE, error = FALSE}
 write.foreign(canonical.long, 
               datafile = paste0('external/',filename,'.txt'), 
               codefile = '', 
               package='SAS')
 ```
-```{r}
+
+```{r, download external 02, message = FALSE, warning = FALSE, error = FALSE, echo = FALSE}
 download_file(
   path = c('external/01-canonical.txt',
            'external/01-canonical.sas'),
