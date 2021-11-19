@@ -1,0 +1,16 @@
+book_filename: 'longitudinal_primer'
+output_dir: 'docs'
+delete_merged_file: true
+language:
+  ui:
+    chapter_name: "Chapter "
+
+ #rmd_files: [
+#   'index.Rmd',
+#   '01-canonical.Rmd',
+#   '02-time.Rmd',
+#] 
+#   '03-shape.Rmd',
+#   '04-covariates.Rmd',
+#   '05-nesting.Rmd',
+# ]

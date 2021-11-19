@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Longitudinal Primer</title>
+  <meta name="description" content="This is a code companion for [title]." />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Longitudinal Primer" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a code companion for [title]." />
+  <meta name="github-repo" content="McCormickNeuro/longitudinal-primer" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Longitudinal Primer" />
+  
+  <meta name="twitter:description" content="This is a code companion for [title]." />
+  
+
+<meta name="author" content="Ethan M. McCormick, Michelle L. Byrne, John C. Flournoy, Katheryn L. Mills, &amp; Jennifer H. Pfiefer" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+
+<link rel="next" href="01-canonical.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/font-awesome-5.13.0/js/script.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">The Hitchhiker’s Guide to Longitudinal Models</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="" data-path="01-canonical.html"><a href="01-canonical.html"><i class="fa fa-check"></i>Canonical Models</a>
+<ul>
+<li class="chapter" data-level="" data-path="01-canonical.html"><a href="01-canonical.html#multilevel-model"><i class="fa fa-check"></i>Multilevel Model</a></li>
+<li class="chapter" data-level="" data-path="01-canonical.html"><a href="01-canonical.html#generalized-additive-mixed-model"><i class="fa fa-check"></i>Generalized Additive Mixed Model</a></li>
+<li class="chapter" data-level="" data-path="01-canonical.html"><a href="01-canonical.html#latent-curve-model"><i class="fa fa-check"></i>Latent Curve Model</a></li>
+<li class="chapter" data-level="" data-path="01-canonical.html"><a href="01-canonical.html#latent-change-score-model"><i class="fa fa-check"></i>Latent Change Score Model</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="02-time.html"><a href="02-time.html"><i class="fa fa-check"></i>Time Structure</a>
+<ul>
+<li class="chapter" data-level="" data-path="02-time.html"><a href="02-time.html#assessment-schedules"><i class="fa fa-check"></i>Assessment Schedules</a>
+<ul>
+<li class="chapter" data-level="" data-path="02-time.html"><a href="02-time.html#single-cohort-data"><i class="fa fa-check"></i>Single Cohort Data</a></li>
+<li class="chapter" data-level="" data-path="02-time.html"><a href="02-time.html#multiple-cohort-data"><i class="fa fa-check"></i>Multiple Cohort Data</a></li>
+<li class="chapter" data-level="" data-path="02-time.html"><a href="02-time.html#accelerated-design"><i class="fa fa-check"></i>Accelerated Design</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="02-time.html"><a href="02-time.html#time-coding"><i class="fa fa-check"></i>Time Coding</a></li>
+<li class="chapter" data-level="" data-path="02-time.html"><a href="02-time.html#additional-considerations"><i class="fa fa-check"></i>Additional Considerations</a>
+<ul>
+<li class="chapter" data-level="" data-path="02-time.html"><a href="02-time.html#alternative-metrics-of-time"><i class="fa fa-check"></i>Alternative Metrics of Time</a></li>
+<li class="chapter" data-level="" data-path="02-time.html"><a href="02-time.html#residual-estimates"><i class="fa fa-check"></i>Residual Estimates</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Longitudinal Primer</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="header">
+<h1 class="title">Longitudinal Primer</h1>
+<h2 class="subtitle"><em>Code Companion</em></h2>
+<p class="author"><em><a href="https://mccormickneuro.github.io/">Ethan M. McCormick</a>, <a href="https://research.monash.edu/en/persons/michelle-byrne">Michelle L. Byrne</a>, <a href="https://johnflournoy.science/">John C. Flournoy</a>, <a href="http://devbrainlab.org/">Katheryn L. Mills</a>, &amp; <a href="https://dsn.uoregon.edu/">Jennifer H. Pfiefer</a></em></p>
+<p class="date"><em>19 November, 2021</em></p>
+</div>
+<div id="intro" class="section level1">
+<h1>Introduction</h1>
+<p>The following document is a code companion to <a href="">citation</a>, <a href="">doi</a>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">echo =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-2"><a href="index.html#cb1-2" aria-hidden="true" tabindex="-1"></a>packages <span class="ot">=</span>  <span class="fu">c</span>(<span class="st">&#39;utils&#39;</span>, <span class="st">&#39;tidyverse&#39;</span>, <span class="st">&#39;downloadthis&#39;</span>,     <span class="co"># packages for data management</span></span>
+<span id="cb1-3"><a href="index.html#cb1-3" aria-hidden="true" tabindex="-1"></a>              <span class="st">&#39;foreign&#39;</span>, <span class="st">&#39;MplusAutomation&#39;</span>,             <span class="co"># packages for writing data         </span></span>
+<span id="cb1-4"><a href="index.html#cb1-4" aria-hidden="true" tabindex="-1"></a>              <span class="st">&#39;ggplot2&#39;</span>, <span class="st">&#39;sjPlot&#39;</span>, <span class="st">&#39;broom&#39;</span>,             <span class="co"># packages for visualization</span></span>
+<span id="cb1-5"><a href="index.html#cb1-5" aria-hidden="true" tabindex="-1"></a>              <span class="st">&#39;nlme&#39;</span>, <span class="st">&#39;lme4&#39;</span>, <span class="st">&#39;lmerTest&#39;</span>,               <span class="co"># packages for MLMs</span></span>
+<span id="cb1-6"><a href="index.html#cb1-6" aria-hidden="true" tabindex="-1"></a>              <span class="st">&#39;mgcv&#39;</span>, <span class="st">&#39;gamm4&#39;</span>,                          <span class="co"># packages for GAMMs</span></span>
+<span id="cb1-7"><a href="index.html#cb1-7" aria-hidden="true" tabindex="-1"></a>              <span class="st">&#39;lavaan&#39;</span>, <span class="st">&#39;semPlot&#39;</span>)                      <span class="co"># packages for SEMs</span></span>
+<span id="cb1-8"><a href="index.html#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="index.html#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">length</span>(<span class="fu">setdiff</span>(packages, <span class="fu">rownames</span>(<span class="fu">installed.packages</span>()))) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb1-10"><a href="index.html#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">install.packages</span>(<span class="fu">setdiff</span>(packages, </span>
+<span id="cb1-11"><a href="index.html#cb1-11" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">rownames</span>(<span class="fu">installed.packages</span>())), </span>
+<span id="cb1-12"><a href="index.html#cb1-12" aria-hidden="true" tabindex="-1"></a>                   <span class="at">repos =</span> <span class="st">&#39;http://cran.us.r-project.org&#39;</span>)</span>
+<span id="cb1-13"><a href="index.html#cb1-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-14"><a href="index.html#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">invisible</span>(<span class="fu">lapply</span>(packages, </span>
+<span id="cb1-15"><a href="index.html#cb1-15" aria-hidden="true" tabindex="-1"></a>                 library, </span>
+<span id="cb1-16"><a href="index.html#cb1-16" aria-hidden="true" tabindex="-1"></a>                 <span class="at">character.only =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+<a href="01-canonical.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": false,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["twitter", "facebook", "linkedin", "google", "weibo", "instapaper"],
+"google": false,
+"instapper": false
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/McCormickNeuro/longitudinal-primer/edit/main/index.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section",
+"depth": 2,
+"scroll_highlight": true
+}
+});
+});
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,146 @@
+# Time Structure {#time}
+
+Thinking more deeply about time in longitudinal models
+
+```{r read data 02}
+single.cohort = read.csv('data/02-single-cohort.csv')
+
+multiple.cohort = read.csv('data/02-multiple-cohort.csv')
+
+accelerated = read.csv('data/02-accelerated.csv')
+```
+
+## Assessment Schedules
+### Single Cohort Data
+```{r single cohort 01}
+set.seed(12345)
+ggplot2::ggplot(single.cohort %>% filter(id %in% sample(id, 50)) %>%
+                  pivot_longer(cols=starts_with('age'),
+                               names_to = c('.value', 'wave'), 
+                               names_pattern = '(.+)(.)'),
+                aes(x = age, y = id)) +
+  geom_line(aes(group = id), size = .5) +
+  geom_point(aes(color = as.factor(wave))) + 
+  labs(x = 'Age', y = 'Individual', color = 'Wave') + 
+  theme(legend.position = 'top')
+
+
+linear.lcm = 'int =~ 1*dlpfc1 + 1*dlpfc2 + 1*dlpfc3 + 1*dlpfc4
+              slp =~ 0*dlpfc1 + 1*dlpfc2 + 2*dlpfc3 + 3*dlpfc4'
+
+lcm = lavaan::growth(linear.lcm, 
+                     data = single.cohort,
+                     estimator = 'ML',
+                     missing='FIML')
+summary(lcm, fit.measures = TRUE, standardize = TRUE, rsquare = TRUE)
+broom::tidy(lcm) %>% knitr::kable()
+
+semPlot::semPaths(lcm, 
+                  intercepts = TRUE, 
+                  edge.color = 'black')
+```
+*Notes: not sure we need to re-show all the models since all the canonical ones are on single-cohort data*
+
+
+### Multiple Cohort Data 
+```{r multiple cohort}
+ggplot(multiple.cohort %>% filter(id %in% sample(id, 50)) %>%
+         pivot_longer(cols=starts_with('monthage'),
+                      names_to = c('.value', 'wave'),
+                      names_pattern = '(.+)(.)'), 
+       aes(x = monthage, y = id)) +
+  geom_line(aes(group = id), size = .5) +
+  geom_point(aes(color = as.factor(wave), shape = factor(cohort)), size=2) +
+  labs(x = 'Age (in Months)', y = 'Individual', color = 'Wave', shape = 'Cohort') +
+  theme(legend.position = 'top') + guides(color = 'none')
+
+linear.lcm = 'int =~ 1*fpct6 + 1*fpct8 + 1*fpct10 + 1*fpct12 + 1*fpct14 + 
+                     1*fpct16 + 1*fpct18 + 1*fpct20
+              slp =~ 0*fpct6 + 1*fpct8 + 2*fpct10 + 3*fpct12 + 4*fpct14 + 
+                     5*fpct16 + 6*fpct18 + 7*fpct20'
+
+lcm = lavaan::growth(linear.lcm, 
+                     data = multiple.cohort,
+                     estimator = 'ML',
+                     missing='FIML')
+summary(lcm, fit.measures = TRUE, standardize = TRUE, rsquare = TRUE)
+broom::tidy(lcm) %>% knitr::kable()
+
+semPlot::semPaths(lcm, 
+                  intercepts = TRUE, 
+                  edge.color = 'black')
+```
+*show with LCM since they are the most straightforward.*
+
+### Accelerated Design
+```{r accelerated}
+set.seed(12345)
+ggplot(accelerated %>% group_by(id) %>% filter(length(unique(wave)) == 3) %>% 
+         ungroup() %>% filter(id %in% sample(id, 100)), 
+       aes(x = age, y = id)) +
+  geom_line(aes(group = id), size = .5) +
+  geom_point(aes(color = as.factor(wave))) + 
+  labs(x = 'Age', y = 'Individual', color = 'Wave', shape = 'Cohort') + 
+  theme(legend.position = 'top')
+
+mlm.lmerTest = lmerTest::lmer(scale(modularity) ~ 1 + age + I(age^2) + (1 | id), 
+                 na.action = na.omit,
+                 REML = TRUE,
+                 data = accelerated)
+summary(mlm.lmerTest)
+tab_model(mlm.lmerTest,
+          show.se = TRUE,
+          show.df = FALSE,
+          show.ci = FALSE,
+          digits = 3,
+          pred.labels = c('Intercept', 'Age', 'Age^2'),
+          dv.labels = 'Modularity',
+          string.se = 'SE',
+          string.p = 'P-Value')
+```
+*show with MLM/GAMM, link to Mplus code for the tscore method*
+
+## Time Coding
+```{r time coding}
+initial.status = 'int =~ 1*dlpfc1 + 1*dlpfc2 + 1*dlpfc3 + 1*dlpfc4
+                  slp =~ 0*dlpfc1 + 1*dlpfc2 + 2*dlpfc3 + 3*dlpfc4'
+
+initial.status.fit = growth(initial.status, 
+                            data = single.cohort,
+                            estimator = 'ML',
+                            missing='FIML')
+
+
+final.status = 'int =~ 1*dlpfc1 + 1*dlpfc2 + 1*dlpfc3 + 1*dlpfc4
+                slp =~ 0*dlpfc1 + 1*dlpfc2 + 2*dlpfc3 + 3*dlpfc4'
+
+final.status.fit = growth(final.status, 
+                          data = single.cohort,
+                          estimator = 'ML',
+                          missing='FIML')
+
+
+summary(initial.status.fit, fit.measures = TRUE, estimates=FALSE)
+summary(final.status.fit, fit.measures = TRUE, estimates=FALSE)
+
+tidy(initial.status.fit) %>% knitr::kable()
+tidy(final.status.fit) %>% knitr::kable()
+```
+
+
+*Show in the LCM since that's the easiest to see in the model syntax, also highlight in the MLM*
+
+## Additional Considerations
+
+### Alternative Metrics of Time
+```{r alternative time metric}
+ggplot(accelerated, aes(x = puberty, y = id)) +
+  geom_line(aes(group = id), size = .5) +
+  geom_point(aes(color = as.factor(wave))) + 
+  labs(x = 'Age', y = 'Individual', color = 'Wave', shape = 'Cohort') + 
+  theme(legend.position = 'top')
+```
+*Show data with puberty as the x variable*
+
+### Residual Estimates
+*Show LCM and MLM specifications of both homo- and heteroscedastic*

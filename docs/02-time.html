@@ -1,0 +1,2055 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Time Structure | Longitudinal Primer</title>
+  <meta name="description" content="This is a code companion for [title]." />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Time Structure | Longitudinal Primer" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a code companion for [title]." />
+  <meta name="github-repo" content="McCormickNeuro/longitudinal-primer" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Time Structure | Longitudinal Primer" />
+  
+  <meta name="twitter:description" content="This is a code companion for [title]." />
+  
+
+<meta name="author" content="Ethan M. McCormick, Michelle L. Byrne, John C. Flournoy, Katheryn L. Mills, &amp; Jennifer H. Pfiefer" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="01-canonical.html"/>
+
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/font-awesome-5.13.0/js/script.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">The Hitchhiker’s Guide to Longitudinal Models</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="" data-path="01-canonical.html"><a href="01-canonical.html"><i class="fa fa-check"></i>Canonical Models</a>
+<ul>
+<li class="chapter" data-level="" data-path="01-canonical.html"><a href="01-canonical.html#multilevel-model"><i class="fa fa-check"></i>Multilevel Model</a></li>
+<li class="chapter" data-level="" data-path="01-canonical.html"><a href="01-canonical.html#generalized-additive-mixed-model"><i class="fa fa-check"></i>Generalized Additive Mixed Model</a></li>
+<li class="chapter" data-level="" data-path="01-canonical.html"><a href="01-canonical.html#latent-curve-model"><i class="fa fa-check"></i>Latent Curve Model</a></li>
+<li class="chapter" data-level="" data-path="01-canonical.html"><a href="01-canonical.html#latent-change-score-model"><i class="fa fa-check"></i>Latent Change Score Model</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="02-time.html"><a href="02-time.html"><i class="fa fa-check"></i>Time Structure</a>
+<ul>
+<li class="chapter" data-level="" data-path="02-time.html"><a href="02-time.html#assessment-schedules"><i class="fa fa-check"></i>Assessment Schedules</a>
+<ul>
+<li class="chapter" data-level="" data-path="02-time.html"><a href="02-time.html#single-cohort-data"><i class="fa fa-check"></i>Single Cohort Data</a></li>
+<li class="chapter" data-level="" data-path="02-time.html"><a href="02-time.html#multiple-cohort-data"><i class="fa fa-check"></i>Multiple Cohort Data</a></li>
+<li class="chapter" data-level="" data-path="02-time.html"><a href="02-time.html#accelerated-design"><i class="fa fa-check"></i>Accelerated Design</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="02-time.html"><a href="02-time.html#time-coding"><i class="fa fa-check"></i>Time Coding</a></li>
+<li class="chapter" data-level="" data-path="02-time.html"><a href="02-time.html#additional-considerations"><i class="fa fa-check"></i>Additional Considerations</a>
+<ul>
+<li class="chapter" data-level="" data-path="02-time.html"><a href="02-time.html#alternative-metrics-of-time"><i class="fa fa-check"></i>Alternative Metrics of Time</a></li>
+<li class="chapter" data-level="" data-path="02-time.html"><a href="02-time.html#residual-estimates"><i class="fa fa-check"></i>Residual Estimates</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Longitudinal Primer</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="time" class="section level1">
+<h1>Time Structure</h1>
+<p>Thinking more deeply about time in longitudinal models</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="02-time.html#cb37-1" aria-hidden="true" tabindex="-1"></a>single.cohort <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&#39;data/02-single-cohort.csv&#39;</span>)</span>
+<span id="cb37-2"><a href="02-time.html#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="02-time.html#cb37-3" aria-hidden="true" tabindex="-1"></a>multiple.cohort <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&#39;data/02-multiple-cohort.csv&#39;</span>)</span>
+<span id="cb37-4"><a href="02-time.html#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-5"><a href="02-time.html#cb37-5" aria-hidden="true" tabindex="-1"></a>accelerated <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&#39;data/02-accelerated.csv&#39;</span>)</span></code></pre></div>
+<div id="assessment-schedules" class="section level2">
+<h2>Assessment Schedules</h2>
+<div id="single-cohort-data" class="section level3">
+<h3>Single Cohort Data</h3>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="02-time.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
+<span id="cb38-2"><a href="02-time.html#cb38-2" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(single.cohort <span class="sc">%&gt;%</span> <span class="fu">filter</span>(id <span class="sc">%in%</span> <span class="fu">sample</span>(id, <span class="dv">50</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb38-3"><a href="02-time.html#cb38-3" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="fu">starts_with</span>(<span class="st">&#39;age&#39;</span>),</span>
+<span id="cb38-4"><a href="02-time.html#cb38-4" aria-hidden="true" tabindex="-1"></a>                               <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&#39;.value&#39;</span>, <span class="st">&#39;wave&#39;</span>), </span>
+<span id="cb38-5"><a href="02-time.html#cb38-5" aria-hidden="true" tabindex="-1"></a>                               <span class="at">names_pattern =</span> <span class="st">&#39;(.+)(.)&#39;</span>),</span>
+<span id="cb38-6"><a href="02-time.html#cb38-6" aria-hidden="true" tabindex="-1"></a>                <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> id)) <span class="sc">+</span></span>
+<span id="cb38-7"><a href="02-time.html#cb38-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> id), <span class="at">size =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb38-8"><a href="02-time.html#cb38-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="fu">as.factor</span>(wave))) <span class="sc">+</span> </span>
+<span id="cb38-9"><a href="02-time.html#cb38-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;Age&#39;</span>, <span class="at">y =</span> <span class="st">&#39;Individual&#39;</span>, <span class="at">color =</span> <span class="st">&#39;Wave&#39;</span>) <span class="sc">+</span> </span>
+<span id="cb38-10"><a href="02-time.html#cb38-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;top&#39;</span>)</span></code></pre></div>
+<p><img src="longitudinal_primer_files/figure-html/single%20cohort%2001-1.png" width="672" /></p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="02-time.html#cb39-1" aria-hidden="true" tabindex="-1"></a>linear.lcm <span class="ot">=</span> <span class="st">&#39;int =~ 1*dlpfc1 + 1*dlpfc2 + 1*dlpfc3 + 1*dlpfc4</span></span>
+<span id="cb39-2"><a href="02-time.html#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="st">              slp =~ 0*dlpfc1 + 1*dlpfc2 + 2*dlpfc3 + 3*dlpfc4&#39;</span></span>
+<span id="cb39-3"><a href="02-time.html#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-4"><a href="02-time.html#cb39-4" aria-hidden="true" tabindex="-1"></a>lcm <span class="ot">=</span> lavaan<span class="sc">::</span><span class="fu">growth</span>(linear.lcm, </span>
+<span id="cb39-5"><a href="02-time.html#cb39-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> single.cohort,</span>
+<span id="cb39-6"><a href="02-time.html#cb39-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">estimator =</span> <span class="st">&#39;ML&#39;</span>,</span>
+<span id="cb39-7"><a href="02-time.html#cb39-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">missing=</span><span class="st">&#39;FIML&#39;</span>)</span>
+<span id="cb39-8"><a href="02-time.html#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lcm, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">standardize =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## lavaan 0.6-9 ended normally after 22 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                         9
+##                                                       
+##   Number of observations                            50
+##   Number of missing patterns                         5
+##                                                       
+## Model Test User Model:
+##                                                       
+##   Test statistic                                12.140
+##   Degrees of freedom                                 5
+##   P-value (Chi-square)                           0.033
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                                72.730
+##   Degrees of freedom                                 6
+##   P-value                                        0.000
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    0.893
+##   Tucker-Lewis Index (TLI)                       0.872
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)               -248.174
+##   Loglikelihood unrestricted model (H1)       -242.104
+##                                                       
+##   Akaike (AIC)                                 514.347
+##   Bayesian (BIC)                               531.555
+##   Sample-size adjusted Bayesian (BIC)          503.306
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.169
+##   90 Percent confidence interval - lower         0.045
+##   90 Percent confidence interval - upper         0.293
+##   P-value RMSEA &lt;= 0.05                          0.055
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.113
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   int =~                                                                
+##     dlpfc1            1.000                               0.794    0.832
+##     dlpfc2            1.000                               0.794    0.773
+##     dlpfc3            1.000                               0.794    0.772
+##     dlpfc4            1.000                               0.794    0.650
+##   slp =~                                                                
+##     dlpfc1            0.000                               0.000    0.000
+##     dlpfc2            1.000                               0.234    0.228
+##     dlpfc3            2.000                               0.468    0.455
+##     dlpfc4            3.000                               0.703    0.575
+## 
+## Covariances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   int ~~                                                                
+##     slp              -0.045    0.097   -0.467    0.641   -0.243   -0.243
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .dlpfc1            0.000                               0.000    0.000
+##    .dlpfc2            0.000                               0.000    0.000
+##    .dlpfc3            0.000                               0.000    0.000
+##    .dlpfc4            0.000                               0.000    0.000
+##     int               0.628    0.132    4.761    0.000    0.791    0.791
+##     slp               0.114    0.054    2.120    0.034    0.487    0.487
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .dlpfc1            0.280    0.196    1.427    0.154    0.280    0.307
+##    .dlpfc2            0.459    0.140    3.275    0.001    0.459    0.435
+##    .dlpfc3            0.389    0.128    3.039    0.002    0.389    0.368
+##    .dlpfc4            0.640    0.278    2.302    0.021    0.640    0.428
+##     int               0.631    0.207    3.039    0.002    1.000    1.000
+##     slp               0.055    0.054    1.010    0.313    1.000    1.000
+## 
+## R-Square:
+##                    Estimate
+##     dlpfc1            0.693
+##     dlpfc2            0.565
+##     dlpfc3            0.632
+##     dlpfc4            0.572</code></pre>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="02-time.html#cb41-1" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(lcm) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div>
+<table>
+<colgroup>
+<col width="17%" />
+<col width="3%" />
+<col width="11%" />
+<col width="10%" />
+<col width="11%" />
+<col width="10%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="left">op</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+<th align="right">std.lv</th>
+<th align="right">std.all</th>
+<th align="right">std.nox</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">int =~ dlpfc1</td>
+<td align="left">=~</td>
+<td align="right">1.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.7940412</td>
+<td align="right">0.8323286</td>
+<td align="right">0.8323286</td>
+</tr>
+<tr class="even">
+<td align="left">int =~ dlpfc2</td>
+<td align="left">=~</td>
+<td align="right">1.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.7940412</td>
+<td align="right">0.7734266</td>
+<td align="right">0.7734266</td>
+</tr>
+<tr class="odd">
+<td align="left">int =~ dlpfc3</td>
+<td align="left">=~</td>
+<td align="right">1.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.7940412</td>
+<td align="right">0.7718441</td>
+<td align="right">0.7718441</td>
+</tr>
+<tr class="even">
+<td align="left">int =~ dlpfc4</td>
+<td align="left">=~</td>
+<td align="right">1.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.7940412</td>
+<td align="right">0.6498139</td>
+<td align="right">0.6498139</td>
+</tr>
+<tr class="odd">
+<td align="left">slp =~ dlpfc1</td>
+<td align="left">=~</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">slp =~ dlpfc2</td>
+<td align="left">=~</td>
+<td align="right">1.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.2342260</td>
+<td align="right">0.2281451</td>
+<td align="right">0.2281451</td>
+</tr>
+<tr class="odd">
+<td align="left">slp =~ dlpfc3</td>
+<td align="left">=~</td>
+<td align="right">2.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.4684521</td>
+<td align="right">0.4553567</td>
+<td align="right">0.4553567</td>
+</tr>
+<tr class="even">
+<td align="left">slp =~ dlpfc4</td>
+<td align="left">=~</td>
+<td align="right">3.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.7026781</td>
+<td align="right">0.5750458</td>
+<td align="right">0.5750458</td>
+</tr>
+<tr class="odd">
+<td align="left">dlpfc1 ~~ dlpfc1</td>
+<td align="left">~~</td>
+<td align="right">0.2796138</td>
+<td align="right">0.1959794</td>
+<td align="right">1.4267507</td>
+<td align="right">0.1536518</td>
+<td align="right">0.2796138</td>
+<td align="right">0.3072290</td>
+<td align="right">0.3072290</td>
+</tr>
+<tr class="even">
+<td align="left">dlpfc2 ~~ dlpfc2</td>
+<td align="left">~~</td>
+<td align="right">0.4589404</td>
+<td align="right">0.1401353</td>
+<td align="right">3.2749802</td>
+<td align="right">0.0010567</td>
+<td align="right">0.4589404</td>
+<td align="right">0.4354200</td>
+<td align="right">0.4354200</td>
+</tr>
+<tr class="odd">
+<td align="left">dlpfc3 ~~ dlpfc3</td>
+<td align="left">~~</td>
+<td align="right">0.3889671</td>
+<td align="right">0.1280032</td>
+<td align="right">3.0387293</td>
+<td align="right">0.0023758</td>
+<td align="right">0.3889671</td>
+<td align="right">0.3675243</td>
+<td align="right">0.3675243</td>
+</tr>
+<tr class="even">
+<td align="left">dlpfc4 ~~ dlpfc4</td>
+<td align="left">~~</td>
+<td align="right">0.6397657</td>
+<td align="right">0.2778724</td>
+<td align="right">2.3023728</td>
+<td align="right">0.0213142</td>
+<td align="right">0.6397657</td>
+<td align="right">0.4284626</td>
+<td align="right">0.4284626</td>
+</tr>
+<tr class="odd">
+<td align="left">int ~~ int</td>
+<td align="left">~~</td>
+<td align="right">0.6305014</td>
+<td align="right">0.2074521</td>
+<td align="right">3.0392633</td>
+<td align="right">0.0023716</td>
+<td align="right">1.0000000</td>
+<td align="right">1.0000000</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">slp ~~ slp</td>
+<td align="left">~~</td>
+<td align="right">0.0548618</td>
+<td align="right">0.0543242</td>
+<td align="right">1.0098967</td>
+<td align="right">0.3125448</td>
+<td align="right">1.0000000</td>
+<td align="right">1.0000000</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">int ~~ slp</td>
+<td align="left">~~</td>
+<td align="right">-0.0451430</td>
+<td align="right">0.0967540</td>
+<td align="right">-0.4665746</td>
+<td align="right">0.6408043</td>
+<td align="right">-0.2427236</td>
+<td align="right">-0.2427236</td>
+<td align="right">-0.2427236</td>
+</tr>
+<tr class="even">
+<td align="left">dlpfc1 ~1</td>
+<td align="left">~1</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">dlpfc2 ~1</td>
+<td align="left">~1</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">dlpfc3 ~1</td>
+<td align="left">~1</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">dlpfc4 ~1</td>
+<td align="left">~1</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">int ~1</td>
+<td align="left">~1</td>
+<td align="right">0.6284401</td>
+<td align="right">0.1320054</td>
+<td align="right">4.7607134</td>
+<td align="right">0.0000019</td>
+<td align="right">0.7914452</td>
+<td align="right">0.7914452</td>
+<td align="right">0.7914452</td>
+</tr>
+<tr class="odd">
+<td align="left">slp ~1</td>
+<td align="left">~1</td>
+<td align="right">0.1139803</td>
+<td align="right">0.0537695</td>
+<td align="right">2.1197937</td>
+<td align="right">0.0340234</td>
+<td align="right">0.4866253</td>
+<td align="right">0.4866253</td>
+<td align="right">0.4866253</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="02-time.html#cb42-1" aria-hidden="true" tabindex="-1"></a>semPlot<span class="sc">::</span><span class="fu">semPaths</span>(lcm, </span>
+<span id="cb42-2"><a href="02-time.html#cb42-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">intercepts =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb42-3"><a href="02-time.html#cb42-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">edge.color =</span> <span class="st">&#39;black&#39;</span>)</span></code></pre></div>
+<p><img src="longitudinal_primer_files/figure-html/single%20cohort%2001-2.png" width="672" />
+<em>Notes: not sure we need to re-show all the models since all the canonical ones are on single-cohort data</em></p>
+</div>
+<div id="multiple-cohort-data" class="section level3">
+<h3>Multiple Cohort Data</h3>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="02-time.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(multiple.cohort <span class="sc">%&gt;%</span> <span class="fu">filter</span>(id <span class="sc">%in%</span> <span class="fu">sample</span>(id, <span class="dv">50</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb43-2"><a href="02-time.html#cb43-2" aria-hidden="true" tabindex="-1"></a>         <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="fu">starts_with</span>(<span class="st">&#39;monthage&#39;</span>),</span>
+<span id="cb43-3"><a href="02-time.html#cb43-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&#39;.value&#39;</span>, <span class="st">&#39;wave&#39;</span>),</span>
+<span id="cb43-4"><a href="02-time.html#cb43-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">names_pattern =</span> <span class="st">&#39;(.+)(.)&#39;</span>), </span>
+<span id="cb43-5"><a href="02-time.html#cb43-5" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> monthage, <span class="at">y =</span> id)) <span class="sc">+</span></span>
+<span id="cb43-6"><a href="02-time.html#cb43-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> id), <span class="at">size =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb43-7"><a href="02-time.html#cb43-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="fu">as.factor</span>(wave), <span class="at">shape =</span> <span class="fu">factor</span>(cohort)), <span class="at">size=</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb43-8"><a href="02-time.html#cb43-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;Age (in Months)&#39;</span>, <span class="at">y =</span> <span class="st">&#39;Individual&#39;</span>, <span class="at">color =</span> <span class="st">&#39;Wave&#39;</span>, <span class="at">shape =</span> <span class="st">&#39;Cohort&#39;</span>) <span class="sc">+</span></span>
+<span id="cb43-9"><a href="02-time.html#cb43-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;top&#39;</span>) <span class="sc">+</span> <span class="fu">guides</span>(<span class="at">color =</span> <span class="st">&#39;none&#39;</span>)</span></code></pre></div>
+<pre><code>## Warning: Removed 246 row(s) containing missing values (geom_path).</code></pre>
+<pre><code>## Warning: Removed 246 rows containing missing values (geom_point).</code></pre>
+<p><img src="longitudinal_primer_files/figure-html/multiple%20cohort-1.png" width="672" /></p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="02-time.html#cb46-1" aria-hidden="true" tabindex="-1"></a>linear.lcm <span class="ot">=</span> <span class="st">&#39;int =~ 1*fpct6 + 1*fpct8 + 1*fpct10 + 1*fpct12 + 1*fpct14 + </span></span>
+<span id="cb46-2"><a href="02-time.html#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="st">                     1*fpct16 + 1*fpct18 + 1*fpct20</span></span>
+<span id="cb46-3"><a href="02-time.html#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="st">              slp =~ 0*fpct6 + 1*fpct8 + 2*fpct10 + 3*fpct12 + 4*fpct14 + </span></span>
+<span id="cb46-4"><a href="02-time.html#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="st">                     5*fpct16 + 6*fpct18 + 7*fpct20&#39;</span></span>
+<span id="cb46-5"><a href="02-time.html#cb46-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-6"><a href="02-time.html#cb46-6" aria-hidden="true" tabindex="-1"></a>lcm <span class="ot">=</span> lavaan<span class="sc">::</span><span class="fu">growth</span>(linear.lcm, </span>
+<span id="cb46-7"><a href="02-time.html#cb46-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> multiple.cohort,</span>
+<span id="cb46-8"><a href="02-time.html#cb46-8" aria-hidden="true" tabindex="-1"></a>                     <span class="at">estimator =</span> <span class="st">&#39;ML&#39;</span>,</span>
+<span id="cb46-9"><a href="02-time.html#cb46-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">missing=</span><span class="st">&#39;FIML&#39;</span>)</span></code></pre></div>
+<pre><code>## Warning in lav_data_full(data = data, group = group, cluster = cluster, : lavaan
+## WARNING: due to missing values, some pairwise combinations have less than 10%
+## coverage</code></pre>
+<pre><code>## Warning in lav_mvnorm_missing_h1_estimate_moments(Y = X[[g]], wt = WT[[g]], : lavaan WARNING:
+##     Maximum number of iterations reached when computing the sample
+##     moments using EM; use the em.h1.iter.max= argument to increase the
+##     number of iterations</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="02-time.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lcm, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">standardize =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## lavaan 0.6-9 ended normally after 51 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        13
+##                                                       
+##   Number of observations                           405
+##   Number of missing patterns                        40
+##                                                       
+## Model Test User Model:
+##                                                       
+##   Test statistic                                43.254
+##   Degrees of freedom                                31
+##   P-value (Chi-square)                           0.071
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                               331.344
+##   Degrees of freedom                                28
+##   P-value                                        0.000
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    0.960
+##   Tucker-Lewis Index (TLI)                       0.964
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -2442.146
+##   Loglikelihood unrestricted model (H1)      -2420.520
+##                                                       
+##   Akaike (AIC)                                4910.293
+##   Bayesian (BIC)                              4962.343
+##   Sample-size adjusted Bayesian (BIC)         4921.093
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.031
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.052
+##   P-value RMSEA &lt;= 0.05                          0.931
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.131
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   int =~                                                                
+##     fpct6             1.000                               1.085    0.636
+##     fpct8             1.000                               1.085    0.682
+##     fpct10            1.000                               1.085    0.620
+##     fpct12            1.000                               1.085    0.578
+##     fpct14            1.000                               1.085    0.532
+##     fpct16            1.000                               1.085    0.534
+##     fpct18            1.000                               1.085    0.541
+##     fpct20            1.000                               1.085    0.479
+##   slp =~                                                                
+##     fpct6             0.000                               0.000    0.000
+##     fpct8             1.000                               0.204    0.129
+##     fpct10            2.000                               0.409    0.234
+##     fpct12            3.000                               0.613    0.327
+##     fpct14            4.000                               0.818    0.401
+##     fpct16            5.000                               1.022    0.503
+##     fpct18            6.000                               1.227    0.612
+##     fpct20            7.000                               1.431    0.632
+## 
+## Covariances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   int ~~                                                                
+##     slp               0.020    0.063    0.312    0.755    0.088    0.088
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .fpct6             0.000                               0.000    0.000
+##    .fpct8             0.000                               0.000    0.000
+##    .fpct10            0.000                               0.000    0.000
+##    .fpct12            0.000                               0.000    0.000
+##    .fpct14            0.000                               0.000    0.000
+##    .fpct16            0.000                               0.000    0.000
+##    .fpct18            0.000                               0.000    0.000
+##    .fpct20            0.000                               0.000    0.000
+##     int               1.600    0.087   18.329    0.000    1.475    1.475
+##     slp               0.083    0.020    4.144    0.000    0.406    0.406
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##    .fpct6             1.737    0.386    4.499    0.000    1.737    0.596
+##    .fpct8             1.271    0.282    4.512    0.000    1.271    0.503
+##    .fpct10            1.639    0.286    5.726    0.000    1.639    0.535
+##    .fpct12            1.854    0.250    7.406    0.000    1.854    0.526
+##    .fpct14            2.162    0.336    6.427    0.000    2.162    0.519
+##    .fpct16            1.709    0.258    6.612    0.000    1.709    0.414
+##    .fpct18            1.106    0.316    3.498    0.000    1.106    0.275
+##    .fpct20            1.623    0.343    4.730    0.000    1.623    0.317
+##     int               1.177    0.320    3.680    0.000    1.000    1.000
+##     slp               0.042    0.016    2.645    0.008    1.000    1.000
+## 
+## R-Square:
+##                    Estimate
+##     fpct6             0.404
+##     fpct8             0.497
+##     fpct10            0.465
+##     fpct12            0.474
+##     fpct14            0.481
+##     fpct16            0.586
+##     fpct18            0.725
+##     fpct20            0.683</code></pre>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="02-time.html#cb51-1" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(lcm) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div>
+<table style="width:100%;">
+<colgroup>
+<col width="18%" />
+<col width="3%" />
+<col width="10%" />
+<col width="10%" />
+<col width="12%" />
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="left">op</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+<th align="right">std.lv</th>
+<th align="right">std.all</th>
+<th align="right">std.nox</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">int =~ fpct6</td>
+<td align="left">=~</td>
+<td align="right">1.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">1.0848449</td>
+<td align="right">0.6355140</td>
+<td align="right">0.6355140</td>
+</tr>
+<tr class="even">
+<td align="left">int =~ fpct8</td>
+<td align="left">=~</td>
+<td align="right">1.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">1.0848449</td>
+<td align="right">0.6822177</td>
+<td align="right">0.6822177</td>
+</tr>
+<tr class="odd">
+<td align="left">int =~ fpct10</td>
+<td align="left">=~</td>
+<td align="right">1.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">1.0848449</td>
+<td align="right">0.6199778</td>
+<td align="right">0.6199778</td>
+</tr>
+<tr class="even">
+<td align="left">int =~ fpct12</td>
+<td align="left">=~</td>
+<td align="right">1.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">1.0848449</td>
+<td align="right">0.5778669</td>
+<td align="right">0.5778669</td>
+</tr>
+<tr class="odd">
+<td align="left">int =~ fpct14</td>
+<td align="left">=~</td>
+<td align="right">1.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">1.0848449</td>
+<td align="right">0.5315924</td>
+<td align="right">0.5315924</td>
+</tr>
+<tr class="even">
+<td align="left">int =~ fpct16</td>
+<td align="left">=~</td>
+<td align="right">1.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">1.0848449</td>
+<td align="right">0.5340599</td>
+<td align="right">0.5340599</td>
+</tr>
+<tr class="odd">
+<td align="left">int =~ fpct18</td>
+<td align="left">=~</td>
+<td align="right">1.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">1.0848449</td>
+<td align="right">0.5409223</td>
+<td align="right">0.5409223</td>
+</tr>
+<tr class="even">
+<td align="left">int =~ fpct20</td>
+<td align="left">=~</td>
+<td align="right">1.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">1.0848449</td>
+<td align="right">0.4793595</td>
+<td align="right">0.4793595</td>
+</tr>
+<tr class="odd">
+<td align="left">slp =~ fpct6</td>
+<td align="left">=~</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">slp =~ fpct8</td>
+<td align="left">=~</td>
+<td align="right">1.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.2044304</td>
+<td align="right">0.1285585</td>
+<td align="right">0.1285585</td>
+</tr>
+<tr class="odd">
+<td align="left">slp =~ fpct10</td>
+<td align="left">=~</td>
+<td align="right">2.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.4088608</td>
+<td align="right">0.2336598</td>
+<td align="right">0.2336598</td>
+</tr>
+<tr class="even">
+<td align="left">slp =~ fpct12</td>
+<td align="left">=~</td>
+<td align="right">3.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.6132912</td>
+<td align="right">0.3266832</td>
+<td align="right">0.3266832</td>
+</tr>
+<tr class="odd">
+<td align="left">slp =~ fpct14</td>
+<td align="left">=~</td>
+<td align="right">4.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.8177216</td>
+<td align="right">0.4006974</td>
+<td align="right">0.4006974</td>
+</tr>
+<tr class="even">
+<td align="left">slp =~ fpct16</td>
+<td align="left">=~</td>
+<td align="right">5.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">1.0221520</td>
+<td align="right">0.5031967</td>
+<td align="right">0.5031967</td>
+</tr>
+<tr class="odd">
+<td align="left">slp =~ fpct18</td>
+<td align="left">=~</td>
+<td align="right">6.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">1.2265824</td>
+<td align="right">0.6115950</td>
+<td align="right">0.6115950</td>
+</tr>
+<tr class="even">
+<td align="left">slp =~ fpct20</td>
+<td align="left">=~</td>
+<td align="right">7.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">1.4310128</td>
+<td align="right">0.6323204</td>
+<td align="right">0.6323204</td>
+</tr>
+<tr class="odd">
+<td align="left">fpct6 ~~ fpct6</td>
+<td align="left">~~</td>
+<td align="right">1.7370816</td>
+<td align="right">0.3861237</td>
+<td align="right">4.4987702</td>
+<td align="right">0.0000068</td>
+<td align="right">1.7370816</td>
+<td align="right">0.5961220</td>
+<td align="right">0.5961220</td>
+</tr>
+<tr class="even">
+<td align="left">fpct8 ~~ fpct8</td>
+<td align="left">~~</td>
+<td align="right">1.2708063</td>
+<td align="right">0.2816246</td>
+<td align="right">4.5124120</td>
+<td align="right">0.0000064</td>
+<td align="right">1.2708063</td>
+<td align="right">0.5025624</td>
+<td align="right">0.5025624</td>
+</tr>
+<tr class="odd">
+<td align="left">fpct10 ~~ fpct10</td>
+<td align="left">~~</td>
+<td align="right">1.6394538</td>
+<td align="right">0.2863074</td>
+<td align="right">5.7262019</td>
+<td align="right">0.0000000</td>
+<td align="right">1.6394538</td>
+<td align="right">0.5354466</td>
+<td align="right">0.5354466</td>
+</tr>
+<tr class="even">
+<td align="left">fpct12 ~~ fpct12</td>
+<td align="left">~~</td>
+<td align="right">1.8538399</td>
+<td align="right">0.2503021</td>
+<td align="right">7.4064107</td>
+<td align="right">0.0000000</td>
+<td align="right">1.8538399</td>
+<td align="right">0.5260081</td>
+<td align="right">0.5260081</td>
+</tr>
+<tr class="odd">
+<td align="left">fpct14 ~~ fpct14</td>
+<td align="left">~~</td>
+<td align="right">2.1624173</td>
+<td align="right">0.3364727</td>
+<td align="right">6.4267245</td>
+<td align="right">0.0000000</td>
+<td align="right">2.1624173</td>
+<td align="right">0.5192323</td>
+<td align="right">0.5192323</td>
+</tr>
+<tr class="even">
+<td align="left">fpct16 ~~ fpct16</td>
+<td align="left">~~</td>
+<td align="right">1.7087292</td>
+<td align="right">0.2584130</td>
+<td align="right">6.6123962</td>
+<td align="right">0.0000000</td>
+<td align="right">1.7087292</td>
+<td align="right">0.4141121</td>
+<td align="right">0.4141121</td>
+</tr>
+<tr class="odd">
+<td align="left">fpct18 ~~ fpct18</td>
+<td align="left">~~</td>
+<td align="right">1.1058222</td>
+<td align="right">0.3160874</td>
+<td align="right">3.4984692</td>
+<td align="right">0.0004679</td>
+<td align="right">1.1058222</td>
+<td align="right">0.2749285</td>
+<td align="right">0.2749285</td>
+</tr>
+<tr class="even">
+<td align="left">fpct20 ~~ fpct20</td>
+<td align="left">~~</td>
+<td align="right">1.6228270</td>
+<td align="right">0.3430886</td>
+<td align="right">4.7300515</td>
+<td align="right">0.0000022</td>
+<td align="right">1.6228270</td>
+<td align="right">0.3168542</td>
+<td align="right">0.3168542</td>
+</tr>
+<tr class="odd">
+<td align="left">int ~~ int</td>
+<td align="left">~~</td>
+<td align="right">1.1768886</td>
+<td align="right">0.3198135</td>
+<td align="right">3.6799212</td>
+<td align="right">0.0002333</td>
+<td align="right">1.0000000</td>
+<td align="right">1.0000000</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">slp ~~ slp</td>
+<td align="left">~~</td>
+<td align="right">0.0417918</td>
+<td align="right">0.0157976</td>
+<td align="right">2.6454494</td>
+<td align="right">0.0081582</td>
+<td align="right">1.0000000</td>
+<td align="right">1.0000000</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">int ~~ slp</td>
+<td align="left">~~</td>
+<td align="right">0.0195836</td>
+<td align="right">0.0628649</td>
+<td align="right">0.3115183</td>
+<td align="right">0.7554067</td>
+<td align="right">0.0883037</td>
+<td align="right">0.0883037</td>
+<td align="right">0.0883037</td>
+</tr>
+<tr class="even">
+<td align="left">fpct6 ~1</td>
+<td align="left">~1</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">fpct8 ~1</td>
+<td align="left">~1</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">fpct10 ~1</td>
+<td align="left">~1</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">fpct12 ~1</td>
+<td align="left">~1</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">fpct14 ~1</td>
+<td align="left">~1</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">fpct16 ~1</td>
+<td align="left">~1</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">fpct18 ~1</td>
+<td align="left">~1</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">fpct20 ~1</td>
+<td align="left">~1</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">int ~1</td>
+<td align="left">~1</td>
+<td align="right">1.5998873</td>
+<td align="right">0.0872869</td>
+<td align="right">18.3290572</td>
+<td align="right">0.0000000</td>
+<td align="right">1.4747613</td>
+<td align="right">1.4747613</td>
+<td align="right">1.4747613</td>
+</tr>
+<tr class="odd">
+<td align="left">slp ~1</td>
+<td align="left">~1</td>
+<td align="right">0.0830330</td>
+<td align="right">0.0200355</td>
+<td align="right">4.1442873</td>
+<td align="right">0.0000341</td>
+<td align="right">0.4061674</td>
+<td align="right">0.4061674</td>
+<td align="right">0.4061674</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="02-time.html#cb52-1" aria-hidden="true" tabindex="-1"></a>semPlot<span class="sc">::</span><span class="fu">semPaths</span>(lcm, </span>
+<span id="cb52-2"><a href="02-time.html#cb52-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">intercepts =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb52-3"><a href="02-time.html#cb52-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">edge.color =</span> <span class="st">&#39;black&#39;</span>)</span></code></pre></div>
+<p><img src="longitudinal_primer_files/figure-html/multiple%20cohort-2.png" width="672" />
+<em>show with LCM since they are the most straightforward.</em></p>
+</div>
+<div id="accelerated-design" class="section level3">
+<h3>Accelerated Design</h3>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="02-time.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
+<span id="cb53-2"><a href="02-time.html#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(accelerated <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(id) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">length</span>(<span class="fu">unique</span>(wave)) <span class="sc">==</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb53-3"><a href="02-time.html#cb53-3" aria-hidden="true" tabindex="-1"></a>         <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> <span class="fu">filter</span>(id <span class="sc">%in%</span> <span class="fu">sample</span>(id, <span class="dv">100</span>)), </span>
+<span id="cb53-4"><a href="02-time.html#cb53-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> id)) <span class="sc">+</span></span>
+<span id="cb53-5"><a href="02-time.html#cb53-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> id), <span class="at">size =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb53-6"><a href="02-time.html#cb53-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="fu">as.factor</span>(wave))) <span class="sc">+</span> </span>
+<span id="cb53-7"><a href="02-time.html#cb53-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;Age&#39;</span>, <span class="at">y =</span> <span class="st">&#39;Individual&#39;</span>, <span class="at">color =</span> <span class="st">&#39;Wave&#39;</span>, <span class="at">shape =</span> <span class="st">&#39;Cohort&#39;</span>) <span class="sc">+</span> </span>
+<span id="cb53-8"><a href="02-time.html#cb53-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;top&#39;</span>)</span></code></pre></div>
+<p><img src="longitudinal_primer_files/figure-html/accelerated-1.png" width="672" /></p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="02-time.html#cb54-1" aria-hidden="true" tabindex="-1"></a>mlm.lmerTest <span class="ot">=</span> lmerTest<span class="sc">::</span><span class="fu">lmer</span>(<span class="fu">scale</span>(modularity) <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id), </span>
+<span id="cb54-2"><a href="02-time.html#cb54-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">na.action =</span> na.omit,</span>
+<span id="cb54-3"><a href="02-time.html#cb54-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">REML =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb54-4"><a href="02-time.html#cb54-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> accelerated)</span>
+<span id="cb54-5"><a href="02-time.html#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mlm.lmerTest)</span></code></pre></div>
+<pre><code>## Linear mixed model fit by REML. t-tests use Satterthwaite&#39;s method [
+## lmerModLmerTest]
+## Formula: scale(modularity) ~ 1 + age + I(age^2) + (1 | id)
+##    Data: accelerated
+## 
+## REML criterion at convergence: 11850.7
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -4.2572 -0.6677 -0.0478  0.6411  3.3902 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev.
+##  id       (Intercept) 0.3276   0.5724  
+##  Residual             0.5990   0.7740  
+## Number of obs: 4799, groups:  id, 297
+## 
+## Fixed effects:
+##               Estimate Std. Error         df t value Pr(&gt;|t|)    
+## (Intercept) -3.293e+00  2.445e-01  3.587e+03  -13.47   &lt;2e-16 ***
+## age          3.633e-01  2.957e-02  3.761e+03   12.29   &lt;2e-16 ***
+## I(age^2)    -9.271e-03  8.806e-04  3.524e+03  -10.53   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Correlation of Fixed Effects:
+##          (Intr) age   
+## age      -0.972       
+## I(age^2)  0.917 -0.981</code></pre>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="02-time.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_model</span>(mlm.lmerTest,</span>
+<span id="cb56-2"><a href="02-time.html#cb56-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">show.se =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb56-3"><a href="02-time.html#cb56-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">show.df =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb56-4"><a href="02-time.html#cb56-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">show.ci =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb56-5"><a href="02-time.html#cb56-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">digits =</span> <span class="dv">3</span>,</span>
+<span id="cb56-6"><a href="02-time.html#cb56-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">pred.labels =</span> <span class="fu">c</span>(<span class="st">&#39;Intercept&#39;</span>, <span class="st">&#39;Age&#39;</span>, <span class="st">&#39;Age^2&#39;</span>),</span>
+<span id="cb56-7"><a href="02-time.html#cb56-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">dv.labels =</span> <span class="st">&#39;Modularity&#39;</span>,</span>
+<span id="cb56-8"><a href="02-time.html#cb56-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">string.se =</span> <span class="st">&#39;SE&#39;</span>,</span>
+<span id="cb56-9"><a href="02-time.html#cb56-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">string.p =</span> <span class="st">&#39;P-Value&#39;</span>)</span></code></pre></div>
+<pre><code>## Argument &#39;df_method&#39; is deprecated. Please use &#39;ci_method&#39; instead.</code></pre>
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
+ 
+</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+Modularity
+</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">
+Predictors
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+Estimates
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+SE
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+P-Value
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+Intercept
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-3.293
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.244
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>&lt;0.001</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+Age
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.363
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.030
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>&lt;0.001</strong>
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+Age^2
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+-0.009
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.001
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>&lt;0.001</strong>
+</td>
+</tr>
+<tr>
+<td colspan="4" style="font-weight:bold; text-align:left; padding-top:.8em;">
+Random Effects
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+σ<sup>2</sup>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.60
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+τ<sub>00</sub> <sub>id</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.33
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+ICC
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.35
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+N <sub>id</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+297
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">
+Observations
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">
+4799
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+Marginal R<sup>2</sup> / Conditional R<sup>2</sup>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.075 / 0.402
+</td>
+</tr>
+</table>
+<p><em>show with MLM/GAMM, link to Mplus code for the tscore method</em></p>
+</div>
+</div>
+<div id="time-coding" class="section level2">
+<h2>Time Coding</h2>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="02-time.html#cb58-1" aria-hidden="true" tabindex="-1"></a>initial.status <span class="ot">=</span> <span class="st">&#39;int =~ 1*dlpfc1 + 1*dlpfc2 + 1*dlpfc3 + 1*dlpfc4</span></span>
+<span id="cb58-2"><a href="02-time.html#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="st">                  slp =~ 0*dlpfc1 + 1*dlpfc2 + 2*dlpfc3 + 3*dlpfc4&#39;</span></span>
+<span id="cb58-3"><a href="02-time.html#cb58-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-4"><a href="02-time.html#cb58-4" aria-hidden="true" tabindex="-1"></a>initial.status.fit <span class="ot">=</span> <span class="fu">growth</span>(initial.status, </span>
+<span id="cb58-5"><a href="02-time.html#cb58-5" aria-hidden="true" tabindex="-1"></a>                            <span class="at">data =</span> single.cohort,</span>
+<span id="cb58-6"><a href="02-time.html#cb58-6" aria-hidden="true" tabindex="-1"></a>                            <span class="at">estimator =</span> <span class="st">&#39;ML&#39;</span>,</span>
+<span id="cb58-7"><a href="02-time.html#cb58-7" aria-hidden="true" tabindex="-1"></a>                            <span class="at">missing=</span><span class="st">&#39;FIML&#39;</span>)</span>
+<span id="cb58-8"><a href="02-time.html#cb58-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-9"><a href="02-time.html#cb58-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-10"><a href="02-time.html#cb58-10" aria-hidden="true" tabindex="-1"></a>final.status <span class="ot">=</span> <span class="st">&#39;int =~ 1*dlpfc1 + 1*dlpfc2 + 1*dlpfc3 + 1*dlpfc4</span></span>
+<span id="cb58-11"><a href="02-time.html#cb58-11" aria-hidden="true" tabindex="-1"></a><span class="st">                slp =~ 0*dlpfc1 + 1*dlpfc2 + 2*dlpfc3 + 3*dlpfc4&#39;</span></span>
+<span id="cb58-12"><a href="02-time.html#cb58-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-13"><a href="02-time.html#cb58-13" aria-hidden="true" tabindex="-1"></a>final.status.fit <span class="ot">=</span> <span class="fu">growth</span>(final.status, </span>
+<span id="cb58-14"><a href="02-time.html#cb58-14" aria-hidden="true" tabindex="-1"></a>                          <span class="at">data =</span> single.cohort,</span>
+<span id="cb58-15"><a href="02-time.html#cb58-15" aria-hidden="true" tabindex="-1"></a>                          <span class="at">estimator =</span> <span class="st">&#39;ML&#39;</span>,</span>
+<span id="cb58-16"><a href="02-time.html#cb58-16" aria-hidden="true" tabindex="-1"></a>                          <span class="at">missing=</span><span class="st">&#39;FIML&#39;</span>)</span>
+<span id="cb58-17"><a href="02-time.html#cb58-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-18"><a href="02-time.html#cb58-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-19"><a href="02-time.html#cb58-19" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(initial.status.fit, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">estimates=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## lavaan 0.6-9 ended normally after 22 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                         9
+##                                                       
+##   Number of observations                            50
+##   Number of missing patterns                         5
+##                                                       
+## Model Test User Model:
+##                                                       
+##   Test statistic                                12.140
+##   Degrees of freedom                                 5
+##   P-value (Chi-square)                           0.033
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                                72.730
+##   Degrees of freedom                                 6
+##   P-value                                        0.000
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    0.893
+##   Tucker-Lewis Index (TLI)                       0.872
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)               -248.174
+##   Loglikelihood unrestricted model (H1)       -242.104
+##                                                       
+##   Akaike (AIC)                                 514.347
+##   Bayesian (BIC)                               531.555
+##   Sample-size adjusted Bayesian (BIC)          503.306
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.169
+##   90 Percent confidence interval - lower         0.045
+##   90 Percent confidence interval - upper         0.293
+##   P-value RMSEA &lt;= 0.05                          0.055
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.113</code></pre>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="02-time.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(final.status.fit, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">estimates=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## lavaan 0.6-9 ended normally after 22 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                         9
+##                                                       
+##   Number of observations                            50
+##   Number of missing patterns                         5
+##                                                       
+## Model Test User Model:
+##                                                       
+##   Test statistic                                12.140
+##   Degrees of freedom                                 5
+##   P-value (Chi-square)                           0.033
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                                72.730
+##   Degrees of freedom                                 6
+##   P-value                                        0.000
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    0.893
+##   Tucker-Lewis Index (TLI)                       0.872
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)               -248.174
+##   Loglikelihood unrestricted model (H1)       -242.104
+##                                                       
+##   Akaike (AIC)                                 514.347
+##   Bayesian (BIC)                               531.555
+##   Sample-size adjusted Bayesian (BIC)          503.306
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.169
+##   90 Percent confidence interval - lower         0.045
+##   90 Percent confidence interval - upper         0.293
+##   P-value RMSEA &lt;= 0.05                          0.055
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.113</code></pre>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="02-time.html#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(initial.status.fit) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div>
+<table>
+<colgroup>
+<col width="17%" />
+<col width="3%" />
+<col width="11%" />
+<col width="10%" />
+<col width="11%" />
+<col width="10%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="left">op</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+<th align="right">std.lv</th>
+<th align="right">std.all</th>
+<th align="right">std.nox</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">int =~ dlpfc1</td>
+<td align="left">=~</td>
+<td align="right">1.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.7940412</td>
+<td align="right">0.8323286</td>
+<td align="right">0.8323286</td>
+</tr>
+<tr class="even">
+<td align="left">int =~ dlpfc2</td>
+<td align="left">=~</td>
+<td align="right">1.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.7940412</td>
+<td align="right">0.7734266</td>
+<td align="right">0.7734266</td>
+</tr>
+<tr class="odd">
+<td align="left">int =~ dlpfc3</td>
+<td align="left">=~</td>
+<td align="right">1.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.7940412</td>
+<td align="right">0.7718441</td>
+<td align="right">0.7718441</td>
+</tr>
+<tr class="even">
+<td align="left">int =~ dlpfc4</td>
+<td align="left">=~</td>
+<td align="right">1.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.7940412</td>
+<td align="right">0.6498139</td>
+<td align="right">0.6498139</td>
+</tr>
+<tr class="odd">
+<td align="left">slp =~ dlpfc1</td>
+<td align="left">=~</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">slp =~ dlpfc2</td>
+<td align="left">=~</td>
+<td align="right">1.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.2342260</td>
+<td align="right">0.2281451</td>
+<td align="right">0.2281451</td>
+</tr>
+<tr class="odd">
+<td align="left">slp =~ dlpfc3</td>
+<td align="left">=~</td>
+<td align="right">2.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.4684521</td>
+<td align="right">0.4553567</td>
+<td align="right">0.4553567</td>
+</tr>
+<tr class="even">
+<td align="left">slp =~ dlpfc4</td>
+<td align="left">=~</td>
+<td align="right">3.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.7026781</td>
+<td align="right">0.5750458</td>
+<td align="right">0.5750458</td>
+</tr>
+<tr class="odd">
+<td align="left">dlpfc1 ~~ dlpfc1</td>
+<td align="left">~~</td>
+<td align="right">0.2796138</td>
+<td align="right">0.1959794</td>
+<td align="right">1.4267507</td>
+<td align="right">0.1536518</td>
+<td align="right">0.2796138</td>
+<td align="right">0.3072290</td>
+<td align="right">0.3072290</td>
+</tr>
+<tr class="even">
+<td align="left">dlpfc2 ~~ dlpfc2</td>
+<td align="left">~~</td>
+<td align="right">0.4589404</td>
+<td align="right">0.1401353</td>
+<td align="right">3.2749802</td>
+<td align="right">0.0010567</td>
+<td align="right">0.4589404</td>
+<td align="right">0.4354200</td>
+<td align="right">0.4354200</td>
+</tr>
+<tr class="odd">
+<td align="left">dlpfc3 ~~ dlpfc3</td>
+<td align="left">~~</td>
+<td align="right">0.3889671</td>
+<td align="right">0.1280032</td>
+<td align="right">3.0387293</td>
+<td align="right">0.0023758</td>
+<td align="right">0.3889671</td>
+<td align="right">0.3675243</td>
+<td align="right">0.3675243</td>
+</tr>
+<tr class="even">
+<td align="left">dlpfc4 ~~ dlpfc4</td>
+<td align="left">~~</td>
+<td align="right">0.6397657</td>
+<td align="right">0.2778724</td>
+<td align="right">2.3023728</td>
+<td align="right">0.0213142</td>
+<td align="right">0.6397657</td>
+<td align="right">0.4284626</td>
+<td align="right">0.4284626</td>
+</tr>
+<tr class="odd">
+<td align="left">int ~~ int</td>
+<td align="left">~~</td>
+<td align="right">0.6305014</td>
+<td align="right">0.2074521</td>
+<td align="right">3.0392633</td>
+<td align="right">0.0023716</td>
+<td align="right">1.0000000</td>
+<td align="right">1.0000000</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">slp ~~ slp</td>
+<td align="left">~~</td>
+<td align="right">0.0548618</td>
+<td align="right">0.0543242</td>
+<td align="right">1.0098967</td>
+<td align="right">0.3125448</td>
+<td align="right">1.0000000</td>
+<td align="right">1.0000000</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">int ~~ slp</td>
+<td align="left">~~</td>
+<td align="right">-0.0451430</td>
+<td align="right">0.0967540</td>
+<td align="right">-0.4665746</td>
+<td align="right">0.6408043</td>
+<td align="right">-0.2427236</td>
+<td align="right">-0.2427236</td>
+<td align="right">-0.2427236</td>
+</tr>
+<tr class="even">
+<td align="left">dlpfc1 ~1</td>
+<td align="left">~1</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">dlpfc2 ~1</td>
+<td align="left">~1</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">dlpfc3 ~1</td>
+<td align="left">~1</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">dlpfc4 ~1</td>
+<td align="left">~1</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">int ~1</td>
+<td align="left">~1</td>
+<td align="right">0.6284401</td>
+<td align="right">0.1320054</td>
+<td align="right">4.7607134</td>
+<td align="right">0.0000019</td>
+<td align="right">0.7914452</td>
+<td align="right">0.7914452</td>
+<td align="right">0.7914452</td>
+</tr>
+<tr class="odd">
+<td align="left">slp ~1</td>
+<td align="left">~1</td>
+<td align="right">0.1139803</td>
+<td align="right">0.0537695</td>
+<td align="right">2.1197937</td>
+<td align="right">0.0340234</td>
+<td align="right">0.4866253</td>
+<td align="right">0.4866253</td>
+<td align="right">0.4866253</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="02-time.html#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(final.status.fit) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div>
+<table>
+<colgroup>
+<col width="17%" />
+<col width="3%" />
+<col width="11%" />
+<col width="10%" />
+<col width="11%" />
+<col width="10%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="left">op</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+<th align="right">std.lv</th>
+<th align="right">std.all</th>
+<th align="right">std.nox</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">int =~ dlpfc1</td>
+<td align="left">=~</td>
+<td align="right">1.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.7940412</td>
+<td align="right">0.8323286</td>
+<td align="right">0.8323286</td>
+</tr>
+<tr class="even">
+<td align="left">int =~ dlpfc2</td>
+<td align="left">=~</td>
+<td align="right">1.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.7940412</td>
+<td align="right">0.7734266</td>
+<td align="right">0.7734266</td>
+</tr>
+<tr class="odd">
+<td align="left">int =~ dlpfc3</td>
+<td align="left">=~</td>
+<td align="right">1.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.7940412</td>
+<td align="right">0.7718441</td>
+<td align="right">0.7718441</td>
+</tr>
+<tr class="even">
+<td align="left">int =~ dlpfc4</td>
+<td align="left">=~</td>
+<td align="right">1.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.7940412</td>
+<td align="right">0.6498139</td>
+<td align="right">0.6498139</td>
+</tr>
+<tr class="odd">
+<td align="left">slp =~ dlpfc1</td>
+<td align="left">=~</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">slp =~ dlpfc2</td>
+<td align="left">=~</td>
+<td align="right">1.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.2342260</td>
+<td align="right">0.2281451</td>
+<td align="right">0.2281451</td>
+</tr>
+<tr class="odd">
+<td align="left">slp =~ dlpfc3</td>
+<td align="left">=~</td>
+<td align="right">2.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.4684521</td>
+<td align="right">0.4553567</td>
+<td align="right">0.4553567</td>
+</tr>
+<tr class="even">
+<td align="left">slp =~ dlpfc4</td>
+<td align="left">=~</td>
+<td align="right">3.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.7026781</td>
+<td align="right">0.5750458</td>
+<td align="right">0.5750458</td>
+</tr>
+<tr class="odd">
+<td align="left">dlpfc1 ~~ dlpfc1</td>
+<td align="left">~~</td>
+<td align="right">0.2796138</td>
+<td align="right">0.1959794</td>
+<td align="right">1.4267507</td>
+<td align="right">0.1536518</td>
+<td align="right">0.2796138</td>
+<td align="right">0.3072290</td>
+<td align="right">0.3072290</td>
+</tr>
+<tr class="even">
+<td align="left">dlpfc2 ~~ dlpfc2</td>
+<td align="left">~~</td>
+<td align="right">0.4589404</td>
+<td align="right">0.1401353</td>
+<td align="right">3.2749802</td>
+<td align="right">0.0010567</td>
+<td align="right">0.4589404</td>
+<td align="right">0.4354200</td>
+<td align="right">0.4354200</td>
+</tr>
+<tr class="odd">
+<td align="left">dlpfc3 ~~ dlpfc3</td>
+<td align="left">~~</td>
+<td align="right">0.3889671</td>
+<td align="right">0.1280032</td>
+<td align="right">3.0387293</td>
+<td align="right">0.0023758</td>
+<td align="right">0.3889671</td>
+<td align="right">0.3675243</td>
+<td align="right">0.3675243</td>
+</tr>
+<tr class="even">
+<td align="left">dlpfc4 ~~ dlpfc4</td>
+<td align="left">~~</td>
+<td align="right">0.6397657</td>
+<td align="right">0.2778724</td>
+<td align="right">2.3023728</td>
+<td align="right">0.0213142</td>
+<td align="right">0.6397657</td>
+<td align="right">0.4284626</td>
+<td align="right">0.4284626</td>
+</tr>
+<tr class="odd">
+<td align="left">int ~~ int</td>
+<td align="left">~~</td>
+<td align="right">0.6305014</td>
+<td align="right">0.2074521</td>
+<td align="right">3.0392633</td>
+<td align="right">0.0023716</td>
+<td align="right">1.0000000</td>
+<td align="right">1.0000000</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">slp ~~ slp</td>
+<td align="left">~~</td>
+<td align="right">0.0548618</td>
+<td align="right">0.0543242</td>
+<td align="right">1.0098967</td>
+<td align="right">0.3125448</td>
+<td align="right">1.0000000</td>
+<td align="right">1.0000000</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">int ~~ slp</td>
+<td align="left">~~</td>
+<td align="right">-0.0451430</td>
+<td align="right">0.0967540</td>
+<td align="right">-0.4665746</td>
+<td align="right">0.6408043</td>
+<td align="right">-0.2427236</td>
+<td align="right">-0.2427236</td>
+<td align="right">-0.2427236</td>
+</tr>
+<tr class="even">
+<td align="left">dlpfc1 ~1</td>
+<td align="left">~1</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">dlpfc2 ~1</td>
+<td align="left">~1</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">dlpfc3 ~1</td>
+<td align="left">~1</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">dlpfc4 ~1</td>
+<td align="left">~1</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">int ~1</td>
+<td align="left">~1</td>
+<td align="right">0.6284401</td>
+<td align="right">0.1320054</td>
+<td align="right">4.7607134</td>
+<td align="right">0.0000019</td>
+<td align="right">0.7914452</td>
+<td align="right">0.7914452</td>
+<td align="right">0.7914452</td>
+</tr>
+<tr class="odd">
+<td align="left">slp ~1</td>
+<td align="left">~1</td>
+<td align="right">0.1139803</td>
+<td align="right">0.0537695</td>
+<td align="right">2.1197937</td>
+<td align="right">0.0340234</td>
+<td align="right">0.4866253</td>
+<td align="right">0.4866253</td>
+<td align="right">0.4866253</td>
+</tr>
+</tbody>
+</table>
+<p><em>Show in the LCM since that’s the easiest to see in the model syntax, also highlight in the MLM</em></p>
+</div>
+<div id="additional-considerations" class="section level2">
+<h2>Additional Considerations</h2>
+<div id="alternative-metrics-of-time" class="section level3">
+<h3>Alternative Metrics of Time</h3>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="02-time.html#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(accelerated, <span class="fu">aes</span>(<span class="at">x =</span> puberty, <span class="at">y =</span> id)) <span class="sc">+</span></span>
+<span id="cb64-2"><a href="02-time.html#cb64-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> id), <span class="at">size =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb64-3"><a href="02-time.html#cb64-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="fu">as.factor</span>(wave))) <span class="sc">+</span> </span>
+<span id="cb64-4"><a href="02-time.html#cb64-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;Age&#39;</span>, <span class="at">y =</span> <span class="st">&#39;Individual&#39;</span>, <span class="at">color =</span> <span class="st">&#39;Wave&#39;</span>, <span class="at">shape =</span> <span class="st">&#39;Cohort&#39;</span>) <span class="sc">+</span> </span>
+<span id="cb64-5"><a href="02-time.html#cb64-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;top&#39;</span>)</span></code></pre></div>
+<pre><code>## Warning: Removed 1283 row(s) containing missing values (geom_path).</code></pre>
+<pre><code>## Warning: Removed 1283 rows containing missing values (geom_point).</code></pre>
+<p><img src="longitudinal_primer_files/figure-html/alternative%20time%20metric-1.png" width="672" />
+<em>Show data with puberty as the x variable</em></p>
+</div>
+<div id="residual-estimates" class="section level3">
+<h3>Residual Estimates</h3>
+<p><em>Show LCM and MLM specifications of both homo- and heteroscedastic</em></p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="01-canonical.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": false,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["twitter", "facebook", "linkedin", "google", "weibo", "instapaper"],
+"google": false,
+"instapper": false
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/McCormickNeuro/longitudinal-primer/edit/main/02-time.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section",
+"depth": 2,
+"scroll_highlight": true
+}
+});
+});
+</script>
+
+</body>
+
+</html>

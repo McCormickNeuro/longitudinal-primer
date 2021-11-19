@@ -1,0 +1,47 @@
+--- 
+title: 'Longitudinal Primer'
+subtitle: 'Code Companion'
+author: '[Ethan M. McCormick](https://mccormickneuro.github.io/), [Michelle L. Byrne](https://research.monash.edu/en/persons/michelle-byrne), [John C. Flournoy](https://johnflournoy.science/), [Katheryn L. Mills](http://devbrainlab.org/), & [Jennifer H. Pfiefer](https://dsn.uoregon.edu/)'
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+#link-citations: yes
+
+# cover-image: path to the social sharing image like images/cover.jpg
+description: |
+  This is a code companion for [title].
+link-citations: yes
+# url: 'https\://https://mccormickneuro.github.io//longitudinal-primer/'
+github-repo: 'McCormickNeuro/longitudinal-primer'
+---
+
+# Introduction {#intro}
+
+The following document is a code companion to [citation](), [doi]().
+
+```{r setup, include = TRUE, warning = FALSE, message = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+packages =  c('utils', 'tidyverse', 'downloadthis',     # packages for data management
+              'foreign', 'MplusAutomation',             # packages for writing data         
+              'ggplot2', 'sjPlot', 'broom',             # packages for visualization
+              'nlme', 'lme4', 'lmerTest',               # packages for MLMs
+              'mgcv', 'gamm4',                          # packages for GAMMs
+              'lavaan', 'semPlot')                      # packages for SEMs
+
+if (length(setdiff(packages, rownames(installed.packages()))) > 0) {
+  install.packages(setdiff(packages, 
+                           rownames(installed.packages())), 
+                   repos = 'http://cran.us.r-project.org')
+}
+invisible(lapply(packages, 
+                 library, 
+                 character.only = TRUE))
+```
+```{r include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+), 'packages.bib')
+```

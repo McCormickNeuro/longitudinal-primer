@@ -1,0 +1,255 @@
+# Canonical Models {#canon}
+
+What follows are canonical versions of growth models in each of the four different frameworks. These models represent basic implementations of a linear growth trajectory with random effects for both the intercept and slope, with the exception of the GAMM, where a non-linear spline model is implemented (otherwise it would just re-capitulate the MLM results). While the contents of this primer and code companion will focus on implementation in the R environment, links will be provided to other programs where possible.
+
+**A fair warning: code in other languages will be provided in an arbitrary and capricious manner. This policy should be familiar to the reader, given their experience with the text of the manuscript (and if very unlucky, the first author).**
+
+```{r read data 01}
+canonical.wide = utils::read.csv('data/01-canonical.csv',
+                                 header = TRUE)
+
+canonical.long = canonical.wide %>% 
+  tidyr::pivot_longer(cols = starts_with('dlpfc'), 
+                      names_to = c('.value', 'wave'), 
+                      names_pattern = '(.+)(.)') %>%
+  dplyr::mutate(wave = as.numeric(wave) - 1)
+
+canonical.gamm = read.csv('data/01-canonical-gamm.csv')
+```
+
+*talk briefly about datasets and show code to output them to mplus*
+
+```{r write data 01}
+filename = '01-canonical'
+capture.output(
+  MplusAutomation::prepareMplusData(canonical.wide, 
+                                    paste0('external/',filename,'.dat')),
+  file=paste0('external/',filename,'_MplusAutomation.txt'))
+
+write.foreign(canonical.long, 
+              datafile = paste0('external/',filename,'.txt'), 
+              codefile = '', 
+              package='SAS')
+```
+```{r}
+download_file(
+  path = c('external/01-canonical.txt',
+           'external/01-canonical.sas'),
+  output_name = '01-canonical-sascode',
+  button_label = 'Download SAS files',
+  button_type = 'default',
+  has_icon = TRUE,
+  icon = 'fa fa-save',
+  self_contained = FALSE
+)
+download_file(
+  path = c('external/01-canonical.dat',
+           'external/01-canonical_MplusAutomation.txt'),
+  output_name = '01-canonical-sascode',
+  button_label = 'Download Mplus files',
+  button_type = 'default',
+  has_icon = TRUE,
+  icon = 'fa fa-save',
+  self_contained = FALSE
+)
+```
+
+
+
+## Multilevel Model
+```{r canonical MLM, warning = FALSE, message = FALSE}
+mlm.nlme = nlme::lme(dlpfc ~ 1 + wave,
+                     random = ~ 1 + wave | id,
+                     na.action = na.omit,
+                     method = 'REML',
+                     data = canonical.long)
+summary(mlm.nlme)
+
+mlm.lme4 = lme4::lmer(dlpfc ~ 1 + wave + (1 + wave | id), 
+                      na.action = na.omit,
+                      REML = TRUE,
+                      data = canonical.long)
+summary(mlm.lme4)
+
+mlm.lmerTest = lmerTest::lmer(dlpfc ~ 1 + wave + (1 + wave | id), 
+                 na.action = na.omit,
+                 REML = TRUE,
+                 data = canonical.long)
+summary(mlm.lmerTest)
+
+sjPlot::tab_model(mlm.lmerTest, mlm.nlme,
+                  show.se = TRUE,
+                  show.df = FALSE,
+                  show.ci = FALSE,
+                  digits = 3,
+                  pred.labels = c('Intercept', 'Wave'),
+                  dv.labels = c('lmer','nlme'),
+                  string.se = 'SE',
+                  string.p = 'P-Value')
+
+ggplot2::ggplot(tidyr::drop_na(canonical.long), 
+                aes(x = wave + 1, 
+                    y = predict(mlm.lmerTest), 
+                    group = id, 
+                    color = factor(id))) +
+  geom_line() + 
+  labs(title = 'Canonical MLM Trajectories',
+       x = 'Wave',
+       y = 'Predicted DLFPC Activation') +
+  theme(legend.position = 'none') 
+```
+
+*Link to SAS & Mplus code*
+
+## Generalized Additive Mixed Model
+```{r canonical GAMM}
+gamm = gamm4::gamm4(modularity ~ s(age),
+                    random = ~ (1 | id),
+                    data = canonical.gamm)
+summary(gamm$mer)
+summary(gamm$gam)
+
+plot(gamm$gam)
+```
+
+## Latent Curve Model
+```{r canonical LCM, results="asis"}
+linear.lcm = 'int =~ 1*dlpfc1 + 1*dlpfc2 + 1*dlpfc3 + 1*dlpfc4
+              slp =~ 0*dlpfc1 + 1*dlpfc2 + 2*dlpfc3 + 3*dlpfc4'
+
+lcm = lavaan::growth(linear.lcm, 
+                     data = canonical.wide,
+                     estimator = 'ML',
+                     missing='FIML')
+summary(lcm, fit.measures = TRUE, standardize = TRUE, rsquare = TRUE)
+broom::tidy(lcm) %>% knitr::kable()
+
+semPlot::semPaths(lcm, 
+                  intercepts = TRUE, 
+                  edge.color = 'black')
+
+lcm = lavaan::growth(linear.lcm, 
+                     data = drop_na(canonical.wide),
+                     estimator = 'ML',
+                     missing='FIML')
+summary(lcm, fit.measures = TRUE, standardize = TRUE, rsquare = TRUE)
+broom::tidy(lcm) %>% knitr::kable()
+
+ggplot2::ggplot(data.frame(id=lcm@Data@case.idx[[1]], 
+                           lavPredict(lcm,type='ov')) %>% 
+                  pivot_longer(cols = starts_with('dlpfc'), 
+                               names_to = c('.value', 'wave'), 
+                               names_pattern = '(.+)(.)') %>%
+                  dplyr::mutate(wave = as.numeric(wave)), 
+                aes(x = wave, 
+                    y = dlpfc, 
+                    group = id, 
+                    color = factor(id))) +
+  geom_line() + 
+  labs(title = 'Canonical LCM Trajectories',
+       x = 'Wave',
+       y = 'Predicted DLFPC Activation') +
+  theme(legend.position = 'none') 
+```
+*Link to Mplus code*
+
+## Latent Change Score Model
+```{r canonical LCSM}
+linear.lcsm = '
+               # Define Phantom Variables (p = phantom)
+               pdlpfc1 =~ 1*dlpfc1; dlpfc1 ~ 0; dlpfc1 ~~ dlpfc1; pdlpfc1 ~~ 0*pdlpfc1
+               pdlpfc2 =~ 1*dlpfc2; dlpfc2 ~ 0; dlpfc2 ~~ dlpfc2; pdlpfc2 ~~ 0*pdlpfc2
+               pdlpfc3 =~ 1*dlpfc3; dlpfc3 ~ 0; dlpfc3 ~~ dlpfc3; pdlpfc3 ~~ 0*pdlpfc3
+               pdlpfc4 =~ 1*dlpfc4; dlpfc4 ~ 0; dlpfc4 ~~ dlpfc4; pdlpfc4 ~~ 0*pdlpfc4
+        
+               # Regressions Between Adjacent Observations
+               pdlpfc2 ~ 1*pdlpfc1
+               pdlpfc3 ~ 1*pdlpfc2
+               pdlpfc4 ~ 1*pdlpfc3
+        
+               # Define Change Latent Variables (delta)
+               delta21 =~ 1*pdlpfc2; delta21 ~~ 0*delta21
+               delta32 =~ 1*pdlpfc3; delta32 ~~ 0*delta32
+               delta43 =~ 1*pdlpfc4; delta43 ~~ 0*delta43
+        
+               # Define Intercept and Slope
+               int =~ 1*pdlpfc1
+               slp =~ 1*delta21 + 1*delta32 + 1*delta43
+        
+               int ~ 1
+               slp ~ 1
+               
+               int ~~ slp
+               slp ~~ slp
+'
+lcsm.linear = sem(linear.lcsm, 
+                  data = canonical.wide, 
+                  estimator = 'ML',
+                  missing = 'FIML')
+summary(lcsm.linear, fit.measures = TRUE, standardize = TRUE, rsquare = TRUE)
+broom::tidy(lcsm.linear) %>% arrange(op) %>% knitr::kable()
+semPlot::semPaths(lcsm.linear,
+                  layout = 'tree2',
+                  intercepts = FALSE, 
+                  edge.color = 'black')
+
+proportional.lcsm = '
+               # Define Phantom Variables (p = phantom)
+               pdlpfc1 =~ 1*dlpfc1; dlpfc1 ~ 0; dlpfc1 ~~ dlpfc1; pdlpfc1 ~~ 0*pdlpfc1
+               pdlpfc2 =~ 1*dlpfc2; dlpfc2 ~ 0; dlpfc2 ~~ dlpfc2; pdlpfc2 ~~ 0*pdlpfc2
+               pdlpfc3 =~ 1*dlpfc3; dlpfc3 ~ 0; dlpfc3 ~~ dlpfc3; pdlpfc3 ~~ 0*pdlpfc3
+               pdlpfc4 =~ 1*dlpfc4; dlpfc4 ~ 0; dlpfc4 ~~ dlpfc4; pdlpfc4 ~~ 0*pdlpfc4
+        
+               # Regressions Between Adjacent Observations
+               pdlpfc2 ~ 1*pdlpfc1
+               pdlpfc3 ~ 1*pdlpfc2
+               pdlpfc4 ~ 1*pdlpfc3
+        
+               # Define Change Latent Variables (delta)
+               delta21 =~ 1*pdlpfc2; delta21 ~~ 0*delta21
+               delta32 =~ 1*pdlpfc3; delta32 ~~ 0*delta32
+               delta43 =~ 1*pdlpfc4; delta43 ~~ 0*delta43
+               
+               # Define Proportional Change Regressions (beta = equality constraint)
+               delta21 ~ beta*pdlpfc1
+               delta32 ~ beta*pdlpfc2
+               delta43 ~ beta*pdlpfc3
+        
+               # Define Intercept and Slope
+               int =~ 1*pdlpfc1
+               slp =~ 1*delta21 + 1*delta32 + 1*delta43
+        
+               int ~ 1
+               slp ~ 1
+               
+               int ~~ slp
+               slp ~~ slp
+'
+lcsm.proportional = sem(proportional.lcsm, 
+                        data = canonical.wide, 
+                        estimator = 'ML',
+                        missing = 'FIML')
+summary(lcsm.proportional, standardize = TRUE, rsquare = TRUE)
+broom::tidy(lcsm.proportional) %>% arrange(op) %>% knitr::kable()
+semPlot::semPaths(lcsm.proportional,
+                  layout = 'tree2',
+                  intercepts = FALSE, 
+                  edge.color = 'black')
+
+ggplot2::ggplot(data.frame(id=lcsm.proportional@Data@case.idx[[1]], 
+                           lavPredict(lcsm.proportional,type='ov')) %>% 
+                  pivot_longer(cols = starts_with('dlpfc'), 
+                               names_to = c('.value', 'wave'), 
+                               names_pattern = '(.+)(.)') %>%
+                  dplyr::mutate(wave = as.numeric(wave)), 
+                aes(x = wave, 
+                    y = dlpfc, 
+                    group = id, 
+                    color = factor(id))) +
+  geom_line() + 
+  labs(title = 'Canonical Proportional LCSM Trajectories',
+       x = 'Wave',
+       y = 'Predicted DLFPC Activation') +
+  theme(legend.position = 'none') 
+```
+*Link to mplus code*
