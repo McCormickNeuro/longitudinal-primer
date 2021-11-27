@@ -1,14 +1,15 @@
 # Introduction {#intro}
 
-The first thing we can do is run a function that will load the R packages needed to run this code companion, and install them to our machine if they are not already.
+The first thing we can do is run a function that will load the R packages needed for this code companion, and install them to our machine if they are not already.
 
 ```{r, packages, message = FALSE, warning = FALSE, error = FALSE}
 packages =  c('utils', 'tidyverse', 'downloadthis',     # packages for data management
               'foreign', 'MplusAutomation',             # packages for writing data         
-              'ggplot2', 'sjPlot', 'broom',             # packages for visualization
+              'sjPlot', 'broom', 'kableExtra',          # packages for generating tables
               'nlme', 'lme4', 'lmerTest',               # packages for MLMs
               'mgcv', 'gamm4',                          # packages for GAMMs
-              'lavaan', 'semPlot')                      # packages for SEMs
+              'lavaan',                                 # packages for SEMs
+              'ggplot2', 'semPlot')                     # packages for visualization                     
 
 if (length(setdiff(packages, rownames(installed.packages()))) > 0) {
   install.packages(setdiff(packages, 
@@ -21,6 +22,7 @@ invisible(lapply(packages,
 ```
 
 We have automatically generated a downloadable bibliography of the R package versions used in this companion for later reproducibility.
+
 ```{r, write bibliography, message = FALSE, warning = FALSE, error = FALSE}
 knitr::write_bib(c(
   .packages(), 'bookdown', 'knitr', 'rmarkdown'
