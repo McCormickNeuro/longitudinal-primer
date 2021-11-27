@@ -3,18 +3,18 @@
 Thinking more deeply about time in longitudinal models
 
 ```{r read data 03}
-single.cohort = read.csv('data/02-single-cohort.csv')
+single.cohort = read.csv('data/single-cohort.csv')
 
-multiple.cohort = read.csv('data/02-multiple-cohort.csv')
+multiple.cohort = read.csv('data/multiple-cohort.csv')
 
-accelerated = read.csv('data/02-accelerated.csv')
+accelerated = read.csv('data/accelerated.csv')
 ```
 
 ## Assessment Schedules
 ### Single Cohort Data
 ```{r single cohort 03}
 set.seed(12345)
-ggplot2::ggplot(single.cohort %>% filter(id %in% sample(id, 50)) %>%
+ggplot2::ggplot(single.cohort %>%
                   pivot_longer(cols=starts_with('age'),
                                names_to = c('.value', 'wave'), 
                                names_pattern = '(.+)(.)'),
@@ -44,14 +44,11 @@ semPlot::semPaths(lcm,
 
 ### Multiple Cohort Data 
 ```{r multiple cohort}
-ggplot(multiple.cohort %>% filter(id %in% sample(id, 50)) %>%
-         pivot_longer(cols=starts_with('monthage'),
-                      names_to = c('.value', 'wave'),
-                      names_pattern = '(.+)(.)'), 
-       aes(x = monthage, y = id)) +
+ggplot(multiple.cohort, 
+       aes(x = age, y = id)) +
   geom_line(aes(group = id), size = .5) +
-  geom_point(aes(color = as.factor(wave), shape = factor(cohort)), size=2) +
-  labs(x = 'Age (in Months)', y = 'Individual', color = 'Wave', shape = 'Cohort') +
+  geom_point(aes(color = as.factor(age), shape = factor(cohort)), size=2) +
+  labs(x = 'Age', y = 'Individual', color = 'Wave', shape = 'Cohort') +
   theme(legend.position = 'top') + guides(color = 'none')
 
 linear.lcm = 'int =~ 1*fpct6 + 1*fpct8 + 1*fpct10 + 1*fpct12 + 1*fpct14 + 

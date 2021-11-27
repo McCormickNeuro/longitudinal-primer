@@ -1,0 +1,33 @@
+# The Shape of Development {#shape}
+
+Establishing the optimal shape of development.
+
+```{r read data 03, eval=F}
+#single.cohort = read.csv(paste0(datadir,'02-single-cohort.csv'))
+
+#multiple.cohort = read.csv(paste0(datadir,'01-abcd.csv'))
+
+#accelerated = read.csv(paste0(datadir,'02-accelerated.csv'))
+```
+
+## Polynomial Trajectories
+*Show intercept-only, linear, quadratic, and inverse trajectories for MLM/LCM/LCSM (to a point)'*
+
+## Piecewise Trajectories
+*Show linear/linear and linear/quadratic trajectories for MLM & LCM, cubic splines with GAMM?'*
+*Show both 2-rate and added-rate*
+
+## Nonlinear Trajectories
+*MLM: show negatively accelerated exponential*
+*GAMM: full GAMM with b-splines*
+*LCM: Show 2 free-loading forms*
+*LCSM: dual-change model*
+
+
+## Additional Considerations
+
+### Fixed and Random Effects
+*show in accelerated (braintime) data that we can estimate a quadratic overall trend even though no one has 4 observations*
+
+### Generalizability
+*Code for cross-validiation?*

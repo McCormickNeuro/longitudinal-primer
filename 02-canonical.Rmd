@@ -5,25 +5,25 @@ What follows are canonical versions of growth models in each of the four differe
 First, we need to read in the datasets we will use in this chapter.
 
 ```{r, read data 02, message = FALSE, warning = FALSE, error = FALSE}
-canonical.wide = utils::read.csv('data/execfunction.csv', header = TRUE) %>%
+executive.function = utils::read.csv('data/executive-function.csv', header = TRUE) %>%
   select(id, dlpfc1:dlpfc4)
 
-canonical.long = canonical.wide %>% 
+executive.function.long = executive.function %>% 
   tidyr::pivot_longer(cols = starts_with('dlpfc'), 
                       names_to = c('.value', 'wave'), 
                       names_pattern = '(.+)(.)') %>%
   dplyr::mutate(wave = as.numeric(wave) - 1)
 
-canonical.gamm = read.csv('data/feedbacklearn.csv') %>% 
+feedback.learning = read.csv('data/feedback-learning.csv') %>% 
   select(id, age, modularity)
 ```
 
 While we will usually read in the wide and long versions of the data directly, here we will demonstrate how to reformat the more common wide data format (i.e., each row corresponds to a different individual and repeated measures are new variables) into the long data format (i.e., each row corresponds to a different repeated measure with multiple rows per person). We can use the `pivot_longer()` function from the [**tidyr**]() package (alternatives include `melt()` from the [**reshape**]() package). We will collect all the columns that begin with the string `dlpfc` and pass the values into one column, while creating a new column `wave` from their number indices (e.g., `1` for `dlpfc1`). We can then use the `mutate()` function from the [**dplyr**]() package to change the wave colum from a character to a numeric variable and subtract $1$ from every value so that the first wave is coded as $0$ (this will be important for interpretations later).
 
-Details regarding these datasets can be found in [Datasets](#datasets). However, shortly, the `execfunction.csv` file contains data for 342 adolescents measured up to 5 times. At each wave, adolescents played an executive function task while in an fMRI scanner. For now, we will only use the DLPFC measures to build the canonical growth models. The first 5 individuals are shown below. These data are in wide format.
+Details regarding these datasets can be found in [Datasets](#datasets). However, shortly, the `executive-function.csv` file contains data for 342 adolescents measured up to 5 times. At each wave, adolescents played an executive function task while in an fMRI scanner. For now, we will only use the DLPFC measures to build the canonical growth models. The first 5 individuals are shown below. These data are in wide format.
 
-```{r, display execfunction wide 02, message = FALSE, warning = FALSE, error = FALSE}
-canonical.wide %>% filter(id <= 5) %>%
+```{r, display executive.function wide 02, message = FALSE, warning = FALSE, error = FALSE}
+executive.function %>% filter(id <= 5) %>%
   kableExtra::kable(label = NA,
                     format = 'html',
                     digits = 3,
@@ -37,8 +37,8 @@ canonical.wide %>% filter(id <= 5) %>%
 
 We can then see what this looks like in long format.
 
-```{r, display execfunction long 02, message = FALSE, warning = FALSE, error = FALSE}
-canonical.long %>% filter(id <= 5) %>%
+```{r, display executive.function long 02, message = FALSE, warning = FALSE, error = FALSE}
+executive.function.long %>% filter(id <= 5) %>%
   kableExtra::kable(label = NA,
                     format = 'html',
                     digits = 3,
@@ -50,10 +50,10 @@ canonical.long %>% filter(id <= 5) %>%
   kableExtra::row_spec(row = 0, align = 'c')
 ```
 
-The `feedbacklearn.csv` file contains data for 297 adolescents and young adults measured up to 3 times. At each wave, individuals played a feedback learning task while in an fMRI scanner. ROI timeseries were then used to construct a brain network graph and the modularity of that graph was calculated. Here we will focus on these modularity values. The first 5 individuals are shown below.
+The `feedback-learning.csv` file contains data for 297 adolescents and young adults measured up to 3 times. At each wave, individuals played a feedback learning task while in an fMRI scanner. ROI timeseries were then used to construct a brain network graph and the modularity of that graph was calculated. Here we will focus on these modularity values. The first 5 individuals are shown below.
 
-```{r, display feedbacklearn 02, message = FALSE, warning = FALSE, error = FALSE}
-canonical.gamm %>% filter(id <= 5) %>%
+```{r, display feedback.learning 02, message = FALSE, warning = FALSE, error = FALSE}
+feedback.learning %>% filter(id <= 5) %>%
   kableExtra::kable(label = NA,
                     format = 'html',
                     digits = 3,
@@ -68,14 +68,14 @@ canonical.gamm %>% filter(id <= 5) %>%
 Before we move into fitting the growth models in each of the four frameworks, we can begin by exporting the data to [**SAS**](https://www.sas.com/) and [**Mplus**](https://www.statmodel.com/) compatible file types. We will use the [**MplusAutomation**](https://michaelhallquist.github.io/MplusAutomation/articles/vignette.html) package to write our Rdata into a `.dat` file. We have wrapped the command in the `capture.output()` function so that we can retain a record of the column names (**Mplus** does not accept files with headers) to prevent referencing the wrong variable when we run our model. The output of the **MplusAutomation** command `prepareMplusData()` will be saved in a text file in the same external directory.
 
 ```{r, write to mplus 02, message = FALSE, warning = FALSE, error = FALSE}
-filename = 'execfunction'
+filename = 'executive-function'
 capture.output(
-  MplusAutomation::prepareMplusData(canonical.wide, 
+  MplusAutomation::prepareMplusData(executive.function, 
                                     paste0('external/',filename,'.dat')),
   file=paste0('external/',filename,'_MplusAutomation.txt'))
 ```
 
-Although we do not show the running and output of these models in-depth, all the **Mplus** files needed to recreate these models are available to be downloaded below.
+Although we do not show the running and output of these models in-depth, all the **Mplus** files needed to recreate the MLM and SEM models are available to be downloaded below.
 
 ```{r, download mplus 02, message = FALSE, warning = FALSE, error = FALSE, echo = FALSE}
 download_file(
@@ -95,13 +95,13 @@ For readers interested in how to automate running **Mplus** models through **R**
 We can also use the package [**foreign**]() to write out the data to a **SAS** compatible text file. The `write.foreign()` function also outputs a syntax file that imports the data into the **SAS** environment. 
 
 ```{r, write to sas 02, message = FALSE, warning = FALSE, error = FALSE}
-foreign::write.foreign(canonical.long, 
+foreign::write.foreign(executive.function.long, 
                        datafile = paste0('external/',filename,'.txt'), 
                        codefile = paste0('external/import_',filename,'.sas'), 
                        package='SAS')
 ```
 
-For convenience, all the **SAS** files needed to recreate these analyses are available for download below.
+For convenience, all the **SAS** files needed to recreate the MLM analyses are available for download below.
 
 ```{r, download sas 02, message = FALSE, warning = FALSE, error = FALSE, echo = FALSE}
 download_file(
@@ -118,7 +118,7 @@ download_file(
 
 ## Multilevel Model
 
-We will start with the multilevel growth model using our `execfunction` data. There are a number of package options to fit multilevel models, but we will focus here on two of the most popular: [**nlme**]() and [**lme4**](). We will also use the [**lmerTest**]() package which outputs *p*-values for the tests, which are not included in the **lme4** package. We will fit a very simple linear model with a random intercept and slope for the DLPFC activation data using all of these packages. For these initial models, we will mostly use `wave` as our metric of time rather than `age` for simplicity. We will return to models which use different time variables in later sections.
+We will start with the multilevel growth model using our `executive.function` data. There are a number of package options to fit multilevel models, but we will focus here on two of the most popular: [**nlme**]() and [**lme4**](). We will also use the [**lmerTest**]() package which outputs *p*-values for the tests, which are not included in the **lme4** package. We will fit a very simple linear model with a random intercept and slope for the DLPFC activation data using all of these packages. For these initial models, we will mostly use `wave` as our metric of time rather than `age` for simplicity. We will return to models which use different time variables in later sections.
 
 ### nlme
 
@@ -129,7 +129,7 @@ mlm.nlme = nlme::lme(dlpfc ~ 1 + wave,
                      random = ~ 1 + wave | id,
                      na.action = na.omit,
                      method = 'REML',
-                     data = canonical.long)
+                     data = executive.function.long)
 summary(mlm.nlme, correlation=FALSE)
 ```
 
@@ -147,7 +147,7 @@ The `lmer()` function has largely supplanted `lme()` in most applications of mul
 mlm.lme4 = lme4::lmer(dlpfc ~ 1 + wave + (1 + wave | id), 
                       na.action = na.omit,
                       REML = TRUE,
-                      data = canonical.long)
+                      data = executive.function.long)
 summary(mlm.lme4, correlation=FALSE)
 ```
 
@@ -161,7 +161,7 @@ If we wish to retain *p*-values in our solution, we can load the package **lmerT
 mlm.lmerTest = lmerTest::lmer(dlpfc ~ 1 + wave + (1 + wave | id), 
                  na.action = na.omit,
                  REML = TRUE,
-                 data = canonical.long)
+                 data = executive.function.long)
 summary(mlm.lmerTest, correlation=FALSE)
 ```
 
@@ -185,10 +185,10 @@ If we wish, we can output the table into a file that we can use to incorporate i
 
 ### MLM Plotting Model-Implied Trajectories
 
-If we want to plot the model-implied trajectories for each individual, we can use the [**ggplot2**]() package. To plot data, we need to have it in long format. Fortunately this is the format used in the MLM model so we don't need to do anything additional. We will plot predicted values generated from the `predict()` function. While we could append these values to our `canonical.long` dataframe in a separate step, we will instead generate the values locally within the `ggplot()` function. This will save us a step and we won't have to deal with merging the predicted values into our dataframe or having to remove those values later. Because MLMs drop `NA` values, our predicted values will not match up to the original dataframe unless we also drop thos `NA` values, so we will use the `drop_na()` function from **tidyr**.
+If we want to plot the model-implied trajectories for each individual, we can use the [**ggplot2**]() package. To plot data, we need to have it in long format. Fortunately this is the format used in the MLM model so we don't need to do anything additional. We will plot predicted values generated from the `predict()` function. While we could append these values to our `executive.function.long` dataframe in a separate step, we will instead generate the values locally within the `ggplot()` function. This will save us a step and we won't have to deal with merging the predicted values into our dataframe or having to remove those values later. Because MLMs drop `NA` values, our predicted values will not match up to the original dataframe unless we also drop thos `NA` values, so we will use the `drop_na()` function from **tidyr**.
 
 ```{r canonical MLM 05, warning = FALSE, message = FALSE}
-ggplot2::ggplot(tidyr::drop_na(canonical.long), 
+ggplot2::ggplot(tidyr::drop_na(executive.function.long), 
                 aes(x = wave + 1, 
                     y = predict(mlm.lmerTest), 
                     group = id, 
@@ -204,7 +204,7 @@ We can see that there is quite a bit of individual differences both in the initi
 
 ## Generalized Additive Mixed Model
 
-We can move on to fitting a GAMM model. Unlike the other frameworks, we will use the `feedbacklearn` data with continuous age in this model. We could, in theory, fit the `execfunction` data, but that would largely be a waste of the GAMM framework's potential for longitudinal analysis. 
+We can move on to fitting a GAMM model. Unlike the other frameworks, we will use the `feedbacklearn` data with continuous age in this model. We could, in theory, fit the `executive.function` data, but that would largely be a waste of the GAMM framework's potential for longitudinal analysis. 
 
 ```{r canonical GAMM 01, warning = FALSE, message = FALSE}
 gamm = gamm4::gamm4(modularity ~ 1 + s(age),
@@ -290,19 +290,19 @@ In the first section, we use the `=~` operator to define the latent variables (`
 
 The next two sections define the parameters of the latent variables. Here we estimate intercepts (i.e., the fixed or average intercept and slope) using the regression operator (`~`) with $1$ on the right hand side and (co)variances using the `~~` operator. Note that variances `int ~~ int` are just the covariance of a variable with itself (take a shot if that makes your head hurt a little bit). Finally, we can define the residual variances of the indicators using the same `~~` operator.
 
-We can then use the `growth()` function mentioned previously to fit the syntax we wrote to the `execfunction` data. Here we will estimate the model with Robust Maximum Likelihood (`estimator = 'ML'`) and we will allow for missing data using the `missing = 'FIML'` argument. Standard alternatives might include `estimator = 'MLR'` for Robust Maximum Likelihood if we have non-normal continuous data, or `estimator = WLSMV` if we have discrete data (see [the lavaan webpage](https://lavaan.ugent.be/tutorial/est.html) for a full list of available options). In general, we will always allow for missing data, but we could change to `missing = 'listwise'` if we wanted to do only complete-case analysis. This option is actually the **lavaan** default, so users should be cautious that this is intended and review the number of observations used in the model to confirm intended behavior.
+We can then use the `growth()` function mentioned previously to fit the syntax we wrote to the `executive.function` data. Here we will estimate the model with Maximum Likelihood (`estimator = 'ML'`) and we will allow for missing data using the `missing = 'FIML'` argument. Standard alternatives might include `estimator = 'MLR'` for Robust Maximum Likelihood if we have non-normal continuous data, or `estimator = WLSMV` if we have discrete data (see [the lavaan webpage](https://lavaan.ugent.be/tutorial/est.html) for a full list of available options). In general, we will always allow for missing data, but we could change to `missing = 'listwise'` if we wanted to do only complete-case analysis. This option is actually the **lavaan** default, so users should be cautious that this is intended and review the number of observations used in the model to confirm intended behavior.
 
 
 ```{r canonical LCM 02}
 lcm = lavaan::growth(linear.lcm, 
-                     data = canonical.wide,
+                     data = executive.function,
                      estimator = 'ML',
                      missing = 'FIML')
 ```
 
 ### LCM Outputs
 
-We can then summarize the model output using `summary()` with some optional arguments. While we will mostly output all of the available information, including `fit.measures`, raw (`estimates`) and standardized (`standardize`) parameter estimates, and `rsquares`, there might be cases where we are only interested in some subsection of the output. For instance, if we are building a sequence of models, we might only consult fit measures without viewing the parameters and associated inference tests so that our model selection isn't driven by "peeking" at effects of interest.
+We can then summarize the model output using `summary()` with some optional arguments. While we will mostly output all of the available information, including `fit.measures`, raw (`estimates`) and standardized (`standardize`) parameter estimates, and `rsquare`, there might be cases where we are only interested in some subsection of the output. For instance, if we are building a sequence of models, we might only consult fit measures without viewing the parameters and associated inference tests so that our model selection isn't driven by "peeking" at effects of interest.
 
 ```{r canonical LCM 03}
 summary(lcm, fit.measures = TRUE, estimates = TRUE, standardize = TRUE, rsquare = TRUE)
@@ -312,7 +312,7 @@ One nice thing about fitting our model to the raw data instead of standardizing 
 
 ```{r canonical LCM 04}
 lcm = lavaan::growth(linear.lcm, 
-                     data = canonical.wide,
+                     data = executive.function,
                      estimator = 'MLR',
                      missing = 'FIML')
 summary(lcm, fit.measures = TRUE, estimates = FALSE, standardize = FALSE, rsquare = FALSE)
@@ -444,7 +444,7 @@ Like before, we will take this syntax object and use it to fit the model we spec
 
 ```{r canonical LCSM 02}
 lcsm.linear = sem(linear.lcsm, 
-                  data = canonical.wide, 
+                  data = executive.function, 
                   estimator = 'ML',
                   missing = 'FIML')
 summary(lcsm.linear, fit.measures = TRUE, estimates = TRUE, standardize = TRUE, rsquare = TRUE)
@@ -506,7 +506,7 @@ proportional.lcsm = '
                slp ~~ slp
 '
 lcsm.proportional = sem(proportional.lcsm, 
-                        data = canonical.wide, 
+                        data = executive.function, 
                         estimator = 'ML',
                         missing = 'FIML')
 ```
