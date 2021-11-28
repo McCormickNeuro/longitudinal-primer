@@ -1,75 +1,96 @@
 # Time Structure {#time}
 
-Thinking more deeply about time in longitudinal models
+Now that we have covered the basic forms of each of the four modeling frameworks, we can start thinking more deeply about how to include time in our longitudinal models. We will begin by visualizing different kinds of assessment schedules and how our models might change depending on the structure of our observations. We will read in subsets of datasets that appear elsewhere in this primer codebook that follow each of three exemplar assessment types. The `single.cohort` and `accelerated` datasets were drawn from the `executive.function` and `feedback.learning` datasets we saw in the canonical models chapter. The `multiple.cohort` dataset has been drawn from the `adversity` dataset (for details, see the [Datasets](#datasets) chapter), which measures white matter development across 8 waves. These data contain fractional anisotropy (FA) measures derived from the forceps minor (`fmin`), a white matter tract that spans the hemispheres of the medial prefrontal cortex. We will see this dataset again when we consider predictors in the [Covariates](#covariates) chapter.
 
-```{r read data 03}
-single.cohort = read.csv('data/single-cohort.csv')
+```{r read data time, message = FALSE, warning = FALSE, error = FALSE}
+single.cohort = read.csv('data/single-cohort.csv', header = TRUE)
 
-multiple.cohort = read.csv('data/multiple-cohort.csv')
+multiple.cohort = read.csv('data/multiple-cohort.csv', header = TRUE)
 
-accelerated = read.csv('data/accelerated.csv')
+accelerated = read.csv('data/accelerated.csv', header = TRUE)
 ```
 
 ## Assessment Schedules
+
 ### Single Cohort Data
-```{r single cohort 03}
+
+As we cover in the main text, single cohort studies are by far the most common in longitudinal modeling. Below we can plot the assessment schedule for the canonical models we worked with in the last chapter. To declutter the plot, we have selected 50 individuals from the larger dataset and ordered them by their age at the first assessment.
+
+```{r single cohort 03, message = FALSE, warning = FALSE, error = FALSE}
 set.seed(12345)
-ggplot2::ggplot(single.cohort %>%
-                  pivot_longer(cols=starts_with('age'),
-                               names_to = c('.value', 'wave'), 
-                               names_pattern = '(.+)(.)'),
-                aes(x = age, y = id)) +
+ggplot(single.cohort %>%
+         pivot_longer(cols=starts_with('age'),
+                      names_to = c('.value', 'wave'), 
+                      names_pattern = '(.+)(.)'),
+       aes(x = age, y = id)) +
   geom_line(aes(group = id), size = .5) +
   geom_point(aes(color = as.factor(wave))) + 
   labs(x = 'Age', y = 'Individual', color = 'Wave') + 
   theme(legend.position = 'top')
-
-
-linear.lcm = 'int =~ 1*dlpfc1 + 1*dlpfc2 + 1*dlpfc3 + 1*dlpfc4
-              slp =~ 0*dlpfc1 + 1*dlpfc2 + 2*dlpfc3 + 3*dlpfc4'
-
-lcm = lavaan::growth(linear.lcm, 
-                     data = single.cohort,
-                     estimator = 'ML',
-                     missing='FIML')
-summary(lcm, fit.measures = TRUE, standardize = TRUE, rsquare = TRUE)
-broom::tidy(lcm) %>% knitr::kable()
-
-semPlot::semPaths(lcm, 
-                  intercepts = TRUE, 
-                  edge.color = 'black')
 ```
-*Notes: not sure we need to re-show all the models since all the canonical ones are on single-cohort data*
 
+We can see that there is some noise in the assessment schedule, as individuals are not observed at *exactly* intervals, however, we can see clear separation in ages between each wave. Because we cover this data extensively in the [Canonical Models](#canon) chapter, we will not show model fits here. However, we should note that because of the structure of this data, age and wave of assessment are highly collinear (and are more so the better job we do at observing individuals at regular intervals). This will impact our considerations about time later.
 
 ### Multiple Cohort Data 
-```{r multiple cohort}
-ggplot(multiple.cohort, 
+
+A slightly more complex assessment schedule design is the multiple cohort design. In these designs, we have multiple, discrete ages at the first assessment which vary across cohorts. Here we can plot our `multiple.cohort` data, which is organized into three cohorts, beginning at ages $4$, $5$, and $6$. While at later ages the cohorts mix somewhat in terms of ages sampled, no individual is observed at consecutive ages. This highlights a key advantage of the multiple cohort design; they can often provide coverage of a wider developmental window without requiring additional subjects or waves of assessment using principles of planned missingness.
+
+```{r multiple cohort 01, message = FALSE, warning = FALSE, error = FALSE}
+ggplot(multiple.cohort %>% 
+         pivot_longer(cols=starts_with('fmin'),
+                      names_to = c('.value', 'age'),
+                      names_pattern = '(....)(.+)') %>%
+         drop_na(fmin) %>% 
+         mutate(age = as.numeric(age)), 
        aes(x = age, y = id)) +
   geom_line(aes(group = id), size = .5) +
   geom_point(aes(color = as.factor(age), shape = factor(cohort)), size=2) +
   labs(x = 'Age', y = 'Individual', color = 'Wave', shape = 'Cohort') +
   theme(legend.position = 'top') + guides(color = 'none')
-
-linear.lcm = 'int =~ 1*fpct6 + 1*fpct8 + 1*fpct10 + 1*fpct12 + 1*fpct14 + 
-                     1*fpct16 + 1*fpct18 + 1*fpct20
-              slp =~ 0*fpct6 + 1*fpct8 + 2*fpct10 + 3*fpct12 + 4*fpct14 + 
-                     5*fpct16 + 6*fpct18 + 7*fpct20'
-
-lcm = lavaan::growth(linear.lcm, 
-                     data = multiple.cohort,
-                     estimator = 'ML',
-                     missing='FIML')
-summary(lcm, fit.measures = TRUE, standardize = TRUE, rsquare = TRUE)
-broom::tidy(lcm) %>% knitr::kable()
-
-semPlot::semPaths(lcm, 
-                  intercepts = TRUE, 
-                  edge.color = 'black')
 ```
-*show with LCM since they are the most straightforward.*
+
+Here we will demonstrate how one might model this type of data using the linear latent curve model for simplicity; however, we could implement this model in any of the 4 modeling frameworks we discussed. To preface the model results, the values of the `fmin` outcome were normalized to the first age assessed (`fmin4`) because of the relatively small natural scale of FA values. We have also read in the full `adversity` data file due to convergence issues with the subsample in `multiple.cohort`.
+
+```{r multiple cohort 02, message = FALSE, warning = FALSE, error = FALSE, echo = FALSE}
+adversity = read.csv('data/adversity.csv', header = TRUE)
+```
+
+```{r multiple cohort 03, message = FALSE, warning = FALSE, error = FALSE}
+mc.wm.model = 'int =~ 1*fmin4 + 1*fmin5 + 1*fmin6 + 1*fmin7 + 
+                      1*fmin8 + 1*fmin9 + 1*fmin10 + 1*fmin11
+               slp =~ 0*fmin4 + 1*fmin5 + 2*fmin6 + 3*fmin7 + 
+                      4*fmin8 + 5*fmin9 + 6*fmin10 + 7*fmin11
+'
+mc.wm = lavaan::growth(mc.wm.model,
+                       data = adversity,
+                       estimator = 'ML',
+                       missing='FIML')
+```
+
+The real leverage that FIML gives us is apparent using this model. We can measure across $8$ ages despite no individual having more than $4$ observations. We can see the abbreviated results below.
+
+```{r multiple cohort 04, message = FALSE, warning = FALSE, error = FALSE}
+summary(mc.wm, fit.measures = FALSE, estimates = TRUE, standardize = TRUE, rsquare = FALSE)
+```
+
+With this model, we will be warned that coverage for certain pairwise combinations is $< 10\%$, which just reflects the fact that almost no individuals gave data at adjacent ages. We could inspect the model coverage using the `lavInspect()` function using the argument `what = 'coverage'`. Note the values at or near $0$ on the 1-off diagonal (e.g., `fmin5` and `fmin4`).
+
+```{r multiple cohort 05, message = FALSE, warning = FALSE, error = FALSE}
+lavInspect(mc.wm, what = 'coverage')
+```
+
+Finally, we can generate a path diagram, highlighting that the intercept and slope are estimated from all ages even though no individual is measured across all of those ages.
+
+```{r multiple cohort 06, message = FALSE, warning = FALSE, error = FALSE}
+semPaths(mc.wm, 
+         intercepts = TRUE,
+         edge.color = 'black')
+```
 
 ### Accelerated Design
+
+
+
 ```{r accelerated}
 set.seed(12345)
 ggplot(accelerated %>% group_by(id) %>% filter(length(unique(wave)) == 3) %>% 

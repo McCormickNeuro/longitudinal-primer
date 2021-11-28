@@ -31,8 +31,7 @@
   
   
 <link rel="prev" href="02-canonical.html"/>
-<link rel="next" href="08-datasets.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<link rel="next" href="04-shape.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,6 +49,7 @@
 
 
 
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 <script src="libs/font-awesome-5.13.0/js/script.js"></script>
@@ -58,18 +58,18 @@
 
 
 <style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -89,7 +89,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -141,10 +141,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a></li>
 <li class="chapter" data-level="" data-path="01-introduction.html"><a href="01-introduction.html"><i class="fa fa-check"></i>Introduction</a></li>
-<li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html"><i class="fa fa-check"></i>Canonical Models</a>
-<ul>
-<li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#multilevel-model"><i class="fa fa-check"></i>Multilevel Model</a>
-<ul>
+<li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html"><i class="fa fa-check"></i>Canonical Models</a><ul>
+<li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#multilevel-model"><i class="fa fa-check"></i>Multilevel Model</a><ul>
 <li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#nlme"><i class="fa fa-check"></i>nlme</a></li>
 <li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#lme4"><i class="fa fa-check"></i>lme4</a></li>
 <li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#lmertest"><i class="fa fa-check"></i>lmerTest</a></li>
@@ -152,32 +150,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#mlm-plotting-model-implied-trajectories"><i class="fa fa-check"></i>MLM Plotting Model-Implied Trajectories</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#generalized-additive-mixed-model"><i class="fa fa-check"></i>Generalized Additive Mixed Model</a></li>
-<li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#latent-curve-model"><i class="fa fa-check"></i>Latent Curve Model</a>
-<ul>
+<li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#latent-curve-model"><i class="fa fa-check"></i>Latent Curve Model</a><ul>
 <li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#lcm-syntax-and-model-fitting"><i class="fa fa-check"></i>LCM Syntax and Model Fitting</a></li>
 <li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#lcm-outputs"><i class="fa fa-check"></i>LCM Outputs</a></li>
 <li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#lcm-path-diagrams"><i class="fa fa-check"></i>LCM Path Diagrams</a></li>
 <li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#lcm-plotting-model-implied-trajectories"><i class="fa fa-check"></i>LCM Plotting Model-Implied Trajectories</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#latent-change-score-model"><i class="fa fa-check"></i>Latent Change Score Model</a>
-<ul>
+<li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#latent-change-score-model"><i class="fa fa-check"></i>Latent Change Score Model</a><ul>
 <li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#linear-lcsm"><i class="fa fa-check"></i>Linear LCSM</a></li>
 <li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#linear-lcsm-with-proportional-change"><i class="fa fa-check"></i>Linear LCSM with Proportional Change</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="03-time.html"><a href="03-time.html"><i class="fa fa-check"></i>Time Structure</a>
-<ul>
-<li class="chapter" data-level="" data-path="03-time.html"><a href="03-time.html#assessment-schedules"><i class="fa fa-check"></i>Assessment Schedules</a>
-<ul>
+<li class="chapter" data-level="" data-path="03-time.html"><a href="03-time.html"><i class="fa fa-check"></i>Time Structure</a><ul>
+<li class="chapter" data-level="" data-path="03-time.html"><a href="03-time.html#assessment-schedules"><i class="fa fa-check"></i>Assessment Schedules</a><ul>
 <li class="chapter" data-level="" data-path="03-time.html"><a href="03-time.html#single-cohort-data"><i class="fa fa-check"></i>Single Cohort Data</a></li>
 <li class="chapter" data-level="" data-path="03-time.html"><a href="03-time.html#multiple-cohort-data"><i class="fa fa-check"></i>Multiple Cohort Data</a></li>
 <li class="chapter" data-level="" data-path="03-time.html"><a href="03-time.html#accelerated-design"><i class="fa fa-check"></i>Accelerated Design</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="03-time.html"><a href="03-time.html#time-coding"><i class="fa fa-check"></i>Time Coding</a></li>
-<li class="chapter" data-level="" data-path="03-time.html"><a href="03-time.html#additional-considerations"><i class="fa fa-check"></i>Additional Considerations</a>
-<ul>
+<li class="chapter" data-level="" data-path="03-time.html"><a href="03-time.html#additional-considerations"><i class="fa fa-check"></i>Additional Considerations</a><ul>
 <li class="chapter" data-level="" data-path="03-time.html"><a href="03-time.html#alternative-metrics-of-time"><i class="fa fa-check"></i>Alternative Metrics of Time</a></li>
 <li class="chapter" data-level="" data-path="03-time.html"><a href="03-time.html#residual-estimates"><i class="fa fa-check"></i>Residual Estimates</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html"><i class="fa fa-check"></i>The Shape of Development</a><ul>
+<li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#polynomial-trajectories"><i class="fa fa-check"></i>Polynomial Trajectories</a></li>
+<li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#piecewise-trajectories"><i class="fa fa-check"></i>Piecewise Trajectories</a></li>
+<li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#nonlinear-trajectories"><i class="fa fa-check"></i>Nonlinear Trajectories</a></li>
+<li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#additional-considerations-1"><i class="fa fa-check"></i>Additional Considerations</a><ul>
+<li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#fixed-and-random-effects"><i class="fa fa-check"></i>Fixed and Random Effects</a></li>
+<li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#generalizability"><i class="fa fa-check"></i>Generalizability</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="08-datasets.html"><a href="08-datasets.html"><i class="fa fa-check"></i>Datasets</a></li>
@@ -203,811 +205,58 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="time" class="section level1">
 <h1>Time Structure</h1>
-<p>Thinking more deeply about time in longitudinal models</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="03-time.html#cb51-1" aria-hidden="true" tabindex="-1"></a>single.cohort <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&#39;data/02-single-cohort.csv&#39;</span>)</span>
-<span id="cb51-2"><a href="03-time.html#cb51-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-3"><a href="03-time.html#cb51-3" aria-hidden="true" tabindex="-1"></a>multiple.cohort <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&#39;data/02-multiple-cohort.csv&#39;</span>)</span>
-<span id="cb51-4"><a href="03-time.html#cb51-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-5"><a href="03-time.html#cb51-5" aria-hidden="true" tabindex="-1"></a>accelerated <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">&#39;data/02-accelerated.csv&#39;</span>)</span></code></pre></div>
+<p>Now that we have covered the basic forms of each of the four modeling frameworks, we can start thinking more deeply about how to include time in our longitudinal models. We will begin by visualizing different kinds of assessment schedules and how our models might change depending on the structure of our observations. We will read in subsets of datasets that appear elsewhere in this primer codebook that follow each of three exemplar assessment types. The <code>single.cohort</code> and <code>accelerated</code> datasets were drawn from the <code>executive.function</code> and <code>feedback.learning</code> datasets we saw in the canonical models chapter. The <code>multiple.cohort</code> dataset has been drawn from the <code>adversity</code> dataset (for details, see the <a href="08-datasets.html#datasets">Datasets</a> chapter), which measures white matter development across 8 waves. These data contain fractional anisotropy (FA) measures derived from the forceps minor (<code>fmin</code>), a white matter tract that spans the hemispheres of the medial prefrontal cortex. We will see this dataset again when we consider predictors in the <a href="#covariates">Covariates</a> chapter.</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="03-time.html#cb51-1"></a>single.cohort =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&#39;data/single-cohort.csv&#39;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb51-2"><a href="03-time.html#cb51-2"></a></span>
+<span id="cb51-3"><a href="03-time.html#cb51-3"></a>multiple.cohort =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&#39;data/multiple-cohort.csv&#39;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb51-4"><a href="03-time.html#cb51-4"></a></span>
+<span id="cb51-5"><a href="03-time.html#cb51-5"></a>accelerated =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&#39;data/accelerated.csv&#39;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <div id="assessment-schedules" class="section level2">
 <h2>Assessment Schedules</h2>
 <div id="single-cohort-data" class="section level3">
 <h3>Single Cohort Data</h3>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="03-time.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
-<span id="cb52-2"><a href="03-time.html#cb52-2" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(single.cohort <span class="sc">%&gt;%</span> <span class="fu">filter</span>(id <span class="sc">%in%</span> <span class="fu">sample</span>(id, <span class="dv">50</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb52-3"><a href="03-time.html#cb52-3" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="fu">starts_with</span>(<span class="st">&#39;age&#39;</span>),</span>
-<span id="cb52-4"><a href="03-time.html#cb52-4" aria-hidden="true" tabindex="-1"></a>                               <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&#39;.value&#39;</span>, <span class="st">&#39;wave&#39;</span>), </span>
-<span id="cb52-5"><a href="03-time.html#cb52-5" aria-hidden="true" tabindex="-1"></a>                               <span class="at">names_pattern =</span> <span class="st">&#39;(.+)(.)&#39;</span>),</span>
-<span id="cb52-6"><a href="03-time.html#cb52-6" aria-hidden="true" tabindex="-1"></a>                <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> id)) <span class="sc">+</span></span>
-<span id="cb52-7"><a href="03-time.html#cb52-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> id), <span class="at">size =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
-<span id="cb52-8"><a href="03-time.html#cb52-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="fu">as.factor</span>(wave))) <span class="sc">+</span> </span>
-<span id="cb52-9"><a href="03-time.html#cb52-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;Age&#39;</span>, <span class="at">y =</span> <span class="st">&#39;Individual&#39;</span>, <span class="at">color =</span> <span class="st">&#39;Wave&#39;</span>) <span class="sc">+</span> </span>
-<span id="cb52-10"><a href="03-time.html#cb52-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;top&#39;</span>)</span></code></pre></div>
+<p>As we cover in the main text, single cohort studies are by far the most common in longitudinal modeling. Below we can plot the assessment schedule for the canonical models we worked with in the last chapter. To declutter the plot, we have selected 50 individuals from the larger dataset and ordered them by their age at the first assessment.</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="03-time.html#cb52-1"></a><span class="kw">set.seed</span>(<span class="dv">12345</span>)</span>
+<span id="cb52-2"><a href="03-time.html#cb52-2"></a><span class="kw">ggplot</span>(single.cohort <span class="op">%&gt;%</span></span>
+<span id="cb52-3"><a href="03-time.html#cb52-3"></a><span class="st">         </span><span class="kw">pivot_longer</span>(<span class="dt">cols=</span><span class="kw">starts_with</span>(<span class="st">&#39;age&#39;</span>),</span>
+<span id="cb52-4"><a href="03-time.html#cb52-4"></a>                      <span class="dt">names_to =</span> <span class="kw">c</span>(<span class="st">&#39;.value&#39;</span>, <span class="st">&#39;wave&#39;</span>), </span>
+<span id="cb52-5"><a href="03-time.html#cb52-5"></a>                      <span class="dt">names_pattern =</span> <span class="st">&#39;(.+)(.)&#39;</span>),</span>
+<span id="cb52-6"><a href="03-time.html#cb52-6"></a>       <span class="kw">aes</span>(<span class="dt">x =</span> age, <span class="dt">y =</span> id)) <span class="op">+</span></span>
+<span id="cb52-7"><a href="03-time.html#cb52-7"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">group =</span> id), <span class="dt">size =</span> <span class="fl">.5</span>) <span class="op">+</span></span>
+<span id="cb52-8"><a href="03-time.html#cb52-8"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> <span class="kw">as.factor</span>(wave))) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb52-9"><a href="03-time.html#cb52-9"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&#39;Age&#39;</span>, <span class="dt">y =</span> <span class="st">&#39;Individual&#39;</span>, <span class="dt">color =</span> <span class="st">&#39;Wave&#39;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb52-10"><a href="03-time.html#cb52-10"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&#39;top&#39;</span>)</span></code></pre></div>
 <p><img src="longitudinal_primer_files/figure-html/single%20cohort%2003-1.png" width="672" /></p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="03-time.html#cb53-1" aria-hidden="true" tabindex="-1"></a>linear.lcm <span class="ot">=</span> <span class="st">&#39;int =~ 1*dlpfc1 + 1*dlpfc2 + 1*dlpfc3 + 1*dlpfc4</span></span>
-<span id="cb53-2"><a href="03-time.html#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="st">              slp =~ 0*dlpfc1 + 1*dlpfc2 + 2*dlpfc3 + 3*dlpfc4&#39;</span></span>
-<span id="cb53-3"><a href="03-time.html#cb53-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-4"><a href="03-time.html#cb53-4" aria-hidden="true" tabindex="-1"></a>lcm <span class="ot">=</span> lavaan<span class="sc">::</span><span class="fu">growth</span>(linear.lcm, </span>
-<span id="cb53-5"><a href="03-time.html#cb53-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> single.cohort,</span>
-<span id="cb53-6"><a href="03-time.html#cb53-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">estimator =</span> <span class="st">&#39;ML&#39;</span>,</span>
-<span id="cb53-7"><a href="03-time.html#cb53-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">missing=</span><span class="st">&#39;FIML&#39;</span>)</span>
-<span id="cb53-8"><a href="03-time.html#cb53-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lcm, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">standardize =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<pre><code>## lavaan 0.6-9 ended normally after 22 iterations
-## 
-##   Estimator                                         ML
-##   Optimization method                           NLMINB
-##   Number of model parameters                         9
-##                                                       
-##   Number of observations                            50
-##   Number of missing patterns                         5
-##                                                       
-## Model Test User Model:
-##                                                       
-##   Test statistic                                12.140
-##   Degrees of freedom                                 5
-##   P-value (Chi-square)                           0.033
-## 
-## Model Test Baseline Model:
-## 
-##   Test statistic                                72.730
-##   Degrees of freedom                                 6
-##   P-value                                        0.000
-## 
-## User Model versus Baseline Model:
-## 
-##   Comparative Fit Index (CFI)                    0.893
-##   Tucker-Lewis Index (TLI)                       0.872
-## 
-## Loglikelihood and Information Criteria:
-## 
-##   Loglikelihood user model (H0)               -248.174
-##   Loglikelihood unrestricted model (H1)       -242.104
-##                                                       
-##   Akaike (AIC)                                 514.347
-##   Bayesian (BIC)                               531.555
-##   Sample-size adjusted Bayesian (BIC)          503.306
-## 
-## Root Mean Square Error of Approximation:
-## 
-##   RMSEA                                          0.169
-##   90 Percent confidence interval - lower         0.045
-##   90 Percent confidence interval - upper         0.293
-##   P-value RMSEA &lt;= 0.05                          0.055
-## 
-## Standardized Root Mean Square Residual:
-## 
-##   SRMR                                           0.113
-## 
-## Parameter Estimates:
-## 
-##   Standard errors                             Standard
-##   Information                                 Observed
-##   Observed information based on                Hessian
-## 
-## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   int =~                                                                
-##     dlpfc1            1.000                               0.794    0.832
-##     dlpfc2            1.000                               0.794    0.773
-##     dlpfc3            1.000                               0.794    0.772
-##     dlpfc4            1.000                               0.794    0.650
-##   slp =~                                                                
-##     dlpfc1            0.000                               0.000    0.000
-##     dlpfc2            1.000                               0.234    0.228
-##     dlpfc3            2.000                               0.468    0.455
-##     dlpfc4            3.000                               0.703    0.575
-## 
-## Covariances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   int ~~                                                                
-##     slp              -0.045    0.097   -0.467    0.641   -0.243   -0.243
-## 
-## Intercepts:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .dlpfc1            0.000                               0.000    0.000
-##    .dlpfc2            0.000                               0.000    0.000
-##    .dlpfc3            0.000                               0.000    0.000
-##    .dlpfc4            0.000                               0.000    0.000
-##     int               0.628    0.132    4.761    0.000    0.791    0.791
-##     slp               0.114    0.054    2.120    0.034    0.487    0.487
-## 
-## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .dlpfc1            0.280    0.196    1.427    0.154    0.280    0.307
-##    .dlpfc2            0.459    0.140    3.275    0.001    0.459    0.435
-##    .dlpfc3            0.389    0.128    3.039    0.002    0.389    0.368
-##    .dlpfc4            0.640    0.278    2.302    0.021    0.640    0.428
-##     int               0.631    0.207    3.039    0.002    1.000    1.000
-##     slp               0.055    0.054    1.010    0.313    1.000    1.000
-## 
-## R-Square:
-##                    Estimate
-##     dlpfc1            0.693
-##     dlpfc2            0.565
-##     dlpfc3            0.632
-##     dlpfc4            0.572</code></pre>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="03-time.html#cb55-1" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(lcm) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div>
-<table>
-<thead>
-<tr>
-<th style="text-align:left;">
-term
-</th>
-<th style="text-align:left;">
-op
-</th>
-<th style="text-align:right;">
-estimate
-</th>
-<th style="text-align:right;">
-std.error
-</th>
-<th style="text-align:right;">
-statistic
-</th>
-<th style="text-align:right;">
-p.value
-</th>
-<th style="text-align:right;">
-std.lv
-</th>
-<th style="text-align:right;">
-std.all
-</th>
-<th style="text-align:right;">
-std.nox
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-int =~ dlpfc1
-</td>
-<td style="text-align:left;">
-=~
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.7940412
-</td>
-<td style="text-align:right;">
-0.8323286
-</td>
-<td style="text-align:right;">
-0.8323286
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-int =~ dlpfc2
-</td>
-<td style="text-align:left;">
-=~
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.7940412
-</td>
-<td style="text-align:right;">
-0.7734266
-</td>
-<td style="text-align:right;">
-0.7734266
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-int =~ dlpfc3
-</td>
-<td style="text-align:left;">
-=~
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.7940412
-</td>
-<td style="text-align:right;">
-0.7718441
-</td>
-<td style="text-align:right;">
-0.7718441
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-int =~ dlpfc4
-</td>
-<td style="text-align:left;">
-=~
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.7940412
-</td>
-<td style="text-align:right;">
-0.6498139
-</td>
-<td style="text-align:right;">
-0.6498139
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-slp =~ dlpfc1
-</td>
-<td style="text-align:left;">
-=~
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-slp =~ dlpfc2
-</td>
-<td style="text-align:left;">
-=~
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.2342260
-</td>
-<td style="text-align:right;">
-0.2281451
-</td>
-<td style="text-align:right;">
-0.2281451
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-slp =~ dlpfc3
-</td>
-<td style="text-align:left;">
-=~
-</td>
-<td style="text-align:right;">
-2.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.4684521
-</td>
-<td style="text-align:right;">
-0.4553567
-</td>
-<td style="text-align:right;">
-0.4553567
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-slp =~ dlpfc4
-</td>
-<td style="text-align:left;">
-=~
-</td>
-<td style="text-align:right;">
-3.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.7026781
-</td>
-<td style="text-align:right;">
-0.5750458
-</td>
-<td style="text-align:right;">
-0.5750458
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-dlpfc1 ~~ dlpfc1
-</td>
-<td style="text-align:left;">
-~~
-</td>
-<td style="text-align:right;">
-0.2796138
-</td>
-<td style="text-align:right;">
-0.1959794
-</td>
-<td style="text-align:right;">
-1.4267507
-</td>
-<td style="text-align:right;">
-0.1536518
-</td>
-<td style="text-align:right;">
-0.2796138
-</td>
-<td style="text-align:right;">
-0.3072290
-</td>
-<td style="text-align:right;">
-0.3072290
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-dlpfc2 ~~ dlpfc2
-</td>
-<td style="text-align:left;">
-~~
-</td>
-<td style="text-align:right;">
-0.4589404
-</td>
-<td style="text-align:right;">
-0.1401353
-</td>
-<td style="text-align:right;">
-3.2749802
-</td>
-<td style="text-align:right;">
-0.0010567
-</td>
-<td style="text-align:right;">
-0.4589404
-</td>
-<td style="text-align:right;">
-0.4354200
-</td>
-<td style="text-align:right;">
-0.4354200
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-dlpfc3 ~~ dlpfc3
-</td>
-<td style="text-align:left;">
-~~
-</td>
-<td style="text-align:right;">
-0.3889671
-</td>
-<td style="text-align:right;">
-0.1280032
-</td>
-<td style="text-align:right;">
-3.0387293
-</td>
-<td style="text-align:right;">
-0.0023758
-</td>
-<td style="text-align:right;">
-0.3889671
-</td>
-<td style="text-align:right;">
-0.3675243
-</td>
-<td style="text-align:right;">
-0.3675243
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-dlpfc4 ~~ dlpfc4
-</td>
-<td style="text-align:left;">
-~~
-</td>
-<td style="text-align:right;">
-0.6397657
-</td>
-<td style="text-align:right;">
-0.2778724
-</td>
-<td style="text-align:right;">
-2.3023728
-</td>
-<td style="text-align:right;">
-0.0213142
-</td>
-<td style="text-align:right;">
-0.6397657
-</td>
-<td style="text-align:right;">
-0.4284626
-</td>
-<td style="text-align:right;">
-0.4284626
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-int ~~ int
-</td>
-<td style="text-align:left;">
-~~
-</td>
-<td style="text-align:right;">
-0.6305014
-</td>
-<td style="text-align:right;">
-0.2074521
-</td>
-<td style="text-align:right;">
-3.0392633
-</td>
-<td style="text-align:right;">
-0.0023716
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-slp ~~ slp
-</td>
-<td style="text-align:left;">
-~~
-</td>
-<td style="text-align:right;">
-0.0548618
-</td>
-<td style="text-align:right;">
-0.0543242
-</td>
-<td style="text-align:right;">
-1.0098967
-</td>
-<td style="text-align:right;">
-0.3125448
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-int ~~ slp
-</td>
-<td style="text-align:left;">
-~~
-</td>
-<td style="text-align:right;">
--0.0451430
-</td>
-<td style="text-align:right;">
-0.0967540
-</td>
-<td style="text-align:right;">
--0.4665746
-</td>
-<td style="text-align:right;">
-0.6408043
-</td>
-<td style="text-align:right;">
--0.2427236
-</td>
-<td style="text-align:right;">
--0.2427236
-</td>
-<td style="text-align:right;">
--0.2427236
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-dlpfc1 ~1
-</td>
-<td style="text-align:left;">
-~1
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-dlpfc2 ~1
-</td>
-<td style="text-align:left;">
-~1
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-dlpfc3 ~1
-</td>
-<td style="text-align:left;">
-~1
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-dlpfc4 ~1
-</td>
-<td style="text-align:left;">
-~1
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-int ~1
-</td>
-<td style="text-align:left;">
-~1
-</td>
-<td style="text-align:right;">
-0.6284401
-</td>
-<td style="text-align:right;">
-0.1320054
-</td>
-<td style="text-align:right;">
-4.7607134
-</td>
-<td style="text-align:right;">
-0.0000019
-</td>
-<td style="text-align:right;">
-0.7914452
-</td>
-<td style="text-align:right;">
-0.7914452
-</td>
-<td style="text-align:right;">
-0.7914452
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-slp ~1
-</td>
-<td style="text-align:left;">
-~1
-</td>
-<td style="text-align:right;">
-0.1139803
-</td>
-<td style="text-align:right;">
-0.0537695
-</td>
-<td style="text-align:right;">
-2.1197937
-</td>
-<td style="text-align:right;">
-0.0340234
-</td>
-<td style="text-align:right;">
-0.4866253
-</td>
-<td style="text-align:right;">
-0.4866253
-</td>
-<td style="text-align:right;">
-0.4866253
-</td>
-</tr>
-</tbody>
-</table>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="03-time.html#cb56-1" aria-hidden="true" tabindex="-1"></a>semPlot<span class="sc">::</span><span class="fu">semPaths</span>(lcm, </span>
-<span id="cb56-2"><a href="03-time.html#cb56-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">intercepts =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb56-3"><a href="03-time.html#cb56-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">edge.color =</span> <span class="st">&#39;black&#39;</span>)</span></code></pre></div>
-<p><img src="longitudinal_primer_files/figure-html/single%20cohort%2003-2.png" width="672" />
-<em>Notes: not sure we need to re-show all the models since all the canonical ones are on single-cohort data</em></p>
+<p>We can see that there is some noise in the assessment schedule, as individuals are not observed at <em>exactly</em> intervals, however, we can see clear separation in ages between each wave. Because we cover this data extensively in the <a href="02-canonical.html#canon">Canonical Models</a> chapter, we will not show model fits here. However, we should note that because of the structure of this data, age and wave of assessment are highly collinear (and are more so the better job we do at observing individuals at regular intervals). This will impact our considerations about time later.</p>
 </div>
 <div id="multiple-cohort-data" class="section level3">
 <h3>Multiple Cohort Data</h3>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="03-time.html#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(multiple.cohort <span class="sc">%&gt;%</span> <span class="fu">filter</span>(id <span class="sc">%in%</span> <span class="fu">sample</span>(id, <span class="dv">50</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb57-2"><a href="03-time.html#cb57-2" aria-hidden="true" tabindex="-1"></a>         <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="fu">starts_with</span>(<span class="st">&#39;monthage&#39;</span>),</span>
-<span id="cb57-3"><a href="03-time.html#cb57-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&#39;.value&#39;</span>, <span class="st">&#39;wave&#39;</span>),</span>
-<span id="cb57-4"><a href="03-time.html#cb57-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">names_pattern =</span> <span class="st">&#39;(.+)(.)&#39;</span>), </span>
-<span id="cb57-5"><a href="03-time.html#cb57-5" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> monthage, <span class="at">y =</span> id)) <span class="sc">+</span></span>
-<span id="cb57-6"><a href="03-time.html#cb57-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> id), <span class="at">size =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
-<span id="cb57-7"><a href="03-time.html#cb57-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="fu">as.factor</span>(wave), <span class="at">shape =</span> <span class="fu">factor</span>(cohort)), <span class="at">size=</span><span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb57-8"><a href="03-time.html#cb57-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;Age (in Months)&#39;</span>, <span class="at">y =</span> <span class="st">&#39;Individual&#39;</span>, <span class="at">color =</span> <span class="st">&#39;Wave&#39;</span>, <span class="at">shape =</span> <span class="st">&#39;Cohort&#39;</span>) <span class="sc">+</span></span>
-<span id="cb57-9"><a href="03-time.html#cb57-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;top&#39;</span>) <span class="sc">+</span> <span class="fu">guides</span>(<span class="at">color =</span> <span class="st">&#39;none&#39;</span>)</span></code></pre></div>
-<pre><code>## Warning: Removed 246 row(s) containing missing values (geom_path).</code></pre>
-<pre><code>## Warning: Removed 246 rows containing missing values (geom_point).</code></pre>
-<p><img src="longitudinal_primer_files/figure-html/multiple%20cohort-1.png" width="672" /></p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="03-time.html#cb60-1" aria-hidden="true" tabindex="-1"></a>linear.lcm <span class="ot">=</span> <span class="st">&#39;int =~ 1*fpct6 + 1*fpct8 + 1*fpct10 + 1*fpct12 + 1*fpct14 + </span></span>
-<span id="cb60-2"><a href="03-time.html#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="st">                     1*fpct16 + 1*fpct18 + 1*fpct20</span></span>
-<span id="cb60-3"><a href="03-time.html#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="st">              slp =~ 0*fpct6 + 1*fpct8 + 2*fpct10 + 3*fpct12 + 4*fpct14 + </span></span>
-<span id="cb60-4"><a href="03-time.html#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="st">                     5*fpct16 + 6*fpct18 + 7*fpct20&#39;</span></span>
-<span id="cb60-5"><a href="03-time.html#cb60-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb60-6"><a href="03-time.html#cb60-6" aria-hidden="true" tabindex="-1"></a>lcm <span class="ot">=</span> lavaan<span class="sc">::</span><span class="fu">growth</span>(linear.lcm, </span>
-<span id="cb60-7"><a href="03-time.html#cb60-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> multiple.cohort,</span>
-<span id="cb60-8"><a href="03-time.html#cb60-8" aria-hidden="true" tabindex="-1"></a>                     <span class="at">estimator =</span> <span class="st">&#39;ML&#39;</span>,</span>
-<span id="cb60-9"><a href="03-time.html#cb60-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">missing=</span><span class="st">&#39;FIML&#39;</span>)</span></code></pre></div>
-<pre><code>## Warning in lav_data_full(data = data, group = group, cluster = cluster, : lavaan WARNING: due to
-## missing values, some pairwise combinations have less than 10% coverage</code></pre>
-<pre><code>## Warning in lav_mvnorm_missing_h1_estimate_moments(Y = X[[g]], wt = WT[[g]], : lavaan WARNING:
-##     Maximum number of iterations reached when computing the sample
-##     moments using EM; use the em.h1.iter.max= argument to increase the
-##     number of iterations</code></pre>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="03-time.html#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lcm, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">standardize =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<pre><code>## lavaan 0.6-9 ended normally after 51 iterations
+<p>A slightly more complex assessment schedule design is the multiple cohort design. In these designs, we have multiple, discrete ages at the first assessment which vary across cohorts. Here we can plot our <code>multiple.cohort</code> data, which is organized into three cohorts, beginning at ages <span class="math inline">\(4\)</span>, <span class="math inline">\(5\)</span>, and <span class="math inline">\(6\)</span>. While at later ages the cohorts mix somewhat in terms of ages sampled, no individual is observed at consecutive ages. This highlights a key advantage of the multiple cohort design; they can often provide coverage of a wider developmental window without requiring additional subjects or waves of assessment using principles of planned missingness.</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="03-time.html#cb53-1"></a><span class="kw">ggplot</span>(multiple.cohort <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb53-2"><a href="03-time.html#cb53-2"></a><span class="st">         </span><span class="kw">pivot_longer</span>(<span class="dt">cols=</span><span class="kw">starts_with</span>(<span class="st">&#39;fmin&#39;</span>),</span>
+<span id="cb53-3"><a href="03-time.html#cb53-3"></a>                      <span class="dt">names_to =</span> <span class="kw">c</span>(<span class="st">&#39;.value&#39;</span>, <span class="st">&#39;age&#39;</span>),</span>
+<span id="cb53-4"><a href="03-time.html#cb53-4"></a>                      <span class="dt">names_pattern =</span> <span class="st">&#39;(....)(.+)&#39;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb53-5"><a href="03-time.html#cb53-5"></a><span class="st">         </span><span class="kw">drop_na</span>(fmin) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb53-6"><a href="03-time.html#cb53-6"></a><span class="st">         </span><span class="kw">mutate</span>(<span class="dt">age =</span> <span class="kw">as.numeric</span>(age)), </span>
+<span id="cb53-7"><a href="03-time.html#cb53-7"></a>       <span class="kw">aes</span>(<span class="dt">x =</span> age, <span class="dt">y =</span> id)) <span class="op">+</span></span>
+<span id="cb53-8"><a href="03-time.html#cb53-8"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">group =</span> id), <span class="dt">size =</span> <span class="fl">.5</span>) <span class="op">+</span></span>
+<span id="cb53-9"><a href="03-time.html#cb53-9"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> <span class="kw">as.factor</span>(age), <span class="dt">shape =</span> <span class="kw">factor</span>(cohort)), <span class="dt">size=</span><span class="dv">2</span>) <span class="op">+</span></span>
+<span id="cb53-10"><a href="03-time.html#cb53-10"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&#39;Age&#39;</span>, <span class="dt">y =</span> <span class="st">&#39;Individual&#39;</span>, <span class="dt">color =</span> <span class="st">&#39;Wave&#39;</span>, <span class="dt">shape =</span> <span class="st">&#39;Cohort&#39;</span>) <span class="op">+</span></span>
+<span id="cb53-11"><a href="03-time.html#cb53-11"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&#39;top&#39;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">guides</span>(<span class="dt">color =</span> <span class="st">&#39;none&#39;</span>)</span></code></pre></div>
+<p><img src="longitudinal_primer_files/figure-html/multiple%20cohort%2001-1.png" width="672" /></p>
+<p>Here we will demonstrate how one might model this type of data using the linear latent curve model for simplicity; however, we could implement this model in any of the 4 modeling frameworks we discussed. To preface the model results, the values of the <code>fmin</code> outcome were normalized to the first age assessed (<code>fmin4</code>) because of the relatively small natural scale of FA values. We have also read in the full <code>adversity</code> data file due to convergence issues with the subsample in <code>multiple.cohort</code>.</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="03-time.html#cb54-1"></a>mc.wm.model =<span class="st"> &#39;int =~ 1*fmin4 + 1*fmin5 + 1*fmin6 + 1*fmin7 + </span></span>
+<span id="cb54-2"><a href="03-time.html#cb54-2"></a><span class="st">                      1*fmin8 + 1*fmin9 + 1*fmin10 + 1*fmin11</span></span>
+<span id="cb54-3"><a href="03-time.html#cb54-3"></a><span class="st">               slp =~ 0*fmin4 + 1*fmin5 + 2*fmin6 + 3*fmin7 + </span></span>
+<span id="cb54-4"><a href="03-time.html#cb54-4"></a><span class="st">                      4*fmin8 + 5*fmin9 + 6*fmin10 + 7*fmin11</span></span>
+<span id="cb54-5"><a href="03-time.html#cb54-5"></a><span class="st">&#39;</span></span>
+<span id="cb54-6"><a href="03-time.html#cb54-6"></a>mc.wm =<span class="st"> </span>lavaan<span class="op">::</span><span class="kw">growth</span>(mc.wm.model,</span>
+<span id="cb54-7"><a href="03-time.html#cb54-7"></a>                       <span class="dt">data =</span> adversity,</span>
+<span id="cb54-8"><a href="03-time.html#cb54-8"></a>                       <span class="dt">estimator =</span> <span class="st">&#39;ML&#39;</span>,</span>
+<span id="cb54-9"><a href="03-time.html#cb54-9"></a>                       <span class="dt">missing=</span><span class="st">&#39;FIML&#39;</span>)</span></code></pre></div>
+<p>The real leverage that FIML gives us is apparent using this model. We can measure across <span class="math inline">\(8\)</span> ages despite no individual having more than <span class="math inline">\(4\)</span> observations. We can see the abbreviated results below.</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="03-time.html#cb55-1"></a><span class="kw">summary</span>(mc.wm, <span class="dt">fit.measures =</span> <span class="ot">FALSE</span>, <span class="dt">estimates =</span> <span class="ot">TRUE</span>, <span class="dt">standardize =</span> <span class="ot">TRUE</span>, <span class="dt">rsquare =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<pre><code>## lavaan 0.6-9 ended normally after 34 iterations
 ## 
 ##   Estimator                                         ML
 ##   Optimization method                           NLMINB
@@ -1022,37 +271,6 @@ slp ~1
 ##   Degrees of freedom                                31
 ##   P-value (Chi-square)                           0.071
 ## 
-## Model Test Baseline Model:
-## 
-##   Test statistic                               331.344
-##   Degrees of freedom                                28
-##   P-value                                        0.000
-## 
-## User Model versus Baseline Model:
-## 
-##   Comparative Fit Index (CFI)                    0.960
-##   Tucker-Lewis Index (TLI)                       0.964
-## 
-## Loglikelihood and Information Criteria:
-## 
-##   Loglikelihood user model (H0)              -2442.146
-##   Loglikelihood unrestricted model (H1)      -2420.520
-##                                                       
-##   Akaike (AIC)                                4910.293
-##   Bayesian (BIC)                              4962.343
-##   Sample-size adjusted Bayesian (BIC)         4921.093
-## 
-## Root Mean Square Error of Approximation:
-## 
-##   RMSEA                                          0.031
-##   90 Percent confidence interval - lower         0.000
-##   90 Percent confidence interval - upper         0.052
-##   P-value RMSEA &lt;= 0.05                          0.931
-## 
-## Standardized Root Mean Square Residual:
-## 
-##   SRMR                                           0.131
-## 
 ## Parameter Estimates:
 ## 
 ##   Standard errors                             Standard
@@ -1062,1234 +280,125 @@ slp ~1
 ## Latent Variables:
 ##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
 ##   int =~                                                                
-##     fpct6             1.000                               1.085    0.636
-##     fpct8             1.000                               1.085    0.682
-##     fpct10            1.000                               1.085    0.620
-##     fpct12            1.000                               1.085    0.578
-##     fpct14            1.000                               1.085    0.532
-##     fpct16            1.000                               1.085    0.534
-##     fpct18            1.000                               1.085    0.541
-##     fpct20            1.000                               1.085    0.479
+##     fmin4             1.000                               0.651    0.636
+##     fmin5             1.000                               0.651    0.682
+##     fmin6             1.000                               0.651    0.620
+##     fmin7             1.000                               0.651    0.578
+##     fmin8             1.000                               0.651    0.532
+##     fmin9             1.000                               0.651    0.534
+##     fmin10            1.000                               0.651    0.541
+##     fmin11            1.000                               0.651    0.479
 ##   slp =~                                                                
-##     fpct6             0.000                               0.000    0.000
-##     fpct8             1.000                               0.204    0.129
-##     fpct10            2.000                               0.409    0.234
-##     fpct12            3.000                               0.613    0.327
-##     fpct14            4.000                               0.818    0.401
-##     fpct16            5.000                               1.022    0.503
-##     fpct18            6.000                               1.227    0.612
-##     fpct20            7.000                               1.431    0.632
+##     fmin4             0.000                               0.000    0.000
+##     fmin5             1.000                               0.123    0.129
+##     fmin6             2.000                               0.245    0.234
+##     fmin7             3.000                               0.368    0.327
+##     fmin8             4.000                               0.491    0.401
+##     fmin9             5.000                               0.614    0.503
+##     fmin10            6.000                               0.736    0.612
+##     fmin11            7.000                               0.859    0.632
 ## 
 ## Covariances:
 ##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
 ##   int ~~                                                                
-##     slp               0.020    0.063    0.312    0.755    0.088    0.088
+##     slp               0.007    0.023    0.312    0.755    0.088    0.088
 ## 
 ## Intercepts:
 ##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .fpct6             0.000                               0.000    0.000
-##    .fpct8             0.000                               0.000    0.000
-##    .fpct10            0.000                               0.000    0.000
-##    .fpct12            0.000                               0.000    0.000
-##    .fpct14            0.000                               0.000    0.000
-##    .fpct16            0.000                               0.000    0.000
-##    .fpct18            0.000                               0.000    0.000
-##    .fpct20            0.000                               0.000    0.000
-##     int               1.600    0.087   18.329    0.000    1.475    1.475
-##     slp               0.083    0.020    4.144    0.000    0.406    0.406
+##    .fmin4             0.000                               0.000    0.000
+##    .fmin5             0.000                               0.000    0.000
+##    .fmin6             0.000                               0.000    0.000
+##    .fmin7             0.000                               0.000    0.000
+##    .fmin8             0.000                               0.000    0.000
+##    .fmin9             0.000                               0.000    0.000
+##    .fmin10            0.000                               0.000    0.000
+##    .fmin11            0.000                               0.000    0.000
+##     int               0.016    0.052    0.299    0.765    0.024    0.024
+##     slp               0.050    0.012    4.144    0.000    0.406    0.406
 ## 
 ## Variances:
 ##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .fpct6             1.737    0.386    4.499    0.000    1.737    0.596
-##    .fpct8             1.271    0.282    4.512    0.000    1.271    0.503
-##    .fpct10            1.639    0.286    5.726    0.000    1.639    0.535
-##    .fpct12            1.854    0.250    7.406    0.000    1.854    0.526
-##    .fpct14            2.162    0.336    6.427    0.000    2.162    0.519
-##    .fpct16            1.709    0.258    6.612    0.000    1.709    0.414
-##    .fpct18            1.106    0.316    3.498    0.000    1.106    0.275
-##    .fpct20            1.623    0.343    4.730    0.000    1.623    0.317
-##     int               1.177    0.320    3.680    0.000    1.000    1.000
-##     slp               0.042    0.016    2.645    0.008    1.000    1.000
-## 
-## R-Square:
-##                    Estimate
-##     fpct6             0.404
-##     fpct8             0.497
-##     fpct10            0.465
-##     fpct12            0.474
-##     fpct14            0.481
-##     fpct16            0.586
-##     fpct18            0.725
-##     fpct20            0.683</code></pre>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="03-time.html#cb65-1" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(lcm) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div>
-<table>
-<thead>
-<tr>
-<th style="text-align:left;">
-term
-</th>
-<th style="text-align:left;">
-op
-</th>
-<th style="text-align:right;">
-estimate
-</th>
-<th style="text-align:right;">
-std.error
-</th>
-<th style="text-align:right;">
-statistic
-</th>
-<th style="text-align:right;">
-p.value
-</th>
-<th style="text-align:right;">
-std.lv
-</th>
-<th style="text-align:right;">
-std.all
-</th>
-<th style="text-align:right;">
-std.nox
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-int =~ fpct6
-</td>
-<td style="text-align:left;">
-=~
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-1.0848449
-</td>
-<td style="text-align:right;">
-0.6355140
-</td>
-<td style="text-align:right;">
-0.6355140
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-int =~ fpct8
-</td>
-<td style="text-align:left;">
-=~
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-1.0848449
-</td>
-<td style="text-align:right;">
-0.6822177
-</td>
-<td style="text-align:right;">
-0.6822177
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-int =~ fpct10
-</td>
-<td style="text-align:left;">
-=~
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-1.0848449
-</td>
-<td style="text-align:right;">
-0.6199778
-</td>
-<td style="text-align:right;">
-0.6199778
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-int =~ fpct12
-</td>
-<td style="text-align:left;">
-=~
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-1.0848449
-</td>
-<td style="text-align:right;">
-0.5778669
-</td>
-<td style="text-align:right;">
-0.5778669
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-int =~ fpct14
-</td>
-<td style="text-align:left;">
-=~
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-1.0848449
-</td>
-<td style="text-align:right;">
-0.5315924
-</td>
-<td style="text-align:right;">
-0.5315924
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-int =~ fpct16
-</td>
-<td style="text-align:left;">
-=~
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-1.0848449
-</td>
-<td style="text-align:right;">
-0.5340599
-</td>
-<td style="text-align:right;">
-0.5340599
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-int =~ fpct18
-</td>
-<td style="text-align:left;">
-=~
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-1.0848449
-</td>
-<td style="text-align:right;">
-0.5409223
-</td>
-<td style="text-align:right;">
-0.5409223
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-int =~ fpct20
-</td>
-<td style="text-align:left;">
-=~
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-1.0848449
-</td>
-<td style="text-align:right;">
-0.4793595
-</td>
-<td style="text-align:right;">
-0.4793595
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-slp =~ fpct6
-</td>
-<td style="text-align:left;">
-=~
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-slp =~ fpct8
-</td>
-<td style="text-align:left;">
-=~
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.2044304
-</td>
-<td style="text-align:right;">
-0.1285585
-</td>
-<td style="text-align:right;">
-0.1285585
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-slp =~ fpct10
-</td>
-<td style="text-align:left;">
-=~
-</td>
-<td style="text-align:right;">
-2.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.4088608
-</td>
-<td style="text-align:right;">
-0.2336598
-</td>
-<td style="text-align:right;">
-0.2336598
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-slp =~ fpct12
-</td>
-<td style="text-align:left;">
-=~
-</td>
-<td style="text-align:right;">
-3.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.6132912
-</td>
-<td style="text-align:right;">
-0.3266832
-</td>
-<td style="text-align:right;">
-0.3266832
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-slp =~ fpct14
-</td>
-<td style="text-align:left;">
-=~
-</td>
-<td style="text-align:right;">
-4.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.8177216
-</td>
-<td style="text-align:right;">
-0.4006974
-</td>
-<td style="text-align:right;">
-0.4006974
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-slp =~ fpct16
-</td>
-<td style="text-align:left;">
-=~
-</td>
-<td style="text-align:right;">
-5.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-1.0221520
-</td>
-<td style="text-align:right;">
-0.5031967
-</td>
-<td style="text-align:right;">
-0.5031967
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-slp =~ fpct18
-</td>
-<td style="text-align:left;">
-=~
-</td>
-<td style="text-align:right;">
-6.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-1.2265824
-</td>
-<td style="text-align:right;">
-0.6115950
-</td>
-<td style="text-align:right;">
-0.6115950
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-slp =~ fpct20
-</td>
-<td style="text-align:left;">
-=~
-</td>
-<td style="text-align:right;">
-7.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-1.4310128
-</td>
-<td style="text-align:right;">
-0.6323204
-</td>
-<td style="text-align:right;">
-0.6323204
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-fpct6 ~~ fpct6
-</td>
-<td style="text-align:left;">
-~~
-</td>
-<td style="text-align:right;">
-1.7370816
-</td>
-<td style="text-align:right;">
-0.3861237
-</td>
-<td style="text-align:right;">
-4.4987702
-</td>
-<td style="text-align:right;">
-0.0000068
-</td>
-<td style="text-align:right;">
-1.7370816
-</td>
-<td style="text-align:right;">
-0.5961220
-</td>
-<td style="text-align:right;">
-0.5961220
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-fpct8 ~~ fpct8
-</td>
-<td style="text-align:left;">
-~~
-</td>
-<td style="text-align:right;">
-1.2708063
-</td>
-<td style="text-align:right;">
-0.2816246
-</td>
-<td style="text-align:right;">
-4.5124120
-</td>
-<td style="text-align:right;">
-0.0000064
-</td>
-<td style="text-align:right;">
-1.2708063
-</td>
-<td style="text-align:right;">
-0.5025624
-</td>
-<td style="text-align:right;">
-0.5025624
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-fpct10 ~~ fpct10
-</td>
-<td style="text-align:left;">
-~~
-</td>
-<td style="text-align:right;">
-1.6394538
-</td>
-<td style="text-align:right;">
-0.2863074
-</td>
-<td style="text-align:right;">
-5.7262019
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-1.6394538
-</td>
-<td style="text-align:right;">
-0.5354466
-</td>
-<td style="text-align:right;">
-0.5354466
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-fpct12 ~~ fpct12
-</td>
-<td style="text-align:left;">
-~~
-</td>
-<td style="text-align:right;">
-1.8538399
-</td>
-<td style="text-align:right;">
-0.2503021
-</td>
-<td style="text-align:right;">
-7.4064107
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-1.8538399
-</td>
-<td style="text-align:right;">
-0.5260081
-</td>
-<td style="text-align:right;">
-0.5260081
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-fpct14 ~~ fpct14
-</td>
-<td style="text-align:left;">
-~~
-</td>
-<td style="text-align:right;">
-2.1624173
-</td>
-<td style="text-align:right;">
-0.3364727
-</td>
-<td style="text-align:right;">
-6.4267245
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-2.1624173
-</td>
-<td style="text-align:right;">
-0.5192323
-</td>
-<td style="text-align:right;">
-0.5192323
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-fpct16 ~~ fpct16
-</td>
-<td style="text-align:left;">
-~~
-</td>
-<td style="text-align:right;">
-1.7087292
-</td>
-<td style="text-align:right;">
-0.2584130
-</td>
-<td style="text-align:right;">
-6.6123962
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-1.7087292
-</td>
-<td style="text-align:right;">
-0.4141121
-</td>
-<td style="text-align:right;">
-0.4141121
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-fpct18 ~~ fpct18
-</td>
-<td style="text-align:left;">
-~~
-</td>
-<td style="text-align:right;">
-1.1058222
-</td>
-<td style="text-align:right;">
-0.3160874
-</td>
-<td style="text-align:right;">
-3.4984692
-</td>
-<td style="text-align:right;">
-0.0004679
-</td>
-<td style="text-align:right;">
-1.1058222
-</td>
-<td style="text-align:right;">
-0.2749285
-</td>
-<td style="text-align:right;">
-0.2749285
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-fpct20 ~~ fpct20
-</td>
-<td style="text-align:left;">
-~~
-</td>
-<td style="text-align:right;">
-1.6228270
-</td>
-<td style="text-align:right;">
-0.3430886
-</td>
-<td style="text-align:right;">
-4.7300515
-</td>
-<td style="text-align:right;">
-0.0000022
-</td>
-<td style="text-align:right;">
-1.6228270
-</td>
-<td style="text-align:right;">
-0.3168542
-</td>
-<td style="text-align:right;">
-0.3168542
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-int ~~ int
-</td>
-<td style="text-align:left;">
-~~
-</td>
-<td style="text-align:right;">
-1.1768886
-</td>
-<td style="text-align:right;">
-0.3198135
-</td>
-<td style="text-align:right;">
-3.6799212
-</td>
-<td style="text-align:right;">
-0.0002333
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-slp ~~ slp
-</td>
-<td style="text-align:left;">
-~~
-</td>
-<td style="text-align:right;">
-0.0417918
-</td>
-<td style="text-align:right;">
-0.0157976
-</td>
-<td style="text-align:right;">
-2.6454494
-</td>
-<td style="text-align:right;">
-0.0081582
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-int ~~ slp
-</td>
-<td style="text-align:left;">
-~~
-</td>
-<td style="text-align:right;">
-0.0195836
-</td>
-<td style="text-align:right;">
-0.0628649
-</td>
-<td style="text-align:right;">
-0.3115183
-</td>
-<td style="text-align:right;">
-0.7554067
-</td>
-<td style="text-align:right;">
-0.0883037
-</td>
-<td style="text-align:right;">
-0.0883037
-</td>
-<td style="text-align:right;">
-0.0883037
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-fpct6 ~1
-</td>
-<td style="text-align:left;">
-~1
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-fpct8 ~1
-</td>
-<td style="text-align:left;">
-~1
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-fpct10 ~1
-</td>
-<td style="text-align:left;">
-~1
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-fpct12 ~1
-</td>
-<td style="text-align:left;">
-~1
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-fpct14 ~1
-</td>
-<td style="text-align:left;">
-~1
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-fpct16 ~1
-</td>
-<td style="text-align:left;">
-~1
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-fpct18 ~1
-</td>
-<td style="text-align:left;">
-~1
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-fpct20 ~1
-</td>
-<td style="text-align:left;">
-~1
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-int ~1
-</td>
-<td style="text-align:left;">
-~1
-</td>
-<td style="text-align:right;">
-1.5998873
-</td>
-<td style="text-align:right;">
-0.0872869
-</td>
-<td style="text-align:right;">
-18.3290572
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-1.4747613
-</td>
-<td style="text-align:right;">
-1.4747613
-</td>
-<td style="text-align:right;">
-1.4747613
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-slp ~1
-</td>
-<td style="text-align:left;">
-~1
-</td>
-<td style="text-align:right;">
-0.0830330
-</td>
-<td style="text-align:right;">
-0.0200355
-</td>
-<td style="text-align:right;">
-4.1442873
-</td>
-<td style="text-align:right;">
-0.0000341
-</td>
-<td style="text-align:right;">
-0.4061674
-</td>
-<td style="text-align:right;">
-0.4061674
-</td>
-<td style="text-align:right;">
-0.4061674
-</td>
-</tr>
-</tbody>
-</table>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="03-time.html#cb66-1" aria-hidden="true" tabindex="-1"></a>semPlot<span class="sc">::</span><span class="fu">semPaths</span>(lcm, </span>
-<span id="cb66-2"><a href="03-time.html#cb66-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">intercepts =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb66-3"><a href="03-time.html#cb66-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">edge.color =</span> <span class="st">&#39;black&#39;</span>)</span></code></pre></div>
-<p><img src="longitudinal_primer_files/figure-html/multiple%20cohort-2.png" width="672" />
-<em>show with LCM since they are the most straightforward.</em></p>
+##    .fmin4             0.626    0.139    4.499    0.000    0.626    0.596
+##    .fmin5             0.458    0.101    4.512    0.000    0.458    0.503
+##    .fmin6             0.591    0.103    5.726    0.000    0.591    0.535
+##    .fmin7             0.668    0.090    7.406    0.000    0.668    0.526
+##    .fmin8             0.779    0.121    6.427    0.000    0.779    0.519
+##    .fmin9             0.616    0.093    6.612    0.000    0.616    0.414
+##    .fmin10            0.398    0.114    3.498    0.000    0.398    0.275
+##    .fmin11            0.585    0.124    4.730    0.000    0.585    0.317
+##     int               0.424    0.115    3.680    0.000    1.000    1.000
+##     slp               0.015    0.006    2.645    0.008    1.000    1.000</code></pre>
+<p>With this model, we will be warned that coverage for certain pairwise combinations is <span class="math inline">\(&lt; 10\%\)</span>, which just reflects the fact that almost no individuals gave data at adjacent ages. We could inspect the model coverage using the <code>lavInspect()</code> function using the argument <code>what = 'coverage'</code>. Note the values at or near <span class="math inline">\(0\)</span> on the 1-off diagonal (e.g., <code>fmin5</code> and <code>fmin4</code>).</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="03-time.html#cb57-1"></a><span class="kw">lavInspect</span>(mc.wm, <span class="dt">what =</span> <span class="st">&#39;coverage&#39;</span>)</span></code></pre></div>
+<pre><code>##        fmin4 fmin5 fmin6 fmin7 fmin8 fmin9 fmin10 fmin11
+## fmin4  0.301                                            
+## fmin5  0.000 0.415                                      
+## fmin6  0.077 0.000 0.360                                
+## fmin7  0.212 0.262 0.000 0.474                          
+## fmin8  0.030 0.121 0.242 0.007 0.373                    
+## fmin9  0.198 0.202 0.069 0.343 0.002 0.430              
+## fmin10 0.069 0.111 0.200 0.040 0.244 0.035 0.333        
+## fmin11 0.151 0.237 0.054 0.341 0.040 0.358 0.030  0.427</code></pre>
+<p>Finally, we can generate a path diagram, highlighting that the intercept and slope are estimated from all ages even though no individual is measured across all of those ages.</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="03-time.html#cb59-1"></a><span class="kw">semPaths</span>(mc.wm, </span>
+<span id="cb59-2"><a href="03-time.html#cb59-2"></a>         <span class="dt">intercepts =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb59-3"><a href="03-time.html#cb59-3"></a>         <span class="dt">edge.color =</span> <span class="st">&#39;black&#39;</span>)</span></code></pre></div>
+<p><img src="longitudinal_primer_files/figure-html/multiple%20cohort%2006-1.png" width="672" /></p>
 </div>
 <div id="accelerated-design" class="section level3">
 <h3>Accelerated Design</h3>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="03-time.html#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
-<span id="cb67-2"><a href="03-time.html#cb67-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(accelerated <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(id) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">length</span>(<span class="fu">unique</span>(wave)) <span class="sc">==</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb67-3"><a href="03-time.html#cb67-3" aria-hidden="true" tabindex="-1"></a>         <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> <span class="fu">filter</span>(id <span class="sc">%in%</span> <span class="fu">sample</span>(id, <span class="dv">100</span>)), </span>
-<span id="cb67-4"><a href="03-time.html#cb67-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> id)) <span class="sc">+</span></span>
-<span id="cb67-5"><a href="03-time.html#cb67-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> id), <span class="at">size =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
-<span id="cb67-6"><a href="03-time.html#cb67-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="fu">as.factor</span>(wave))) <span class="sc">+</span> </span>
-<span id="cb67-7"><a href="03-time.html#cb67-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;Age&#39;</span>, <span class="at">y =</span> <span class="st">&#39;Individual&#39;</span>, <span class="at">color =</span> <span class="st">&#39;Wave&#39;</span>, <span class="at">shape =</span> <span class="st">&#39;Cohort&#39;</span>) <span class="sc">+</span> </span>
-<span id="cb67-8"><a href="03-time.html#cb67-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;top&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="03-time.html#cb60-1"></a><span class="kw">set.seed</span>(<span class="dv">12345</span>)</span>
+<span id="cb60-2"><a href="03-time.html#cb60-2"></a><span class="kw">ggplot</span>(accelerated <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(id) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="kw">length</span>(<span class="kw">unique</span>(wave)) <span class="op">==</span><span class="st"> </span><span class="dv">3</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb60-3"><a href="03-time.html#cb60-3"></a><span class="st">         </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(id <span class="op">%in%</span><span class="st"> </span><span class="kw">sample</span>(id, <span class="dv">100</span>)), </span>
+<span id="cb60-4"><a href="03-time.html#cb60-4"></a>       <span class="kw">aes</span>(<span class="dt">x =</span> age, <span class="dt">y =</span> id)) <span class="op">+</span></span>
+<span id="cb60-5"><a href="03-time.html#cb60-5"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">group =</span> id), <span class="dt">size =</span> <span class="fl">.5</span>) <span class="op">+</span></span>
+<span id="cb60-6"><a href="03-time.html#cb60-6"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> <span class="kw">as.factor</span>(wave))) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb60-7"><a href="03-time.html#cb60-7"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&#39;Age&#39;</span>, <span class="dt">y =</span> <span class="st">&#39;Individual&#39;</span>, <span class="dt">color =</span> <span class="st">&#39;Wave&#39;</span>, <span class="dt">shape =</span> <span class="st">&#39;Cohort&#39;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb60-8"><a href="03-time.html#cb60-8"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&#39;top&#39;</span>)</span></code></pre></div>
 <p><img src="longitudinal_primer_files/figure-html/accelerated-1.png" width="672" /></p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="03-time.html#cb68-1" aria-hidden="true" tabindex="-1"></a>mlm.lmerTest <span class="ot">=</span> lmerTest<span class="sc">::</span><span class="fu">lmer</span>(<span class="fu">scale</span>(modularity) <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id), </span>
-<span id="cb68-2"><a href="03-time.html#cb68-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">na.action =</span> na.omit,</span>
-<span id="cb68-3"><a href="03-time.html#cb68-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">REML =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb68-4"><a href="03-time.html#cb68-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> accelerated)</span>
-<span id="cb68-5"><a href="03-time.html#cb68-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mlm.lmerTest)</span></code></pre></div>
-<pre><code>## Linear mixed model fit by REML. t-tests use Satterthwaite&#39;s method [&#39;lmerModLmerTest&#39;]
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="03-time.html#cb61-1"></a>mlm.lmerTest =<span class="st"> </span>lmerTest<span class="op">::</span><span class="kw">lmer</span>(<span class="kw">scale</span>(modularity) <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(age<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>id), </span>
+<span id="cb61-2"><a href="03-time.html#cb61-2"></a>                 <span class="dt">na.action =</span> na.omit,</span>
+<span id="cb61-3"><a href="03-time.html#cb61-3"></a>                 <span class="dt">REML =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb61-4"><a href="03-time.html#cb61-4"></a>                 <span class="dt">data =</span> accelerated)</span>
+<span id="cb61-5"><a href="03-time.html#cb61-5"></a><span class="kw">summary</span>(mlm.lmerTest)</span></code></pre></div>
+<pre><code>## Linear mixed model fit by REML. t-tests use Satterthwaite&#39;s method [
+## lmerModLmerTest]
 ## Formula: scale(modularity) ~ 1 + age + I(age^2) + (1 | id)
 ##    Data: accelerated
 ## 
-## REML criterion at convergence: 11850.7
+## REML criterion at convergence: 642.4
 ## 
 ## Scaled residuals: 
-##     Min      1Q  Median      3Q     Max 
-## -4.2572 -0.6677 -0.0478  0.6411  3.3902 
+##      Min       1Q   Median       3Q      Max 
+## -3.02380 -0.55867 -0.00133  0.56810  2.43080 
 ## 
 ## Random effects:
 ##  Groups   Name        Variance Std.Dev.
-##  id       (Intercept) 0.3276   0.5724  
-##  Residual             0.5990   0.7740  
-## Number of obs: 4799, groups:  id, 297
+##  id       (Intercept) 0.4079   0.6386  
+##  Residual             0.5131   0.7163  
+## Number of obs: 243, groups:  id, 81
 ## 
 ## Fixed effects:
 ##               Estimate Std. Error         df t value Pr(&gt;|t|)    
-## (Intercept) -3.293e+00  2.445e-01  3.587e+03  -13.47   &lt;2e-16 ***
-## age          3.633e-01  2.957e-02  3.761e+03   12.29   &lt;2e-16 ***
-## I(age^2)    -9.271e-03  8.806e-04  3.524e+03  -10.53   &lt;2e-16 ***
+## (Intercept)  -4.229027   0.928266 239.194454  -4.556 8.32e-06 ***
+## age           0.460537   0.105741 239.506339   4.355 1.97e-05 ***
+## I(age^2)     -0.011828   0.002949 238.656616  -4.011 8.10e-05 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Correlation of Fixed Effects:
 ##          (Intr) age   
-## age      -0.972       
-## I(age^2)  0.917 -0.981</code></pre>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="03-time.html#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_model</span>(mlm.lmerTest,</span>
-<span id="cb70-2"><a href="03-time.html#cb70-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">show.se =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb70-3"><a href="03-time.html#cb70-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">show.df =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb70-4"><a href="03-time.html#cb70-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">show.ci =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb70-5"><a href="03-time.html#cb70-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">digits =</span> <span class="dv">3</span>,</span>
-<span id="cb70-6"><a href="03-time.html#cb70-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">pred.labels =</span> <span class="fu">c</span>(<span class="st">&#39;Intercept&#39;</span>, <span class="st">&#39;Age&#39;</span>, <span class="st">&#39;Age^2&#39;</span>),</span>
-<span id="cb70-7"><a href="03-time.html#cb70-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">dv.labels =</span> <span class="st">&#39;Modularity&#39;</span>,</span>
-<span id="cb70-8"><a href="03-time.html#cb70-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">string.se =</span> <span class="st">&#39;SE&#39;</span>,</span>
-<span id="cb70-9"><a href="03-time.html#cb70-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">string.p =</span> <span class="st">&#39;P-Value&#39;</span>)</span></code></pre></div>
-<pre><code>## Argument &#39;df_method&#39; is deprecated. Please use &#39;ci_method&#39; instead.</code></pre>
+## age      -0.982       
+## I(age^2)  0.940 -0.986</code></pre>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="03-time.html#cb63-1"></a><span class="kw">tab_model</span>(mlm.lmerTest,</span>
+<span id="cb63-2"><a href="03-time.html#cb63-2"></a>          <span class="dt">show.se =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb63-3"><a href="03-time.html#cb63-3"></a>          <span class="dt">show.df =</span> <span class="ot">FALSE</span>,</span>
+<span id="cb63-4"><a href="03-time.html#cb63-4"></a>          <span class="dt">show.ci =</span> <span class="ot">FALSE</span>,</span>
+<span id="cb63-5"><a href="03-time.html#cb63-5"></a>          <span class="dt">digits =</span> <span class="dv">3</span>,</span>
+<span id="cb63-6"><a href="03-time.html#cb63-6"></a>          <span class="dt">pred.labels =</span> <span class="kw">c</span>(<span class="st">&#39;Intercept&#39;</span>, <span class="st">&#39;Age&#39;</span>, <span class="st">&#39;Age^2&#39;</span>),</span>
+<span id="cb63-7"><a href="03-time.html#cb63-7"></a>          <span class="dt">dv.labels =</span> <span class="st">&#39;Modularity&#39;</span>,</span>
+<span id="cb63-8"><a href="03-time.html#cb63-8"></a>          <span class="dt">string.se =</span> <span class="st">&#39;SE&#39;</span>,</span>
+<span id="cb63-9"><a href="03-time.html#cb63-9"></a>          <span class="dt">string.p =</span> <span class="st">&#39;P-Value&#39;</span>)</span></code></pre></div>
 <table style="border-collapse:collapse; border:none;">
 <tr>
 <th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
@@ -2318,10 +427,10 @@ P-Value
 Intercept
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
--3.293
+-4.229
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.244
+0.928
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
 <strong>&lt;0.001</strong>
@@ -2332,10 +441,10 @@ Intercept
 Age
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.363
+0.461
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.030
+0.106
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
 <strong>&lt;0.001</strong>
@@ -2346,10 +455,10 @@ Age
 Age^2
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
--0.009
+-0.012
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.001
+0.003
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
 <strong>&lt;0.001</strong>
@@ -2365,35 +474,35 @@ Random Effects
 σ<sup>2</sup>
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
-0.60
+0.51
 </td>
 <tr>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
 τ<sub>00</sub> <sub>id</sub>
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
-0.33
+0.41
 </td>
 <tr>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
 ICC
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
-0.35
+0.44
 </td>
 <tr>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
 N <sub>id</sub>
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
-297
+81
 </td>
 <tr>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">
 Observations
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">
-4799
+243
 </td>
 </tr>
 <tr>
@@ -2401,7 +510,7 @@ Observations
 Marginal R<sup>2</sup> / Conditional R<sup>2</sup>
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
-0.075 / 0.402
+0.086 / 0.491
 </td>
 </tr>
 </table>
@@ -2410,25 +519,25 @@ Marginal R<sup>2</sup> / Conditional R<sup>2</sup>
 </div>
 <div id="time-coding" class="section level2">
 <h2>Time Coding</h2>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="03-time.html#cb72-1" aria-hidden="true" tabindex="-1"></a>initial.status <span class="ot">=</span> <span class="st">&#39;int =~ 1*dlpfc1 + 1*dlpfc2 + 1*dlpfc3 + 1*dlpfc4</span></span>
-<span id="cb72-2"><a href="03-time.html#cb72-2" aria-hidden="true" tabindex="-1"></a><span class="st">                  slp =~ 0*dlpfc1 + 1*dlpfc2 + 2*dlpfc3 + 3*dlpfc4&#39;</span></span>
-<span id="cb72-3"><a href="03-time.html#cb72-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-4"><a href="03-time.html#cb72-4" aria-hidden="true" tabindex="-1"></a>initial.status.fit <span class="ot">=</span> <span class="fu">growth</span>(initial.status, </span>
-<span id="cb72-5"><a href="03-time.html#cb72-5" aria-hidden="true" tabindex="-1"></a>                            <span class="at">data =</span> single.cohort,</span>
-<span id="cb72-6"><a href="03-time.html#cb72-6" aria-hidden="true" tabindex="-1"></a>                            <span class="at">estimator =</span> <span class="st">&#39;ML&#39;</span>,</span>
-<span id="cb72-7"><a href="03-time.html#cb72-7" aria-hidden="true" tabindex="-1"></a>                            <span class="at">missing=</span><span class="st">&#39;FIML&#39;</span>)</span>
-<span id="cb72-8"><a href="03-time.html#cb72-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-9"><a href="03-time.html#cb72-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-10"><a href="03-time.html#cb72-10" aria-hidden="true" tabindex="-1"></a>final.status <span class="ot">=</span> <span class="st">&#39;int =~ 1*dlpfc1 + 1*dlpfc2 + 1*dlpfc3 + 1*dlpfc4</span></span>
-<span id="cb72-11"><a href="03-time.html#cb72-11" aria-hidden="true" tabindex="-1"></a><span class="st">                slp =~ 0*dlpfc1 + 1*dlpfc2 + 2*dlpfc3 + 3*dlpfc4&#39;</span></span>
-<span id="cb72-12"><a href="03-time.html#cb72-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-13"><a href="03-time.html#cb72-13" aria-hidden="true" tabindex="-1"></a>final.status.fit <span class="ot">=</span> <span class="fu">growth</span>(final.status, </span>
-<span id="cb72-14"><a href="03-time.html#cb72-14" aria-hidden="true" tabindex="-1"></a>                          <span class="at">data =</span> single.cohort,</span>
-<span id="cb72-15"><a href="03-time.html#cb72-15" aria-hidden="true" tabindex="-1"></a>                          <span class="at">estimator =</span> <span class="st">&#39;ML&#39;</span>,</span>
-<span id="cb72-16"><a href="03-time.html#cb72-16" aria-hidden="true" tabindex="-1"></a>                          <span class="at">missing=</span><span class="st">&#39;FIML&#39;</span>)</span>
-<span id="cb72-17"><a href="03-time.html#cb72-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-18"><a href="03-time.html#cb72-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb72-19"><a href="03-time.html#cb72-19" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(initial.status.fit, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">estimates=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="03-time.html#cb64-1"></a>initial.status =<span class="st"> &#39;int =~ 1*dlpfc1 + 1*dlpfc2 + 1*dlpfc3 + 1*dlpfc4</span></span>
+<span id="cb64-2"><a href="03-time.html#cb64-2"></a><span class="st">                  slp =~ 0*dlpfc1 + 1*dlpfc2 + 2*dlpfc3 + 3*dlpfc4&#39;</span></span>
+<span id="cb64-3"><a href="03-time.html#cb64-3"></a></span>
+<span id="cb64-4"><a href="03-time.html#cb64-4"></a>initial.status.fit =<span class="st"> </span><span class="kw">growth</span>(initial.status, </span>
+<span id="cb64-5"><a href="03-time.html#cb64-5"></a>                            <span class="dt">data =</span> single.cohort,</span>
+<span id="cb64-6"><a href="03-time.html#cb64-6"></a>                            <span class="dt">estimator =</span> <span class="st">&#39;ML&#39;</span>,</span>
+<span id="cb64-7"><a href="03-time.html#cb64-7"></a>                            <span class="dt">missing=</span><span class="st">&#39;FIML&#39;</span>)</span>
+<span id="cb64-8"><a href="03-time.html#cb64-8"></a></span>
+<span id="cb64-9"><a href="03-time.html#cb64-9"></a></span>
+<span id="cb64-10"><a href="03-time.html#cb64-10"></a>final.status =<span class="st"> &#39;int =~ 1*dlpfc1 + 1*dlpfc2 + 1*dlpfc3 + 1*dlpfc4</span></span>
+<span id="cb64-11"><a href="03-time.html#cb64-11"></a><span class="st">                slp =~ 0*dlpfc1 + 1*dlpfc2 + 2*dlpfc3 + 3*dlpfc4&#39;</span></span>
+<span id="cb64-12"><a href="03-time.html#cb64-12"></a></span>
+<span id="cb64-13"><a href="03-time.html#cb64-13"></a>final.status.fit =<span class="st"> </span><span class="kw">growth</span>(final.status, </span>
+<span id="cb64-14"><a href="03-time.html#cb64-14"></a>                          <span class="dt">data =</span> single.cohort,</span>
+<span id="cb64-15"><a href="03-time.html#cb64-15"></a>                          <span class="dt">estimator =</span> <span class="st">&#39;ML&#39;</span>,</span>
+<span id="cb64-16"><a href="03-time.html#cb64-16"></a>                          <span class="dt">missing=</span><span class="st">&#39;FIML&#39;</span>)</span>
+<span id="cb64-17"><a href="03-time.html#cb64-17"></a></span>
+<span id="cb64-18"><a href="03-time.html#cb64-18"></a></span>
+<span id="cb64-19"><a href="03-time.html#cb64-19"></a><span class="kw">summary</span>(initial.status.fit, <span class="dt">fit.measures =</span> <span class="ot">TRUE</span>, <span class="dt">estimates=</span><span class="ot">FALSE</span>)</span></code></pre></div>
 <pre><code>## lavaan 0.6-9 ended normally after 22 iterations
 ## 
 ##   Estimator                                         ML
@@ -2474,7 +583,7 @@ Marginal R<sup>2</sup> / Conditional R<sup>2</sup>
 ## Standardized Root Mean Square Residual:
 ## 
 ##   SRMR                                           0.113</code></pre>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="03-time.html#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(final.status.fit, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">estimates=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="03-time.html#cb66-1"></a><span class="kw">summary</span>(final.status.fit, <span class="dt">fit.measures =</span> <span class="ot">TRUE</span>, <span class="dt">estimates=</span><span class="ot">FALSE</span>)</span></code></pre></div>
 <pre><code>## lavaan 0.6-9 ended normally after 22 iterations
 ## 
 ##   Estimator                                         ML
@@ -2520,7 +629,7 @@ Marginal R<sup>2</sup> / Conditional R<sup>2</sup>
 ## Standardized Root Mean Square Residual:
 ## 
 ##   SRMR                                           0.113</code></pre>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="03-time.html#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(initial.status.fit) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="03-time.html#cb68-1"></a><span class="kw">tidy</span>(initial.status.fit) <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw">kable</span>()</span></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -3165,7 +1274,7 @@ slp ~1
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="03-time.html#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(final.status.fit) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="03-time.html#cb69-1"></a><span class="kw">tidy</span>(final.status.fit) <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw">kable</span>()</span></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -3816,13 +1925,13 @@ slp ~1
 <h2>Additional Considerations</h2>
 <div id="alternative-metrics-of-time" class="section level3">
 <h3>Alternative Metrics of Time</h3>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="03-time.html#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(accelerated, <span class="fu">aes</span>(<span class="at">x =</span> puberty, <span class="at">y =</span> id)) <span class="sc">+</span></span>
-<span id="cb78-2"><a href="03-time.html#cb78-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> id), <span class="at">size =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
-<span id="cb78-3"><a href="03-time.html#cb78-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="fu">as.factor</span>(wave))) <span class="sc">+</span> </span>
-<span id="cb78-4"><a href="03-time.html#cb78-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;Age&#39;</span>, <span class="at">y =</span> <span class="st">&#39;Individual&#39;</span>, <span class="at">color =</span> <span class="st">&#39;Wave&#39;</span>, <span class="at">shape =</span> <span class="st">&#39;Cohort&#39;</span>) <span class="sc">+</span> </span>
-<span id="cb78-5"><a href="03-time.html#cb78-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;top&#39;</span>)</span></code></pre></div>
-<pre><code>## Warning: Removed 1283 row(s) containing missing values (geom_path).</code></pre>
-<pre><code>## Warning: Removed 1283 rows containing missing values (geom_point).</code></pre>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="03-time.html#cb70-1"></a><span class="kw">ggplot</span>(accelerated, <span class="kw">aes</span>(<span class="dt">x =</span> puberty, <span class="dt">y =</span> id)) <span class="op">+</span></span>
+<span id="cb70-2"><a href="03-time.html#cb70-2"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">group =</span> id), <span class="dt">size =</span> <span class="fl">.5</span>) <span class="op">+</span></span>
+<span id="cb70-3"><a href="03-time.html#cb70-3"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> <span class="kw">as.factor</span>(wave))) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb70-4"><a href="03-time.html#cb70-4"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&#39;Age&#39;</span>, <span class="dt">y =</span> <span class="st">&#39;Individual&#39;</span>, <span class="dt">color =</span> <span class="st">&#39;Wave&#39;</span>, <span class="dt">shape =</span> <span class="st">&#39;Cohort&#39;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb70-5"><a href="03-time.html#cb70-5"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&#39;top&#39;</span>)</span></code></pre></div>
+<pre><code>## Warning: Removed 93 row(s) containing missing values (geom_path).</code></pre>
+<pre><code>## Warning: Removed 93 rows containing missing values (geom_point).</code></pre>
 <p><img src="longitudinal_primer_files/figure-html/alternative%20time%20metric-1.png" width="672" />
 <em>Show data with puberty as the x variable</em></p>
 </div>
@@ -3839,7 +1948,7 @@ slp ~1
         </div>
       </div>
 <a href="02-canonical.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="08-datasets.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="04-shape.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

@@ -32,7 +32,6 @@
   
 
 
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,6 +49,7 @@
 
 
 
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 <script src="libs/font-awesome-5.13.0/js/script.js"></script>
@@ -58,18 +58,18 @@
 
 
 <style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -89,7 +89,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -141,10 +141,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a></li>
 <li class="chapter" data-level="" data-path="01-introduction.html"><a href="01-introduction.html"><i class="fa fa-check"></i>Introduction</a></li>
-<li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html"><i class="fa fa-check"></i>Canonical Models</a>
-<ul>
-<li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#multilevel-model"><i class="fa fa-check"></i>Multilevel Model</a>
-<ul>
+<li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html"><i class="fa fa-check"></i>Canonical Models</a><ul>
+<li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#multilevel-model"><i class="fa fa-check"></i>Multilevel Model</a><ul>
 <li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#nlme"><i class="fa fa-check"></i>nlme</a></li>
 <li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#lme4"><i class="fa fa-check"></i>lme4</a></li>
 <li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#lmertest"><i class="fa fa-check"></i>lmerTest</a></li>
@@ -152,32 +150,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#mlm-plotting-model-implied-trajectories"><i class="fa fa-check"></i>MLM Plotting Model-Implied Trajectories</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#generalized-additive-mixed-model"><i class="fa fa-check"></i>Generalized Additive Mixed Model</a></li>
-<li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#latent-curve-model"><i class="fa fa-check"></i>Latent Curve Model</a>
-<ul>
+<li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#latent-curve-model"><i class="fa fa-check"></i>Latent Curve Model</a><ul>
 <li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#lcm-syntax-and-model-fitting"><i class="fa fa-check"></i>LCM Syntax and Model Fitting</a></li>
 <li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#lcm-outputs"><i class="fa fa-check"></i>LCM Outputs</a></li>
 <li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#lcm-path-diagrams"><i class="fa fa-check"></i>LCM Path Diagrams</a></li>
 <li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#lcm-plotting-model-implied-trajectories"><i class="fa fa-check"></i>LCM Plotting Model-Implied Trajectories</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#latent-change-score-model"><i class="fa fa-check"></i>Latent Change Score Model</a>
-<ul>
+<li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#latent-change-score-model"><i class="fa fa-check"></i>Latent Change Score Model</a><ul>
 <li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#linear-lcsm"><i class="fa fa-check"></i>Linear LCSM</a></li>
 <li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#linear-lcsm-with-proportional-change"><i class="fa fa-check"></i>Linear LCSM with Proportional Change</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="03-time.html"><a href="03-time.html"><i class="fa fa-check"></i>Time Structure</a>
-<ul>
-<li class="chapter" data-level="" data-path="03-time.html"><a href="03-time.html#assessment-schedules"><i class="fa fa-check"></i>Assessment Schedules</a>
-<ul>
+<li class="chapter" data-level="" data-path="03-time.html"><a href="03-time.html"><i class="fa fa-check"></i>Time Structure</a><ul>
+<li class="chapter" data-level="" data-path="03-time.html"><a href="03-time.html#assessment-schedules"><i class="fa fa-check"></i>Assessment Schedules</a><ul>
 <li class="chapter" data-level="" data-path="03-time.html"><a href="03-time.html#single-cohort-data"><i class="fa fa-check"></i>Single Cohort Data</a></li>
 <li class="chapter" data-level="" data-path="03-time.html"><a href="03-time.html#multiple-cohort-data"><i class="fa fa-check"></i>Multiple Cohort Data</a></li>
 <li class="chapter" data-level="" data-path="03-time.html"><a href="03-time.html#accelerated-design"><i class="fa fa-check"></i>Accelerated Design</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="03-time.html"><a href="03-time.html#time-coding"><i class="fa fa-check"></i>Time Coding</a></li>
-<li class="chapter" data-level="" data-path="03-time.html"><a href="03-time.html#additional-considerations"><i class="fa fa-check"></i>Additional Considerations</a>
-<ul>
+<li class="chapter" data-level="" data-path="03-time.html"><a href="03-time.html#additional-considerations"><i class="fa fa-check"></i>Additional Considerations</a><ul>
 <li class="chapter" data-level="" data-path="03-time.html"><a href="03-time.html#alternative-metrics-of-time"><i class="fa fa-check"></i>Alternative Metrics of Time</a></li>
 <li class="chapter" data-level="" data-path="03-time.html"><a href="03-time.html#residual-estimates"><i class="fa fa-check"></i>Residual Estimates</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html"><i class="fa fa-check"></i>The Shape of Development</a><ul>
+<li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#polynomial-trajectories"><i class="fa fa-check"></i>Polynomial Trajectories</a></li>
+<li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#piecewise-trajectories"><i class="fa fa-check"></i>Piecewise Trajectories</a></li>
+<li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#nonlinear-trajectories"><i class="fa fa-check"></i>Nonlinear Trajectories</a></li>
+<li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#additional-considerations-1"><i class="fa fa-check"></i>Additional Considerations</a><ul>
+<li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#fixed-and-random-effects"><i class="fa fa-check"></i>Fixed and Random Effects</a></li>
+<li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#generalizability"><i class="fa fa-check"></i>Generalizability</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="08-datasets.html"><a href="08-datasets.html"><i class="fa fa-check"></i>Datasets</a></li>

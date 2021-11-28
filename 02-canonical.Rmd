@@ -4,7 +4,7 @@ What follows are canonical versions of growth models in each of the four differe
 
 First, we need to read in the datasets we will use in this chapter.
 
-```{r, read data 02, message = FALSE, warning = FALSE, error = FALSE}
+```{r, read data canonical, message = FALSE, warning = FALSE, error = FALSE}
 executive.function = utils::read.csv('data/executive-function.csv', header = TRUE) %>%
   select(id, dlpfc1:dlpfc4)
 
@@ -209,13 +209,13 @@ We can move on to fitting a GAMM model. Unlike the other frameworks, we will use
 ```{r canonical GAMM 01, warning = FALSE, message = FALSE}
 gamm = gamm4::gamm4(modularity ~ 1 + s(age),
                     random = ~ (1 | id),
-                    data = canonical.gamm)
+                    data = feedback.learning)
 summary(gamm$mer)
 summary(gamm$gam)
 coef(gamm$gam)
 
 
-testgamm = gamm(modularity ~ s(age), random=list(id=~1), data=canonical.gamm)
+testgamm = gamm(modularity ~ s(age), random=list(id=~1), data=feedback.learning)
 ```
 ```{r canonical GAMM 02, warning = FALSE, message = FALSE, results='asis', eval=FALSE}
 gamtabs(gamm$gam, 
@@ -229,9 +229,9 @@ plot(gamm$gam, se = TRUE, shade = TRUE, rug = TRUE,
 ```
 
 ```{r canonical GAMM 04, warning = FALSE, message = FALSE,  eval=FALSE}
-canonical.gamm$id = factor(canonical.gamm$id)
+feedback.learning$id = factor(feedback.learning$id)
 gamm.mcgv = mgcv::gam(modularity ~ 1 + s(age) + s(id, bs='re'), 
-                      data=canonical.gamm)
+                      data=feedback.learning)
 summary(gamm.mcgv)
 coef(gamm.mcgv)
 plot_smooth(gamm.mcgv, view = 'age', rm.ranef = TRUE, rug=TRUE,
@@ -242,13 +242,13 @@ plot(gamm.mcgv)
 
 ```{r, eval=FALSE}
 gamm.mcgv2 = mgcv::gam(modularity ~ 1 + s(age, k=3) + s(id, bs='re'), 
-                       data=canonical.gamm)
+                       data=feedback.learning)
 plot_smooth(gamm.mcgv2, view = 'age', rm.ranef = TRUE, rug=TRUE,
             main = 'Canonical GAMM Smooth with 3 Basis Functions',
             xlab = 'Age', ylab = 'Modularity')
 
 gamm.mcgv3 = mgcv::gam(modularity ~ 1 + s(age, k=20) + s(id, bs='re'), 
-                       data=canonical.gamm)
+                       data=feedback.learning)
 plot_smooth(gamm.mcgv3, view = 'age', rm.ranef = TRUE, rug=TRUE,
             main = 'Canonical GAMM Smooth with 20 Basis Functions',
             xlab = 'Age', ylab = 'Modularity')
