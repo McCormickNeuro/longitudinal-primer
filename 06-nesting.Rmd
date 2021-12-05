@@ -1,0 +1,23 @@
+# Nested Data {#nesting}
+
+Different forms of nesting in longitudinal models.
+
+```{r read data nesting, eval=F}
+```
+
+## Categorical Predictors
+*Show with MLM/LCM*
+
+## Multiple Groups Models
+*Show with LCM/LCSM*
+
+## Fixed Effect Approach
+*Show with MLM*
+
+## Random Effect Approach
+*Show with MLM & LCM*
+*ML-SEM*
+*Cluster correction: link to Mplus code*
+
+
+

@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>The Shape of Development | The Hitchhiker’s Guide to Longitudinal Models</title>
+  <title>Covariantes and Distal Outcomes | The Hitchhiker’s Guide to Longitudinal Models</title>
   <meta name="description" content="This is a code companion for The Hitchhiker’s Guide to Longitudinal Models." />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="The Shape of Development | The Hitchhiker’s Guide to Longitudinal Models" />
+  <meta property="og:title" content="Covariantes and Distal Outcomes | The Hitchhiker’s Guide to Longitudinal Models" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://https://mccormickneuro.github.io/longitudinal-primer/" />
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="McCormickNeuro/longitudinal-primer" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="The Shape of Development | The Hitchhiker’s Guide to Longitudinal Models" />
+  <meta name="twitter:title" content="Covariantes and Distal Outcomes | The Hitchhiker’s Guide to Longitudinal Models" />
   
   <meta name="twitter:description" content="This is a code companion for The Hitchhiker’s Guide to Longitudinal Models." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="03-time.html"/>
-<link rel="next" href="05-covariates.html"/>
+<link rel="prev" href="04-shape.html"/>
+<link rel="next" href="06-nesting.html"/>
 <script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -231,36 +231,44 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="shape" class="section level1">
-<h1>The Shape of Development</h1>
-<p>Establishing the optimal shape of development.</p>
-<div id="polynomial-trajectories" class="section level2">
-<h2>Polynomial Trajectories</h2>
-<p><em>Show intercept-only, linear, quadratic, and inverse trajectories for MLM/LCM/LCSM (to a point)’</em></p>
+<div id="covariates" class="section level1">
+<h1>Covariantes and Distal Outcomes</h1>
+<p>Including covariates and distal outcomes into our models.</p>
+<div id="covariates-1" class="section level2">
+<h2>Covariates</h2>
+<div id="time-invariant-covariates" class="section level3">
+<h3>Time Invariant Covariates</h3>
+<p><em>Show with MLM/GAMM/LCM</em>
+<em>Need to check if TICs are possible with LCSMs (something Patrick said makes me think no)</em>
+<em>latent TIC?</em>
+<em>joint likelihood</em></p>
 </div>
-<div id="piecewise-trajectories" class="section level2">
-<h2>Piecewise Trajectories</h2>
-<p><em>Show linear/linear and linear/quadratic trajectories for MLM &amp; LCM, cubic splines with GAMM?’</em>
-<em>Show both 2-rate and added-rate</em></p>
+<div id="time-varying-covariates" class="section level3">
+<h3>Time Varying Covariates</h3>
+<p><em>Show with MLM/GAMM/LCM</em>
+<em>LCM: show unique time-specific relationships</em>
+<em>show fixed vs random effects</em>
+<em>show contemporaneous and lagged effects</em></p>
 </div>
-<div id="nonlinear-trajectories" class="section level2">
-<h2>Nonlinear Trajectories</h2>
-<p><em>MLM: show negatively accelerated exponential</em>
-<em>GAMM: full GAMM with b-splines</em>
-<em>LCM: Show 2 free-loading forms</em>
-<em>LCSM: dual-change model</em></p>
+<div id="cross-level-interactions" class="section level3">
+<h3>Cross-level Interactions</h3>
+<p><em>Show with MLM and LCM</em></p>
 </div>
-<div id="additional-considerations-1" class="section level2">
-<h2>Additional Considerations</h2>
-<div id="fixed-and-random-effects" class="section level3">
-<h3>Fixed and Random Effects</h3>
-<p><em>show in accelerated (braintime) data that we can estimate a quadratic overall trend even though no one has 4 observations</em></p>
+<div id="within--and-betwen-person-variance" class="section level3">
+<h3>Within- and Betwen-Person Variance</h3>
+<p><em>show approaches to centering in the MLM</em>
+<em>show RI-CLPM/LCM-SR model</em></p>
 </div>
-<div id="generalizability" class="section level3">
-<h3>Generalizability</h3>
-<p><em>Code for cross-validiation?</em></p>
+<div id="multivariate-models" class="section level3">
+<h3>Multivariate Models</h3>
+<p><em>Show with MLM/LCM/LCSM</em></p>
+</div>
+</div>
+<div id="distal-outcomes" class="section level2">
+<h2>Distal Outcomes</h2>
+<p><em>MLM: show 2 step model</em>
+<em>LCM: show simultaneous model and 2 step model</em></p>
 
-</div>
 </div>
 </div>
             </section>
@@ -268,8 +276,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="03-time.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="05-covariates.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="04-shape.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="06-nesting.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -302,7 +310,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/McCormickNeuro/longitudinal-primer/edit/main/04-shape.Rmd",
+"link": "https://github.com/McCormickNeuro/longitudinal-primer/edit/main/05-covariates.Rmd",
 "text": "Edit"
 },
 "history": {

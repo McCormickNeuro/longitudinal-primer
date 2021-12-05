@@ -1,7 +1,7 @@
 --- 
-title: 'The Hitchhiker’s Guide to Longitudinal Models'
-subtitle: 'Code Companion'
-author: '[Ethan M. McCormick](https://mccormickneuro.github.io/), [Michelle L. Byrne](https://research.monash.edu/en/persons/michelle-byrne), [John C. Flournoy](https://johnflournoy.science/), [Katheryn L. Mills](http://devbrainlab.org/), & [Jennifer H. Pfiefer](https://dsn.uoregon.edu/)'
+title: "The Hitchhiker’s Guide to Longitudinal Models"
+subtitle: "Code Companion"
+author: "[Ethan M. McCormick](https://mccormickneuro.github.io/), [Michelle L. Byrne](https://research.monash.edu/en/persons/michelle-byrne), [John C. Flournoy](https://johnflournoy.science/), [Katheryn L. Mills](http://devbrainlab.org/), & [Jennifer H. Pfiefer](https://dsn.uoregon.edu/)"
 date: "Published: `r format(Sys.time(), '%d %B, %Y')`"
 site: bookdown::bookdown_site
 documentclass: book
@@ -10,10 +10,10 @@ biblio-style: apalike
 #link-citations: yes
 # cover-image: path to the social sharing image like images/cover.jpg
 description: |
-  This is a code companion for [title].
+  This is a code companion for The Hitchhiker’s Guide to Longitudinal Models.
 link-citations: yes
-# url: 'https\://https://mccormickneuro.github.io//longitudinal-primer/'
-github-repo: 'McCormickNeuro/longitudinal-primer'
+url: https\://https://mccormickneuro.github.io/longitudinal-primer/
+github-repo: "McCormickNeuro/longitudinal-primer"
 ---
 
 # About {#about}
@@ -21,7 +21,7 @@ github-repo: 'McCormickNeuro/longitudinal-primer'
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-The following document is a code companion to [citation](), [doi](). 
+The following document is a code companion to [The Hitchhiker’s Guide to Longitudinal Models: A Primer on Model Selection for Repeated-Measures Methods](), [doi](). 
 
 Some general notes about this code companion:
 

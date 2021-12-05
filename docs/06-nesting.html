@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>The Shape of Development | The Hitchhiker’s Guide to Longitudinal Models</title>
+  <title>Nested Data | The Hitchhiker’s Guide to Longitudinal Models</title>
   <meta name="description" content="This is a code companion for The Hitchhiker’s Guide to Longitudinal Models." />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="The Shape of Development | The Hitchhiker’s Guide to Longitudinal Models" />
+  <meta property="og:title" content="Nested Data | The Hitchhiker’s Guide to Longitudinal Models" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://https://mccormickneuro.github.io/longitudinal-primer/" />
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="McCormickNeuro/longitudinal-primer" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="The Shape of Development | The Hitchhiker’s Guide to Longitudinal Models" />
+  <meta name="twitter:title" content="Nested Data | The Hitchhiker’s Guide to Longitudinal Models" />
   
   <meta name="twitter:description" content="This is a code companion for The Hitchhiker’s Guide to Longitudinal Models." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="03-time.html"/>
-<link rel="next" href="05-covariates.html"/>
+<link rel="prev" href="05-covariates.html"/>
+<link rel="next" href="07-datasets.html"/>
 <script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -231,36 +231,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="shape" class="section level1">
-<h1>The Shape of Development</h1>
-<p>Establishing the optimal shape of development.</p>
-<div id="polynomial-trajectories" class="section level2">
-<h2>Polynomial Trajectories</h2>
-<p><em>Show intercept-only, linear, quadratic, and inverse trajectories for MLM/LCM/LCSM (to a point)’</em></p>
+<div id="nesting" class="section level1">
+<h1>Nested Data</h1>
+<p>Different forms of nesting in longitudinal models.</p>
+<div id="categorical-predictors" class="section level2">
+<h2>Categorical Predictors</h2>
+<p><em>Show with MLM/LCM</em></p>
 </div>
-<div id="piecewise-trajectories" class="section level2">
-<h2>Piecewise Trajectories</h2>
-<p><em>Show linear/linear and linear/quadratic trajectories for MLM &amp; LCM, cubic splines with GAMM?’</em>
-<em>Show both 2-rate and added-rate</em></p>
+<div id="multiple-groups-models" class="section level2">
+<h2>Multiple Groups Models</h2>
+<p><em>Show with LCM/LCSM</em></p>
 </div>
-<div id="nonlinear-trajectories" class="section level2">
-<h2>Nonlinear Trajectories</h2>
-<p><em>MLM: show negatively accelerated exponential</em>
-<em>GAMM: full GAMM with b-splines</em>
-<em>LCM: Show 2 free-loading forms</em>
-<em>LCSM: dual-change model</em></p>
+<div id="fixed-effect-approach" class="section level2">
+<h2>Fixed Effect Approach</h2>
+<p><em>Show with MLM</em></p>
 </div>
-<div id="additional-considerations-1" class="section level2">
-<h2>Additional Considerations</h2>
-<div id="fixed-and-random-effects" class="section level3">
-<h3>Fixed and Random Effects</h3>
-<p><em>show in accelerated (braintime) data that we can estimate a quadratic overall trend even though no one has 4 observations</em></p>
-</div>
-<div id="generalizability" class="section level3">
-<h3>Generalizability</h3>
-<p><em>Code for cross-validiation?</em></p>
+<div id="random-effect-approach" class="section level2">
+<h2>Random Effect Approach</h2>
+<p><em>Show with MLM &amp; LCM</em>
+<em>ML-SEM</em>
+<em>Cluster correction: link to Mplus code</em></p>
 
-</div>
 </div>
 </div>
             </section>
@@ -268,8 +259,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="03-time.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="05-covariates.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="05-covariates.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="07-datasets.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -302,7 +293,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/McCormickNeuro/longitudinal-primer/edit/main/04-shape.Rmd",
+"link": "https://github.com/McCormickNeuro/longitudinal-primer/edit/main/06-nesting.Rmd",
 "text": "Edit"
 },
 "history": {

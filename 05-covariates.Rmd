@@ -1,0 +1,39 @@
+# Covariantes and Distal Outcomes {#covariates}
+
+Including covariates and distal outcomes into our models.
+
+```{r read data covariates, eval=F}
+```
+
+## Covariates
+### Time Invariant Covariates
+*Show with MLM/GAMM/LCM*
+*Need to check if TICs are possible with LCSMs (something Patrick said makes me think no)*
+*latent TIC?*
+*joint likelihood*
+
+### Time Varying Covariates
+*Show with MLM/GAMM/LCM*
+*LCM: show unique time-specific relationships*
+*show fixed vs random effects*
+*show contemporaneous and lagged effects*
+
+### Cross-level Interactions
+*Show with MLM and LCM*
+
+### Within- and Betwen-Person Variance
+*show approaches to centering in the MLM*
+*show RI-CLPM/LCM-SR model*
+
+### Multivariate Models
+*Show with MLM/LCM/LCSM*
+
+## Distal Outcomes
+*MLM: show 2 step model*
+*LCM: show simultaneous model and 2 step model*
+
+
+
+
+
+

@@ -3,11 +3,7 @@
 Establishing the optimal shape of development.
 
 ```{r read data shape, eval=F}
-#single.cohort = read.csv(paste0(datadir,'02-single-cohort.csv'))
 
-#multiple.cohort = read.csv(paste0(datadir,'01-abcd.csv'))
-
-#accelerated = read.csv(paste0(datadir,'02-accelerated.csv'))
 ```
 
 ## Polynomial Trajectories
