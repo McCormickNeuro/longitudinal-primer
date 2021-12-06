@@ -151,7 +151,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#mlm-outputs"><i class="fa fa-check"></i>MLM Outputs</a></li>
 <li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#mlm-plotting-model-implied-trajectories"><i class="fa fa-check"></i>MLM Plotting Model-Implied Trajectories</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#generalized-additive-mixed-model"><i class="fa fa-check"></i>Generalized Additive Mixed Model</a></li>
+<li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#generalized-additive-mixed-model"><i class="fa fa-check"></i>Generalized Additive Mixed Model</a>
+<ul>
+<li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#gamm-outputs"><i class="fa fa-check"></i>GAMM Outputs</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#latent-curve-model"><i class="fa fa-check"></i>Latent Curve Model</a>
 <ul>
 <li class="chapter" data-level="" data-path="02-canonical.html"><a href="02-canonical.html#lcm-syntax-and-model-fitting"><i class="fa fa-check"></i>LCM Syntax and Model Fitting</a></li>
@@ -235,57 +238,57 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="time" class="section level1">
 <h1>Time Structure</h1>
 <p>Now that we have covered the basic forms of each of the four modeling frameworks, we can start thinking more deeply about how to include time in our longitudinal models. We will begin by visualizing different kinds of assessment schedules and how our models might change depending on the structure of our observations. We will read in subsets of datasets that appear elsewhere in this primer codebook that follow each of three exemplar assessment types. The <code>single.cohort</code> and <code>accelerated</code> datasets were drawn from the <code>executive.function</code> and <code>feedback.learning</code> datasets we saw in the canonical models chapter. The <code>multiple.cohort</code> dataset has been drawn from the <code>adversity</code> dataset (for details, see the <a href="07-datasets.html#datasets">Datasets</a> chapter), which measures white matter development across 8 waves. These data contain fractional anisotropy (FA) measures derived from the forceps minor (<code>fmin</code>), a white matter tract that spans the hemispheres of the medial prefrontal cortex. We will see this dataset again when we consider predictors in the <a href="05-covariates.html#covariates">Covariates</a> chapter.</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="03-time.html#cb51-1" aria-hidden="true" tabindex="-1"></a>single.cohort <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/single-cohort.csv&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb51-2"><a href="03-time.html#cb51-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-3"><a href="03-time.html#cb51-3" aria-hidden="true" tabindex="-1"></a>multiple.cohort <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/multiple-cohort.csv&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb51-4"><a href="03-time.html#cb51-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-5"><a href="03-time.html#cb51-5" aria-hidden="true" tabindex="-1"></a>accelerated <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/accelerated.csv&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="03-time.html#cb47-1" aria-hidden="true" tabindex="-1"></a>single.cohort <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/single-cohort.csv&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb47-2"><a href="03-time.html#cb47-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-3"><a href="03-time.html#cb47-3" aria-hidden="true" tabindex="-1"></a>multiple.cohort <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/multiple-cohort.csv&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb47-4"><a href="03-time.html#cb47-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-5"><a href="03-time.html#cb47-5" aria-hidden="true" tabindex="-1"></a>accelerated <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/accelerated.csv&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <div id="assessment-schedules" class="section level2">
 <h2>Assessment Schedules</h2>
 <div id="single-cohort-data" class="section level3">
 <h3>Single Cohort Data</h3>
 <p>As we cover in the main text, single cohort studies are by far the most common in longitudinal modeling. Below we can plot the assessment schedule for the canonical models we worked with in the last chapter. To declutter the plot, we have selected 50 individuals from the larger dataset and ordered them by their age at the first assessment.</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="03-time.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
-<span id="cb52-2"><a href="03-time.html#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(single.cohort <span class="sc">%&gt;%</span></span>
-<span id="cb52-3"><a href="03-time.html#cb52-3" aria-hidden="true" tabindex="-1"></a>         <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="fu">starts_with</span>(<span class="st">&quot;age&quot;</span>),</span>
-<span id="cb52-4"><a href="03-time.html#cb52-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;.value&quot;</span>, <span class="st">&quot;wave&quot;</span>), </span>
-<span id="cb52-5"><a href="03-time.html#cb52-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">names_pattern =</span> <span class="st">&quot;(.+)(.)&quot;</span>),</span>
-<span id="cb52-6"><a href="03-time.html#cb52-6" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> id)) <span class="sc">+</span></span>
-<span id="cb52-7"><a href="03-time.html#cb52-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> id), <span class="at">size =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
-<span id="cb52-8"><a href="03-time.html#cb52-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="fu">as.factor</span>(wave))) <span class="sc">+</span> </span>
-<span id="cb52-9"><a href="03-time.html#cb52-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Age&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Individual&quot;</span>, <span class="at">color =</span> <span class="st">&quot;Wave&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb52-10"><a href="03-time.html#cb52-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;top&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="03-time.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
+<span id="cb48-2"><a href="03-time.html#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(single.cohort <span class="sc">%&gt;%</span></span>
+<span id="cb48-3"><a href="03-time.html#cb48-3" aria-hidden="true" tabindex="-1"></a>         <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="fu">starts_with</span>(<span class="st">&quot;age&quot;</span>),</span>
+<span id="cb48-4"><a href="03-time.html#cb48-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;.value&quot;</span>, <span class="st">&quot;wave&quot;</span>), </span>
+<span id="cb48-5"><a href="03-time.html#cb48-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">names_pattern =</span> <span class="st">&quot;(.+)(.)&quot;</span>),</span>
+<span id="cb48-6"><a href="03-time.html#cb48-6" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> id)) <span class="sc">+</span></span>
+<span id="cb48-7"><a href="03-time.html#cb48-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> id), <span class="at">size =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb48-8"><a href="03-time.html#cb48-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="fu">as.factor</span>(wave))) <span class="sc">+</span> </span>
+<span id="cb48-9"><a href="03-time.html#cb48-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Age&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Individual&quot;</span>, <span class="at">color =</span> <span class="st">&quot;Wave&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb48-10"><a href="03-time.html#cb48-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;top&quot;</span>)</span></code></pre></div>
 <p><img src="longitudinal_primer_files/figure-html/single%20cohort%2003-1.png" width="672" /></p>
 <p>We can see that there is some noise in the assessment schedule, as individuals are not observed at <em>exactly</em> intervals, however, we can see clear separation in ages between each wave. Because we cover this data extensively in the <a href="02-canonical.html#canon">Canonical Models</a> chapter, we will not show model fits here. However, we should note that because of the structure of this data, age and wave of assessment are highly collinear (and are more so the better job we do at observing individuals at regular intervals). This will impact our considerations about time later.</p>
 </div>
 <div id="multiple-cohort-data" class="section level3">
 <h3>Multiple Cohort Data</h3>
 <p>A slightly more complex assessment schedule design is the multiple cohort design. In these designs, we have multiple, discrete ages at the first assessment which vary across cohorts. Here we can plot our <code>multiple.cohort</code> data, which is organized into three cohorts, beginning at ages <span class="math inline">\(4\)</span>, <span class="math inline">\(5\)</span>, and <span class="math inline">\(6\)</span>. While at later ages the cohorts mix somewhat in terms of ages sampled, no individual is observed at consecutive ages. This highlights a key advantage of the multiple cohort design; they can often provide coverage of a wider developmental window without requiring additional subjects or waves of assessment using principles of planned missingness.</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="03-time.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(multiple.cohort <span class="sc">%&gt;%</span> </span>
-<span id="cb53-2"><a href="03-time.html#cb53-2" aria-hidden="true" tabindex="-1"></a>         <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="fu">starts_with</span>(<span class="st">&quot;fmin&quot;</span>),</span>
-<span id="cb53-3"><a href="03-time.html#cb53-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;.value&quot;</span>, <span class="st">&quot;age&quot;</span>),</span>
-<span id="cb53-4"><a href="03-time.html#cb53-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">names_pattern =</span> <span class="st">&quot;(....)(.+)&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb53-5"><a href="03-time.html#cb53-5" aria-hidden="true" tabindex="-1"></a>         <span class="fu">drop_na</span>(fmin) <span class="sc">%&gt;%</span> </span>
-<span id="cb53-6"><a href="03-time.html#cb53-6" aria-hidden="true" tabindex="-1"></a>         <span class="fu">mutate</span>(<span class="at">age =</span> <span class="fu">as.numeric</span>(age)), </span>
-<span id="cb53-7"><a href="03-time.html#cb53-7" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> id)) <span class="sc">+</span></span>
-<span id="cb53-8"><a href="03-time.html#cb53-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> id), <span class="at">size =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
-<span id="cb53-9"><a href="03-time.html#cb53-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="fu">as.factor</span>(age), <span class="at">shape =</span> <span class="fu">factor</span>(cohort)), <span class="at">size=</span><span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb53-10"><a href="03-time.html#cb53-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Age&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Individual&quot;</span>, <span class="at">color =</span> <span class="st">&quot;Wave&quot;</span>, <span class="at">shape =</span> <span class="st">&quot;Cohort&quot;</span>) <span class="sc">+</span></span>
-<span id="cb53-11"><a href="03-time.html#cb53-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;top&quot;</span>) <span class="sc">+</span> <span class="fu">guides</span>(<span class="at">color =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="03-time.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(multiple.cohort <span class="sc">%&gt;%</span> </span>
+<span id="cb49-2"><a href="03-time.html#cb49-2" aria-hidden="true" tabindex="-1"></a>         <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="fu">starts_with</span>(<span class="st">&quot;fmin&quot;</span>),</span>
+<span id="cb49-3"><a href="03-time.html#cb49-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;.value&quot;</span>, <span class="st">&quot;age&quot;</span>),</span>
+<span id="cb49-4"><a href="03-time.html#cb49-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">names_pattern =</span> <span class="st">&quot;(....)(.+)&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb49-5"><a href="03-time.html#cb49-5" aria-hidden="true" tabindex="-1"></a>         <span class="fu">drop_na</span>(fmin) <span class="sc">%&gt;%</span> </span>
+<span id="cb49-6"><a href="03-time.html#cb49-6" aria-hidden="true" tabindex="-1"></a>         <span class="fu">mutate</span>(<span class="at">age =</span> <span class="fu">as.numeric</span>(age)), </span>
+<span id="cb49-7"><a href="03-time.html#cb49-7" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> id)) <span class="sc">+</span></span>
+<span id="cb49-8"><a href="03-time.html#cb49-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> id), <span class="at">size =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb49-9"><a href="03-time.html#cb49-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="fu">as.factor</span>(age), <span class="at">shape =</span> <span class="fu">factor</span>(cohort)), <span class="at">size=</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb49-10"><a href="03-time.html#cb49-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Age&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Individual&quot;</span>, <span class="at">color =</span> <span class="st">&quot;Wave&quot;</span>, <span class="at">shape =</span> <span class="st">&quot;Cohort&quot;</span>) <span class="sc">+</span></span>
+<span id="cb49-11"><a href="03-time.html#cb49-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;top&quot;</span>) <span class="sc">+</span> <span class="fu">guides</span>(<span class="at">color =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
 <p><img src="longitudinal_primer_files/figure-html/multiple%20cohort%2001-1.png" width="672" /></p>
 <p>Here we will demonstrate how one might model this type of data using the linear latent curve model for simplicity; however, we could implement this model in any of the 4 modeling frameworks we discussed. To preface the model results, the values of the <code>fmin</code> outcome were normalized to the first age assessed (<code>fmin4</code>) because of the relatively small natural scale of FA values. We have also read in the full <code>adversity</code> data file due to convergence issues with the subsample in <code>multiple.cohort</code>.</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="03-time.html#cb54-1" aria-hidden="true" tabindex="-1"></a>mc.wm.model <span class="ot">&lt;-</span> <span class="st">&quot;int =~ 1*fmin4 + 1*fmin5 + 1*fmin6 + 1*fmin7 + </span></span>
-<span id="cb54-2"><a href="03-time.html#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="st">                       1*fmin8 + 1*fmin9 + 1*fmin10 + 1*fmin11</span></span>
-<span id="cb54-3"><a href="03-time.html#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="st">                slp =~ 0*fmin4 + 1*fmin5 + 2*fmin6 + 3*fmin7 + </span></span>
-<span id="cb54-4"><a href="03-time.html#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="st">                       4*fmin8 + 5*fmin9 + 6*fmin10 + 7*fmin11</span></span>
-<span id="cb54-5"><a href="03-time.html#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span>
-<span id="cb54-6"><a href="03-time.html#cb54-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-7"><a href="03-time.html#cb54-7" aria-hidden="true" tabindex="-1"></a>mc.wm <span class="ot">&lt;-</span> <span class="fu">growth</span>(mc.wm.model,</span>
-<span id="cb54-8"><a href="03-time.html#cb54-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> adversity,</span>
-<span id="cb54-9"><a href="03-time.html#cb54-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">estimator =</span> <span class="st">&quot;ML&quot;</span>,</span>
-<span id="cb54-10"><a href="03-time.html#cb54-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">missing =</span> <span class="st">&quot;FIML&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="03-time.html#cb50-1" aria-hidden="true" tabindex="-1"></a>mc.wm.model <span class="ot">&lt;-</span> <span class="st">&quot;int =~ 1*fmin4 + 1*fmin5 + 1*fmin6 + 1*fmin7 + </span></span>
+<span id="cb50-2"><a href="03-time.html#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="st">                       1*fmin8 + 1*fmin9 + 1*fmin10 + 1*fmin11</span></span>
+<span id="cb50-3"><a href="03-time.html#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="st">                slp =~ 0*fmin4 + 1*fmin5 + 2*fmin6 + 3*fmin7 + </span></span>
+<span id="cb50-4"><a href="03-time.html#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="st">                       4*fmin8 + 5*fmin9 + 6*fmin10 + 7*fmin11</span></span>
+<span id="cb50-5"><a href="03-time.html#cb50-5" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span>
+<span id="cb50-6"><a href="03-time.html#cb50-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-7"><a href="03-time.html#cb50-7" aria-hidden="true" tabindex="-1"></a>mc.wm <span class="ot">&lt;-</span> <span class="fu">growth</span>(mc.wm.model,</span>
+<span id="cb50-8"><a href="03-time.html#cb50-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> adversity,</span>
+<span id="cb50-9"><a href="03-time.html#cb50-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">estimator =</span> <span class="st">&quot;ML&quot;</span>,</span>
+<span id="cb50-10"><a href="03-time.html#cb50-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">missing =</span> <span class="st">&quot;FIML&quot;</span>)</span></code></pre></div>
 <p>The real leverage that FIML gives us is apparent using this model. We can measure across <span class="math inline">\(8\)</span> ages despite no individual having more than <span class="math inline">\(4\)</span> observations. We can see the abbreviated results below.</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="03-time.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mc.wm, <span class="at">fit.measures =</span> <span class="cn">FALSE</span>, <span class="at">estimates =</span> <span class="cn">TRUE</span>, <span class="at">standardize =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="03-time.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mc.wm, <span class="at">fit.measures =</span> <span class="cn">FALSE</span>, <span class="at">estimates =</span> <span class="cn">TRUE</span>, <span class="at">standardize =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## lavaan 0.6-9 ended normally after 34 iterations
 ## 
 ##   Estimator                                         ML
@@ -359,7 +362,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##     int               0.424    0.115    3.680    0.000    1.000    1.000
 ##     slp               0.015    0.006    2.645    0.008    1.000    1.000</code></pre>
 <p>With this model, we will be warned that coverage for certain pairwise combinations is <span class="math inline">\(&lt; 10\%\)</span>, which just reflects the fact that almost no individuals gave data at adjacent ages. We could inspect the model coverage using the <code>lavInspect()</code> function using the argument <code>what = "coverage"</code>. Note the values at or near <span class="math inline">\(0\)</span> on the 1-off diagonal (e.g., <code>fmin5</code> and <code>fmin4</code>).</p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="03-time.html#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lavInspect</span>(mc.wm, <span class="at">what =</span> <span class="st">&quot;coverage&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="03-time.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lavInspect</span>(mc.wm, <span class="at">what =</span> <span class="st">&quot;coverage&quot;</span>)</span></code></pre></div>
 <pre><code>##        fmin4 fmin5 fmin6 fmin7 fmin8 fmin9 fmin10 fmin11
 ## fmin4  0.301                                            
 ## fmin5  0.000 0.415                                      
@@ -370,29 +373,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## fmin10 0.069 0.111 0.200 0.040 0.244 0.035 0.333        
 ## fmin11 0.151 0.237 0.054 0.341 0.040 0.358 0.030  0.427</code></pre>
 <p>Finally, we can generate a path diagram, highlighting that the intercept and slope are estimated from all ages even though no individual is measured across all of those ages.</p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="03-time.html#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(mc.wm, </span>
-<span id="cb59-2"><a href="03-time.html#cb59-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">intercepts =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb59-3"><a href="03-time.html#cb59-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">edge.color =</span> <span class="st">&quot;black&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="03-time.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(mc.wm, </span>
+<span id="cb55-2"><a href="03-time.html#cb55-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">intercepts =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb55-3"><a href="03-time.html#cb55-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">edge.color =</span> <span class="st">&quot;black&quot;</span>)</span></code></pre></div>
 <p><img src="longitudinal_primer_files/figure-html/multiple%20cohort%2006-1.png" width="672" /></p>
 </div>
 <div id="accelerated-design" class="section level3">
 <h3>Accelerated Design</h3>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="03-time.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
-<span id="cb60-2"><a href="03-time.html#cb60-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb60-3"><a href="03-time.html#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(accelerated <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(id) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">length</span>(<span class="fu">unique</span>(wave)) <span class="sc">==</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb60-4"><a href="03-time.html#cb60-4" aria-hidden="true" tabindex="-1"></a>         <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> <span class="fu">filter</span>(id <span class="sc">%in%</span> <span class="fu">sample</span>(id, <span class="dv">100</span>)), </span>
-<span id="cb60-5"><a href="03-time.html#cb60-5" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> id)) <span class="sc">+</span></span>
-<span id="cb60-6"><a href="03-time.html#cb60-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> id), <span class="at">size =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
-<span id="cb60-7"><a href="03-time.html#cb60-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="fu">as.factor</span>(wave))) <span class="sc">+</span> </span>
-<span id="cb60-8"><a href="03-time.html#cb60-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Age&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Individual&quot;</span>, <span class="at">color =</span> <span class="st">&quot;Wave&quot;</span>, <span class="at">shape =</span> <span class="st">&quot;Cohort&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb60-9"><a href="03-time.html#cb60-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;top&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="03-time.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
+<span id="cb56-2"><a href="03-time.html#cb56-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-3"><a href="03-time.html#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(accelerated <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(id) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">length</span>(<span class="fu">unique</span>(wave)) <span class="sc">==</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb56-4"><a href="03-time.html#cb56-4" aria-hidden="true" tabindex="-1"></a>         <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> <span class="fu">filter</span>(id <span class="sc">%in%</span> <span class="fu">sample</span>(id, <span class="dv">100</span>)), </span>
+<span id="cb56-5"><a href="03-time.html#cb56-5" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> id)) <span class="sc">+</span></span>
+<span id="cb56-6"><a href="03-time.html#cb56-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> id), <span class="at">size =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb56-7"><a href="03-time.html#cb56-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="fu">as.factor</span>(wave))) <span class="sc">+</span> </span>
+<span id="cb56-8"><a href="03-time.html#cb56-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Age&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Individual&quot;</span>, <span class="at">color =</span> <span class="st">&quot;Wave&quot;</span>, <span class="at">shape =</span> <span class="st">&quot;Cohort&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb56-9"><a href="03-time.html#cb56-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;top&quot;</span>)</span></code></pre></div>
 <p><img src="longitudinal_primer_files/figure-html/accelerated-1.png" width="672" /></p>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="03-time.html#cb61-1" aria-hidden="true" tabindex="-1"></a>mlm.lmerTest <span class="ot">&lt;-</span> <span class="fu">lmer</span>(<span class="fu">scale</span>(modularity) <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id), </span>
-<span id="cb61-2"><a href="03-time.html#cb61-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">na.action =</span> na.omit,</span>
-<span id="cb61-3"><a href="03-time.html#cb61-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">REML =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb61-4"><a href="03-time.html#cb61-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> accelerated)</span>
-<span id="cb61-5"><a href="03-time.html#cb61-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-6"><a href="03-time.html#cb61-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mlm.lmerTest)</span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="03-time.html#cb57-1" aria-hidden="true" tabindex="-1"></a>mlm.lmerTest <span class="ot">&lt;-</span> <span class="fu">lmer</span>(<span class="fu">scale</span>(modularity) <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id), </span>
+<span id="cb57-2"><a href="03-time.html#cb57-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">na.action =</span> na.omit,</span>
+<span id="cb57-3"><a href="03-time.html#cb57-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">REML =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb57-4"><a href="03-time.html#cb57-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> accelerated)</span>
+<span id="cb57-5"><a href="03-time.html#cb57-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-6"><a href="03-time.html#cb57-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mlm.lmerTest)</span></code></pre></div>
 <pre><code>## Linear mixed model fit by REML. t-tests use Satterthwaite&#39;s method [&#39;lmerModLmerTest&#39;]
 ## Formula: scale(modularity) ~ 1 + age + I(age^2) + (1 | id)
 ##    Data: accelerated
@@ -421,15 +424,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##          (Intr) age   
 ## age      -0.982       
 ## I(age^2)  0.940 -0.986</code></pre>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="03-time.html#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_model</span>(mlm.lmerTest,</span>
-<span id="cb63-2"><a href="03-time.html#cb63-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">show.se =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb63-3"><a href="03-time.html#cb63-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">show.df =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb63-4"><a href="03-time.html#cb63-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">show.ci =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb63-5"><a href="03-time.html#cb63-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">digits =</span> <span class="dv">3</span>,</span>
-<span id="cb63-6"><a href="03-time.html#cb63-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">pred.labels =</span> <span class="fu">c</span>(<span class="st">&quot;Intercept&quot;</span>, <span class="st">&quot;Age&quot;</span>, <span class="st">&quot;Age^2&quot;</span>),</span>
-<span id="cb63-7"><a href="03-time.html#cb63-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">dv.labels =</span> <span class="st">&quot;Modularity&quot;</span>,</span>
-<span id="cb63-8"><a href="03-time.html#cb63-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">string.se =</span> <span class="st">&quot;SE&quot;</span>,</span>
-<span id="cb63-9"><a href="03-time.html#cb63-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">string.p =</span> <span class="st">&quot;P-Value&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="03-time.html#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_model</span>(mlm.lmerTest,</span>
+<span id="cb59-2"><a href="03-time.html#cb59-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">show.se =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb59-3"><a href="03-time.html#cb59-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">show.df =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb59-4"><a href="03-time.html#cb59-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">show.ci =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb59-5"><a href="03-time.html#cb59-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">digits =</span> <span class="dv">3</span>,</span>
+<span id="cb59-6"><a href="03-time.html#cb59-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">pred.labels =</span> <span class="fu">c</span>(<span class="st">&quot;Intercept&quot;</span>, <span class="st">&quot;Age&quot;</span>, <span class="st">&quot;Age^2&quot;</span>),</span>
+<span id="cb59-7"><a href="03-time.html#cb59-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">dv.labels =</span> <span class="st">&quot;Modularity&quot;</span>,</span>
+<span id="cb59-8"><a href="03-time.html#cb59-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">string.se =</span> <span class="st">&quot;SE&quot;</span>,</span>
+<span id="cb59-9"><a href="03-time.html#cb59-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">string.p =</span> <span class="st">&quot;P-Value&quot;</span>)</span></code></pre></div>
 <pre><code>## Argument &#39;df_method&#39; is deprecated. Please use &#39;ci_method&#39; instead.</code></pre>
 <table style="border-collapse:collapse; border:none;">
 <tr>
@@ -551,25 +554,25 @@ Marginal R<sup>2</sup> / Conditional R<sup>2</sup>
 </div>
 <div id="time-coding" class="section level2">
 <h2>Time Coding</h2>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="03-time.html#cb65-1" aria-hidden="true" tabindex="-1"></a>initial.status <span class="ot">&lt;-</span> <span class="st">&quot;int =~ 1*dlpfc1 + 1*dlpfc2 + 1*dlpfc3 + 1*dlpfc4</span></span>
-<span id="cb65-2"><a href="03-time.html#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="st">                   slp =~ 0*dlpfc1 + 1*dlpfc2 + 2*dlpfc3 + 3*dlpfc4&quot;</span></span>
-<span id="cb65-3"><a href="03-time.html#cb65-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb65-4"><a href="03-time.html#cb65-4" aria-hidden="true" tabindex="-1"></a>initial.status.fit <span class="ot">&lt;-</span> <span class="fu">growth</span>(initial.status, </span>
-<span id="cb65-5"><a href="03-time.html#cb65-5" aria-hidden="true" tabindex="-1"></a>                             <span class="at">data =</span> single.cohort,</span>
-<span id="cb65-6"><a href="03-time.html#cb65-6" aria-hidden="true" tabindex="-1"></a>                             <span class="at">estimator =</span> <span class="st">&quot;ML&quot;</span>,</span>
-<span id="cb65-7"><a href="03-time.html#cb65-7" aria-hidden="true" tabindex="-1"></a>                             <span class="at">missing=</span><span class="st">&quot;FIML&quot;</span>)</span>
-<span id="cb65-8"><a href="03-time.html#cb65-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb65-9"><a href="03-time.html#cb65-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb65-10"><a href="03-time.html#cb65-10" aria-hidden="true" tabindex="-1"></a>final.status <span class="ot">&lt;-</span> <span class="st">&quot;int =~ 1*dlpfc1 + 1*dlpfc2 + 1*dlpfc3 + 1*dlpfc4</span></span>
-<span id="cb65-11"><a href="03-time.html#cb65-11" aria-hidden="true" tabindex="-1"></a><span class="st">                 slp =~ 0*dlpfc1 + 1*dlpfc2 + 2*dlpfc3 + 3*dlpfc4&quot;</span></span>
-<span id="cb65-12"><a href="03-time.html#cb65-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb65-13"><a href="03-time.html#cb65-13" aria-hidden="true" tabindex="-1"></a>final.status.fit <span class="ot">&lt;-</span> <span class="fu">growth</span>(final.status, </span>
-<span id="cb65-14"><a href="03-time.html#cb65-14" aria-hidden="true" tabindex="-1"></a>                           <span class="at">data =</span> single.cohort,</span>
-<span id="cb65-15"><a href="03-time.html#cb65-15" aria-hidden="true" tabindex="-1"></a>                           <span class="at">estimator =</span> <span class="st">&quot;ML&quot;</span>,</span>
-<span id="cb65-16"><a href="03-time.html#cb65-16" aria-hidden="true" tabindex="-1"></a>                           <span class="at">missing =</span> <span class="st">&quot;FIML&quot;</span>)</span>
-<span id="cb65-17"><a href="03-time.html#cb65-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb65-18"><a href="03-time.html#cb65-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb65-19"><a href="03-time.html#cb65-19" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(initial.status.fit, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">estimates=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="03-time.html#cb61-1" aria-hidden="true" tabindex="-1"></a>initial.status <span class="ot">&lt;-</span> <span class="st">&quot;int =~ 1*dlpfc1 + 1*dlpfc2 + 1*dlpfc3 + 1*dlpfc4</span></span>
+<span id="cb61-2"><a href="03-time.html#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="st">                   slp =~ 0*dlpfc1 + 1*dlpfc2 + 2*dlpfc3 + 3*dlpfc4&quot;</span></span>
+<span id="cb61-3"><a href="03-time.html#cb61-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-4"><a href="03-time.html#cb61-4" aria-hidden="true" tabindex="-1"></a>initial.status.fit <span class="ot">&lt;-</span> <span class="fu">growth</span>(initial.status, </span>
+<span id="cb61-5"><a href="03-time.html#cb61-5" aria-hidden="true" tabindex="-1"></a>                             <span class="at">data =</span> single.cohort,</span>
+<span id="cb61-6"><a href="03-time.html#cb61-6" aria-hidden="true" tabindex="-1"></a>                             <span class="at">estimator =</span> <span class="st">&quot;ML&quot;</span>,</span>
+<span id="cb61-7"><a href="03-time.html#cb61-7" aria-hidden="true" tabindex="-1"></a>                             <span class="at">missing=</span><span class="st">&quot;FIML&quot;</span>)</span>
+<span id="cb61-8"><a href="03-time.html#cb61-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-9"><a href="03-time.html#cb61-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-10"><a href="03-time.html#cb61-10" aria-hidden="true" tabindex="-1"></a>final.status <span class="ot">&lt;-</span> <span class="st">&quot;int =~ 1*dlpfc1 + 1*dlpfc2 + 1*dlpfc3 + 1*dlpfc4</span></span>
+<span id="cb61-11"><a href="03-time.html#cb61-11" aria-hidden="true" tabindex="-1"></a><span class="st">                 slp =~ 0*dlpfc1 + 1*dlpfc2 + 2*dlpfc3 + 3*dlpfc4&quot;</span></span>
+<span id="cb61-12"><a href="03-time.html#cb61-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-13"><a href="03-time.html#cb61-13" aria-hidden="true" tabindex="-1"></a>final.status.fit <span class="ot">&lt;-</span> <span class="fu">growth</span>(final.status, </span>
+<span id="cb61-14"><a href="03-time.html#cb61-14" aria-hidden="true" tabindex="-1"></a>                           <span class="at">data =</span> single.cohort,</span>
+<span id="cb61-15"><a href="03-time.html#cb61-15" aria-hidden="true" tabindex="-1"></a>                           <span class="at">estimator =</span> <span class="st">&quot;ML&quot;</span>,</span>
+<span id="cb61-16"><a href="03-time.html#cb61-16" aria-hidden="true" tabindex="-1"></a>                           <span class="at">missing =</span> <span class="st">&quot;FIML&quot;</span>)</span>
+<span id="cb61-17"><a href="03-time.html#cb61-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-18"><a href="03-time.html#cb61-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-19"><a href="03-time.html#cb61-19" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(initial.status.fit, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">estimates=</span><span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## lavaan 0.6-9 ended normally after 22 iterations
 ## 
 ##   Estimator                                         ML
@@ -615,7 +618,7 @@ Marginal R<sup>2</sup> / Conditional R<sup>2</sup>
 ## Standardized Root Mean Square Residual:
 ## 
 ##   SRMR                                           0.113</code></pre>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="03-time.html#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(final.status.fit, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">estimates=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="03-time.html#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(final.status.fit, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">estimates=</span><span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## lavaan 0.6-9 ended normally after 22 iterations
 ## 
 ##   Estimator                                         ML
@@ -661,7 +664,7 @@ Marginal R<sup>2</sup> / Conditional R<sup>2</sup>
 ## Standardized Root Mean Square Residual:
 ## 
 ##   SRMR                                           0.113</code></pre>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="03-time.html#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(initial.status.fit) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="03-time.html#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(initial.status.fit) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -1306,7 +1309,7 @@ slp ~1
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="03-time.html#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(final.status.fit) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="03-time.html#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(final.status.fit) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -1957,11 +1960,11 @@ slp ~1
 <h2>Additional Considerations</h2>
 <div id="alternative-metrics-of-time" class="section level3">
 <h3>Alternative Metrics of Time</h3>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="03-time.html#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(accelerated, <span class="fu">aes</span>(<span class="at">x =</span> puberty, <span class="at">y =</span> id)) <span class="sc">+</span></span>
-<span id="cb71-2"><a href="03-time.html#cb71-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> id), <span class="at">size =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
-<span id="cb71-3"><a href="03-time.html#cb71-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="fu">as.factor</span>(wave))) <span class="sc">+</span> </span>
-<span id="cb71-4"><a href="03-time.html#cb71-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Age&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Individual&quot;</span>, <span class="at">color =</span> <span class="st">&quot;Wave&quot;</span>, <span class="at">shape =</span> <span class="st">&quot;Cohort&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb71-5"><a href="03-time.html#cb71-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;top&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="03-time.html#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(accelerated, <span class="fu">aes</span>(<span class="at">x =</span> puberty, <span class="at">y =</span> id)) <span class="sc">+</span></span>
+<span id="cb67-2"><a href="03-time.html#cb67-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> id), <span class="at">size =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb67-3"><a href="03-time.html#cb67-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="fu">as.factor</span>(wave))) <span class="sc">+</span> </span>
+<span id="cb67-4"><a href="03-time.html#cb67-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Age&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Individual&quot;</span>, <span class="at">color =</span> <span class="st">&quot;Wave&quot;</span>, <span class="at">shape =</span> <span class="st">&quot;Cohort&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb67-5"><a href="03-time.html#cb67-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;top&quot;</span>)</span></code></pre></div>
 <pre><code>## Warning: Removed 93 row(s) containing missing values (geom_path).</code></pre>
 <pre><code>## Warning: Removed 93 rows containing missing values (geom_point).</code></pre>
 <p><img src="longitudinal_primer_files/figure-html/alternative%20time%20metric-1.png" width="672" />
