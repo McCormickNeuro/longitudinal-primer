@@ -17,6 +17,8 @@ Different forms of nesting in longitudinal models.
 ## Random Effect Approach
 *Show with MLM & LCM*
 *ML-SEM*
+
+## Cluster Correction
 *Cluster correction: link to Mplus code*
 
 

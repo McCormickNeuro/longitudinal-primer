@@ -1,4 +1,4 @@
-# Covariantes and Distal Outcomes {#covariates}
+# Covariates and Distal Outcomes {#covariates}
 
 Including covariates and distal outcomes into our models.
 
