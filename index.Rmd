@@ -21,7 +21,7 @@ github-repo: "McCormickNeuro/longitudinal-primer"
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-The following document is a code companion to [The Hitchhiker’s Guide to Longitudinal Models: A Primer on Model Selection for Repeated-Measures Methods](), [doi](). 
+The following document is a code companion to [The Hitchhiker’s Guide to Longitudinal Models: A Primer on Model Selection for Repeated-Measures Methods](https://psyarxiv.com/ga4qz), [https://osf.io/bn6yu/](https://osf.io/bn6yu/). 
 
 Some general notes about this code companion:
 
