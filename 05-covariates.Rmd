@@ -37,3 +37,6 @@ Including covariates and distal outcomes into our models.
 
 
 
+```{r, cleanup covariates, message = FALSE, warning = FALSE, error = FALSE, echo = FALSE}
+rm(list = ls(all.names = FALSE))
+```

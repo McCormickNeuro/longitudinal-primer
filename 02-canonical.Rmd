@@ -20,7 +20,7 @@ feedback.learning <- read.csv("data/feedback-learning.csv") %>%
 
 While we will usually read in the wide and long versions of the data directly, here we will demonstrate how to reformat the more common wide data format (i.e., each row corresponds to a different individual and repeated measures are new variables) into the long data format (i.e., each row corresponds to a different repeated measure with multiple rows per person). We can use the `pivot_longer()` function from the [**tidyr**](https://tidyr.tidyverse.org/) package (alternatives include `melt()` from the [**reshape**](https://cran.r-project.org/web/packages/reshape2/index.html) package). We will collect all the columns that begin with the string `dlpfc` and pass the values into one column, while creating a new column `wave` from their number indices (e.g., `1` for `dlpfc1`). We can then use the `mutate()` function from the [**dplyr**](https://dplyr.tidyverse.org/) package to change the wave colum from a character to a numeric variable and subtract $1$ from every value so that the first wave is coded as $0$ (this will be important for interpretations later).
 
-Details regarding these datasets can be found in [Datasets](#datasets). However, shortly, the `executive-function.csv` file contains data for 342 adolescents measured up to 5 times. At each wave, adolescents played an executive function task while in an fMRI scanner. For now, we will only use the DLPFC measures to build the canonical growth models. The first 5 individuals are shown below. These data are in wide format.
+Details regarding these datasets can be found in [Datasets](#datasets). However, shortly, the `executive-function.csv` file contains data for $342$ adolescents measured up to $4$ times. At each wave, adolescents played an executive function task while in an fMRI scanner. For now, we will only use the DLPFC measures to build the canonical growth models. The first $5$ individuals are shown below. These data are in wide format.
 
 ```{r, display executive.function wide 02, message = FALSE, warning = FALSE, error = FALSE}
 executive.function %>% filter(id <= 5) %>%
@@ -50,7 +50,7 @@ executive.function.long %>% filter(id <= 5) %>%
   kableExtra::row_spec(row = 0, align = "c")
 ```
 
-The `feedback-learning.csv` file contains data for 297 adolescents and young adults measured up to 3 times. At each wave, individuals played a feedback learning task while in an fMRI scanner. ROI timeseries were then used to construct a brain network graph and the modularity of that graph was calculated. Here we will focus on these modularity values. The first 5 individuals are shown below.
+The `feedback-learning.csv` file contains data for $297$ adolescents and young adults measured up to $3$ times. At each wave, individuals played a feedback learning task while in an fMRI scanner. ROI timeseries were then used to construct a brain network graph and the modularity of that graph was calculated. Here we will focus on these modularity values. The first $5$ individuals are shown below.
 
 ```{r, display feedback.learning 02, message = FALSE, warning = FALSE, error = FALSE}
 feedback.learning %>% filter(id <= 5) %>%
@@ -131,7 +131,7 @@ mlm.nlme <- nlme::lme(dlpfc ~ 1 + wave,
                       method = "REML",
                       data = executive.function.long)
 
-summary(mlm.nlme, correlation=FALSE)
+summary(mlm.nlme, correlation = FALSE)
 ```
 
 The first section of the model output shows the loglikelihood (`logLik`) and associated absolute fit indices (`AIC` and `BIC`). The `Random effects` section shows parameter estimtaes of the standard deviations (`StdDev`) and correlations (`Corr`) of the random effects (the identities are denoted by labels to the left of the matrix), as well as the level-1 error standard deviation (`Residual`). We can see that the standard deviation of the random intercept ($StdDev = 0.812$) is substantially larger than that of the random slope ($StdDev = 0.223$). This is often the case and has more to do with the scaling of the effect than anything else. The correlation between the random effects ($Corr = -0.354$) suggests that individual with higher initial levels of DLPFC activation show lower slope values . We will need to interpret this in the context of the fixed effects (e.g., are the slopes less positive, or more negative?), and plotting the predicted effects is often useful for this interpretation.
@@ -150,7 +150,7 @@ mlm.lme4 <- lme4::lmer(dlpfc ~ 1 + wave + (1 + wave | id),
                        REML = TRUE,
                        data = executive.function.long)
 
-summary(mlm.lme4, correlation=FALSE)
+summary(mlm.lme4, correlation = FALSE)
 ```
 
 The main differences in the output are that `lmer()` gives the variance of the random effects in addition to the standard deviations, and that there are no longer *p*-values associated with the fixed effects. However, all the values are identical to the `lme()` solution (which should make us sigh in relief).
@@ -165,7 +165,7 @@ mlm.lmerTest <- lmerTest::lmer(dlpfc ~ 1 + wave + (1 + wave | id),
                                REML = TRUE,
                                data = executive.function.long)
 
-summary(mlm.lmerTest, correlation=FALSE)
+summary(mlm.lmerTest, correlation = FALSE)
 ```
 
 ### MLM Outputs
@@ -558,3 +558,6 @@ ggplot2::ggplot(data.frame(id=lcsm.proportional@Data@case.idx[[1]],
   theme(legend.position = "none") 
 ```
 
+```{r, cleanup canon, message = FALSE, warning = FALSE, error = FALSE, echo = FALSE}
+rm(list = ls(all.names = FALSE))
+```

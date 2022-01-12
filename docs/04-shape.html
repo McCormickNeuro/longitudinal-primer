@@ -185,7 +185,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html"><i class="fa fa-check"></i>The Shape of Development</a>
 <ul>
-<li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#polynomial-trajectories"><i class="fa fa-check"></i>Polynomial Trajectories</a></li>
+<li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#polynomial-trajectories"><i class="fa fa-check"></i>Polynomial Trajectories</a>
+<ul>
+<li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#intercept-only-model"><i class="fa fa-check"></i>Intercept-Only Model</a></li>
+<li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#linear-model"><i class="fa fa-check"></i>Linear Model</a></li>
+<li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#quadratic-model"><i class="fa fa-check"></i>Quadratic Model</a></li>
+<li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#inverse-model"><i class="fa fa-check"></i>Inverse Model</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#piecewise-trajectories"><i class="fa fa-check"></i>Piecewise Trajectories</a></li>
 <li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#nonlinear-trajectories"><i class="fa fa-check"></i>Nonlinear Trajectories</a></li>
 <li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#additional-considerations-1"><i class="fa fa-check"></i>Additional Considerations</a>
@@ -237,15 +243,2666 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="shape" class="section level1">
 <h1>The Shape of Development</h1>
-<p>Establishing the optimal shape of development.</p>
+<p>However, we define the underlying metric of time to structure our longitudinal model, one of the key substantive questions often underlying work in developmental science is to characterize the course that a given construct takes over time. Here we will highlight many of the different developmental trajectories that we can fit to our data, starting with relatively simple polynomial shapes and working our way up to modeling fully nonlinear trends. In addition to the <code>feedback.learning</code> data we have used thus far, we will also use data drawn from the <code>external-math.csv</code> and <code>adversity.csv</code> files. The <code>external.math</code> data contains up to <span class="math inline">\(5\)</span> repeated observations from <span class="math inline">\(405\)</span> children aged <span class="math inline">\(6\)</span> to <span class="math inline">\(14\)</span>, measured once every <span class="math inline">\(2\)</span> years. Here we will focus on measures of externalizing behavior and math proficiency. The <code>adversity</code> data contains fractional anisotropy (FA) measures from <span class="math inline">\(398\)</span> children measured up to <span class="math inline">\(4\)</span> times across ages <span class="math inline">\(4\)</span> to <span class="math inline">\(11\)</span>. We previously used a subset of this data in the <a href="03-time.html#time">Time</a> chapter, but here we will utilize the entire sample.</p>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="04-shape.html#cb91-1" aria-hidden="true" tabindex="-1"></a>external.math <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/external-math.csv&quot;</span>)</span>
+<span id="cb91-2"><a href="04-shape.html#cb91-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb91-3"><a href="04-shape.html#cb91-3" aria-hidden="true" tabindex="-1"></a>adversity <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/adversity.csv&quot;</span>)</span>
+<span id="cb91-4"><a href="04-shape.html#cb91-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb91-5"><a href="04-shape.html#cb91-5" aria-hidden="true" tabindex="-1"></a>feedback.learning <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/feedback-learning.csv&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb91-6"><a href="04-shape.html#cb91-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id, age, modularity, learning.rate)</span></code></pre></div>
 <div id="polynomial-trajectories" class="section level2">
 <h2>Polynomial Trajectories</h2>
-<p><em>Show intercept-only, linear, quadratic, and inverse trajectories for MLM/LCM/LCSM (to a point)’</em></p>
+<p>Like we discussed in the main text, polynomial trajectories are far and away the most common trajectories modeled with longitudinal data. They require relatively few unique timepoints, are straightforward to model, and offer easily-interpretable parameter estimates.</p>
+<div id="intercept-only-model" class="section level3">
+<h3>Intercept-Only Model</h3>
+<p>We can first consider the simplest polynomial model, one without even a slope. The intercept-only model simply models person-specific differences in average level across time. We can start here with the LCM, which makes the various specifications easiest to see, but we will also build syntax for models in the other frameworks.</p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="04-shape.html#cb92-1" aria-hidden="true" tabindex="-1"></a>int.lcm <span class="ot">&lt;-</span> <span class="st">&quot;int =~ 1*ext6 + 1*ext8 + 1*ext10 + 1*ext12 + 1*ext14&quot;</span></span>
+<span id="cb92-2"><a href="04-shape.html#cb92-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-3"><a href="04-shape.html#cb92-3" aria-hidden="true" tabindex="-1"></a>int.lcm.fit <span class="ot">&lt;-</span> <span class="fu">growth</span>(int.lcm, </span>
+<span id="cb92-4"><a href="04-shape.html#cb92-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data =</span> external.math,</span>
+<span id="cb92-5"><a href="04-shape.html#cb92-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">estimator =</span> <span class="st">&quot;ML&quot;</span>,</span>
+<span id="cb92-6"><a href="04-shape.html#cb92-6" aria-hidden="true" tabindex="-1"></a>                      <span class="at">missing =</span> <span class="st">&quot;FIML&quot;</span>)</span>
+<span id="cb92-7"><a href="04-shape.html#cb92-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-8"><a href="04-shape.html#cb92-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(int.lcm.fit, <span class="at">fit.measures =</span> <span class="cn">FALSE</span>, <span class="at">estimates =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb92-9"><a href="04-shape.html#cb92-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">standardize =</span> <span class="cn">FALSE</span>, <span class="at">rsquare =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## lavaan 0.6-9 ended normally after 25 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                         7
+##                                                       
+##   Number of observations                           405
+##   Number of missing patterns                        21
+##                                                       
+## Model Test User Model:
+##                                                       
+##   Test statistic                                71.246
+##   Degrees of freedom                                13
+##   P-value (Chi-square)                           0.000
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##   int =~                                              
+##     ext6              1.000                           
+##     ext8              1.000                           
+##     ext10             1.000                           
+##     ext12             1.000                           
+##     ext14             1.000                           
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##    .ext6              0.000                           
+##    .ext8              0.000                           
+##    .ext10             0.000                           
+##    .ext12             0.000                           
+##    .ext14             0.000                           
+##     int               1.882    0.077   24.397    0.000
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##    .ext6              1.761    0.203    8.690    0.000
+##    .ext8              1.771    0.189    9.384    0.000
+##    .ext10             2.023    0.208    9.730    0.000
+##    .ext12             2.243    0.230    9.758    0.000
+##    .ext14             2.049    0.348    5.891    0.000
+##     int               1.752    0.172   10.161    0.000</code></pre>
+<p>We can see that there is significant variance in the intercept factor, suggesting meaningful person-to-person variability in level of externalizing behavior during late childhood and early adolescence. While this might seem a somewhat silly model to fit to these data, this is one half of a random-intercept cross-lag panel model and might be appropriate if we do not expect systematic change over time. However, these intercept-only models are admittedly more plausible for intensive longitudinal data. The MLM specification for this model can be seen below. We will first transform the data into long format before fitting the model.</p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="04-shape.html#cb94-1" aria-hidden="true" tabindex="-1"></a>external.math.long <span class="ot">&lt;-</span> external.math <span class="sc">%&gt;%</span> </span>
+<span id="cb94-2"><a href="04-shape.html#cb94-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="fu">c</span>(<span class="st">&quot;ext&quot;</span>, <span class="st">&quot;math&quot;</span>)), </span>
+<span id="cb94-3"><a href="04-shape.html#cb94-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;.value&quot;</span>, <span class="st">&quot;age&quot;</span>), </span>
+<span id="cb94-4"><a href="04-shape.html#cb94-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">names_pattern =</span> <span class="st">&quot;(ext|math)(.+)&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb94-5"><a href="04-shape.html#cb94-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">age =</span> <span class="fu">as.numeric</span>(age))</span>
+<span id="cb94-6"><a href="04-shape.html#cb94-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb94-7"><a href="04-shape.html#cb94-7" aria-hidden="true" tabindex="-1"></a>int.mlm <span class="ot">&lt;-</span> <span class="fu">lmer</span>(ext <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id),</span>
+<span id="cb94-8"><a href="04-shape.html#cb94-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">na.action =</span> na.omit,</span>
+<span id="cb94-9"><a href="04-shape.html#cb94-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">REML =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb94-10"><a href="04-shape.html#cb94-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> external.math.long)</span>
+<span id="cb94-11"><a href="04-shape.html#cb94-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb94-12"><a href="04-shape.html#cb94-12" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(int.mlm, <span class="at">correlation =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## Linear mixed model fit by REML. t-tests use Satterthwaite&#39;s method [
+## lmerModLmerTest]
+## Formula: ext ~ 1 + (1 | id)
+##    Data: external.math.long
+## 
+## REML criterion at convergence: 5316.7
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -3.2539 -0.5600 -0.2063  0.4736  4.5276 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev.
+##  id       (Intercept) 1.799    1.341   
+##  Residual             1.944    1.394   
+## Number of obs: 1357, groups:  id, 405
+## 
+## Fixed effects:
+##              Estimate Std. Error        df t value Pr(&gt;|t|)    
+## (Intercept)   1.89455    0.07736 399.24978   24.49   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Note that this is just a random-effects ANOVA model with no predictors.</p>
+</div>
+<div id="linear-model" class="section level3">
+<h3>Linear Model</h3>
+<p>We will move quickly through the linear polynomial models because we have covered them extensively thus far. Below is the syntax for the linear LCM. Remember that assessments are biannual so factor loadings should increase by two for each wave.</p>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="04-shape.html#cb96-1" aria-hidden="true" tabindex="-1"></a>lin.lcm <span class="ot">&lt;-</span> <span class="st">&quot;int =~ 1*ext6 + 1*ext8 + 1*ext10 + 1*ext12 + 1*ext14</span></span>
+<span id="cb96-2"><a href="04-shape.html#cb96-2" aria-hidden="true" tabindex="-1"></a><span class="st">            slp =~ 0*ext6 + 2*ext8 + 4*ext10 + 6*ext12 + 8*ext14&quot;</span></span>
+<span id="cb96-3"><a href="04-shape.html#cb96-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-4"><a href="04-shape.html#cb96-4" aria-hidden="true" tabindex="-1"></a>lin.lcm.fit <span class="ot">&lt;-</span> <span class="fu">growth</span>(lin.lcm, </span>
+<span id="cb96-5"><a href="04-shape.html#cb96-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data =</span> external.math,</span>
+<span id="cb96-6"><a href="04-shape.html#cb96-6" aria-hidden="true" tabindex="-1"></a>                      <span class="at">estimator =</span> <span class="st">&quot;ML&quot;</span>,</span>
+<span id="cb96-7"><a href="04-shape.html#cb96-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">missing =</span> <span class="st">&quot;FIML&quot;</span>)</span>
+<span id="cb96-8"><a href="04-shape.html#cb96-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-9"><a href="04-shape.html#cb96-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lin.lcm.fit, <span class="at">fit.measures =</span> <span class="cn">FALSE</span>, <span class="at">estimates =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb96-10"><a href="04-shape.html#cb96-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">standardize =</span> <span class="cn">FALSE</span>, <span class="at">rsquare =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## lavaan 0.6-9 ended normally after 36 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        10
+##                                                       
+##   Number of observations                           405
+##   Number of missing patterns                        21
+##                                                       
+## Model Test User Model:
+##                                                       
+##   Test statistic                                19.507
+##   Degrees of freedom                                10
+##   P-value (Chi-square)                           0.034
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##   int =~                                              
+##     ext6              1.000                           
+##     ext8              1.000                           
+##     ext10             1.000                           
+##     ext12             1.000                           
+##     ext14             1.000                           
+##   slp =~                                              
+##     ext6              0.000                           
+##     ext8              2.000                           
+##     ext10             4.000                           
+##     ext12             6.000                           
+##     ext14             8.000                           
+## 
+## Covariances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##   int ~~                                              
+##     slp               0.084    0.042    2.003    0.045
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##    .ext6              0.000                           
+##    .ext8              0.000                           
+##    .ext10             0.000                           
+##    .ext12             0.000                           
+##    .ext14             0.000                           
+##     int               1.664    0.081   20.459    0.000
+##     slp               0.074    0.018    4.135    0.000
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##    .ext6              1.653    0.239    6.914    0.000
+##    .ext8              1.844    0.188    9.807    0.000
+##    .ext10             1.910    0.199    9.593    0.000
+##    .ext12             1.592    0.227    7.007    0.000
+##    .ext14             1.618    0.372    4.346    0.000
+##     int               1.068    0.227    4.710    0.000
+##     slp               0.024    0.011    2.066    0.039</code></pre>
+<p>While we have ignored model fit for most models, one nice thing about many of these models, is that they are nested and allow for formal model comparison with likelihood ratio tests, similar to those we saw with hetero- vs. homoscedastic residuals. For instance, we can compare the intercept-only with a linear model.</p>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="04-shape.html#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lavTestLRT</span>(int.lcm.fit, lin.lcm.fit)</span></code></pre></div>
+<pre><code>## Chi-Squared Difference Test
+## 
+##             Df    AIC    BIC  Chisq Chisq diff Df diff Pr(&gt;Chisq)    
+## lin.lcm.fit 10 5278.2 5318.3 19.506                                  
+## int.lcm.fit 13 5324.0 5352.0 71.246      51.74       3  3.403e-11 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Remember that we compare whether the more constrained model (here the intercept-only) induces a significant <em>decrease</em> in model fit. Here this is true, suggesting that we should retain the linear model over the intercept-only model. If we take a peak at the model fit, this is because the linear model fits the data reasonably well, while the intercept-only model is quite poor in terms of fit.</p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="04-shape.html#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(int.lcm.fit, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">estimates =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb100-2"><a href="04-shape.html#cb100-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">standardize =</span> <span class="cn">FALSE</span>, <span class="at">rsquare =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## lavaan 0.6-9 ended normally after 25 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                         7
+##                                                       
+##   Number of observations                           405
+##   Number of missing patterns                        21
+##                                                       
+## Model Test User Model:
+##                                                       
+##   Test statistic                                71.246
+##   Degrees of freedom                                13
+##   P-value (Chi-square)                           0.000
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                               361.048
+##   Degrees of freedom                                10
+##   P-value                                        0.000
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    0.834
+##   Tucker-Lewis Index (TLI)                       0.872
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -2654.990
+##   Loglikelihood unrestricted model (H1)      -2619.367
+##                                                       
+##   Akaike (AIC)                                5323.980
+##   Bayesian (BIC)                              5352.007
+##   Sample-size adjusted Bayesian (BIC)         5329.795
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.105
+##   90 Percent confidence interval - lower         0.082
+##   90 Percent confidence interval - upper         0.130
+##   P-value RMSEA &lt;= 0.05                          0.000
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.156</code></pre>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="04-shape.html#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lin.lcm.fit, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">estimates =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb102-2"><a href="04-shape.html#cb102-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">standardize =</span> <span class="cn">FALSE</span>, <span class="at">rsquare =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## lavaan 0.6-9 ended normally after 36 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        10
+##                                                       
+##   Number of observations                           405
+##   Number of missing patterns                        21
+##                                                       
+## Model Test User Model:
+##                                                       
+##   Test statistic                                19.507
+##   Degrees of freedom                                10
+##   P-value (Chi-square)                           0.034
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                               361.048
+##   Degrees of freedom                                10
+##   P-value                                        0.000
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    0.973
+##   Tucker-Lewis Index (TLI)                       0.973
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -2629.120
+##   Loglikelihood unrestricted model (H1)      -2619.367
+##                                                       
+##   Akaike (AIC)                                5278.240
+##   Bayesian (BIC)                              5318.279
+##   Sample-size adjusted Bayesian (BIC)         5286.547
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.048
+##   90 Percent confidence interval - lower         0.013
+##   90 Percent confidence interval - upper         0.080
+##   P-value RMSEA &lt;= 0.05                          0.486
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.082</code></pre>
+<p>To fit the corresponding MLM, we first need to generate our linear predictor as an observed variable in our data frame (and will need to do so each time we increase the order of the model). Here we will generate the linear predictor by simply subtracting <span class="math inline">\(6\)</span> from the <code>age</code> variable.</p>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="04-shape.html#cb104-1" aria-hidden="true" tabindex="-1"></a>external.math.long<span class="sc">$</span>age <span class="ot">&lt;-</span> external.math.long<span class="sc">$</span>age <span class="sc">-</span> <span class="fu">min</span>(external.math.long<span class="sc">$</span>age)</span>
+<span id="cb104-2"><a href="04-shape.html#cb104-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb104-3"><a href="04-shape.html#cb104-3" aria-hidden="true" tabindex="-1"></a>lin.mlm <span class="ot">&lt;-</span> <span class="fu">lmer</span>(ext <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> age <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> age <span class="sc">|</span> id),</span>
+<span id="cb104-4"><a href="04-shape.html#cb104-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">na.action =</span> na.omit,</span>
+<span id="cb104-5"><a href="04-shape.html#cb104-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">REML =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb104-6"><a href="04-shape.html#cb104-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> external.math.long,</span>
+<span id="cb104-7"><a href="04-shape.html#cb104-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">control =</span> <span class="fu">lmerControl</span>(<span class="at">optimizer =</span> <span class="st">&quot;bobyqa&quot;</span>,</span>
+<span id="cb104-8"><a href="04-shape.html#cb104-8" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">optCtrl =</span> <span class="fu">list</span>(<span class="at">maxfun =</span> <span class="fl">2e5</span>)))</span>
+<span id="cb104-9"><a href="04-shape.html#cb104-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb104-10"><a href="04-shape.html#cb104-10" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lin.mlm, <span class="at">correlation =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## Linear mixed model fit by REML. t-tests use Satterthwaite&#39;s method [
+## lmerModLmerTest]
+## Formula: ext ~ 1 + age + (1 + age | id)
+##    Data: external.math.long
+## Control: 
+## lmerControl(optimizer = &quot;bobyqa&quot;, optCtrl = list(maxfun = 2e+05))
+## 
+## REML criterion at convergence: 5269.3
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -3.1375 -0.5422 -0.1737  0.4491  3.9389 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev. Corr
+##  id       (Intercept) 1.02975  1.0148       
+##           age         0.01778  0.1334   0.75
+##  Residual             1.78241  1.3351       
+## Number of obs: 1357, groups:  id, 405
+## 
+## Fixed effects:
+##              Estimate Std. Error        df t value Pr(&gt;|t|)    
+## (Intercept)   1.66939    0.08114 372.83468  20.574  &lt; 2e-16 ***
+## age           0.07235    0.01758 288.52536   4.116 5.03e-05 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>And the model comparison reveals the same preference for the linear model. Note that the model is re-estimated with ML [FIML] because the two models contain different fixed effects. REML models can be compared when the models differ only in the variance structure. Fortunately this will be done automatically so we don’t have to “manually” re-estimate the models.</p>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="04-shape.html#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(int.mlm, lin.mlm)</span></code></pre></div>
+<pre><code>## Data: external.math.long
+## Models:
+## int.mlm: ext ~ 1 + (1 | id)
+## lin.mlm: ext ~ 1 + age + (1 + age | id)
+##         npar    AIC    BIC  logLik deviance  Chisq Df Pr(&gt;Chisq)    
+## int.mlm    3 5319.5 5335.1 -2656.7   5313.5                         
+## lin.mlm    6 5271.7 5303.0 -2629.9   5259.7 53.736  3  1.277e-11 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Finally, we can see a version of the linear LCSM for the <code>external.math</code> data below. Note again that biannual observations mean that we need to set the factor loadings for the slope factor to <span class="math inline">\(2\)</span> instead of <span class="math inline">\(1\)</span> to indicate the spacing appropriately.</p>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="04-shape.html#cb108-1" aria-hidden="true" tabindex="-1"></a>lin.lcsm <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb108-2"><a href="04-shape.html#cb108-2" aria-hidden="true" tabindex="-1"></a><span class="st">            # Define Phantom Variables (p = phantom)</span></span>
+<span id="cb108-3"><a href="04-shape.html#cb108-3" aria-hidden="true" tabindex="-1"></a><span class="st">            pext6 =~ 1*ext6; ext6 ~ 0; ext6 ~~ ext6; pext6 ~~ 0*pext6</span></span>
+<span id="cb108-4"><a href="04-shape.html#cb108-4" aria-hidden="true" tabindex="-1"></a><span class="st">            pext8 =~ 1*ext8; ext8 ~ 0; ext8 ~~ ext8; pext8 ~~ 0*pext8</span></span>
+<span id="cb108-5"><a href="04-shape.html#cb108-5" aria-hidden="true" tabindex="-1"></a><span class="st">            pext10 =~ 1*ext10; ext10 ~ 0; ext10 ~~ ext10; pext10 ~~ 0*pext10</span></span>
+<span id="cb108-6"><a href="04-shape.html#cb108-6" aria-hidden="true" tabindex="-1"></a><span class="st">            pext12 =~ 1*ext12; ext12 ~ 0; ext12 ~~ ext12; pext12 ~~ 0*pext12</span></span>
+<span id="cb108-7"><a href="04-shape.html#cb108-7" aria-hidden="true" tabindex="-1"></a><span class="st">            pext14 =~ 1*ext14; ext14 ~ 0; ext14 ~~ ext14; pext14 ~~ 0*pext14</span></span>
+<span id="cb108-8"><a href="04-shape.html#cb108-8" aria-hidden="true" tabindex="-1"></a><span class="st">        </span></span>
+<span id="cb108-9"><a href="04-shape.html#cb108-9" aria-hidden="true" tabindex="-1"></a><span class="st">            # Regressions Between Adjacent Observations</span></span>
+<span id="cb108-10"><a href="04-shape.html#cb108-10" aria-hidden="true" tabindex="-1"></a><span class="st">            pext8 ~ 1*pext6</span></span>
+<span id="cb108-11"><a href="04-shape.html#cb108-11" aria-hidden="true" tabindex="-1"></a><span class="st">            pext10 ~ 1*pext8</span></span>
+<span id="cb108-12"><a href="04-shape.html#cb108-12" aria-hidden="true" tabindex="-1"></a><span class="st">            pext12 ~ 1*pext10</span></span>
+<span id="cb108-13"><a href="04-shape.html#cb108-13" aria-hidden="true" tabindex="-1"></a><span class="st">            pext14 ~ 1*pext12</span></span>
+<span id="cb108-14"><a href="04-shape.html#cb108-14" aria-hidden="true" tabindex="-1"></a><span class="st">        </span></span>
+<span id="cb108-15"><a href="04-shape.html#cb108-15" aria-hidden="true" tabindex="-1"></a><span class="st">            # Define Change Latent Variables (delta)</span></span>
+<span id="cb108-16"><a href="04-shape.html#cb108-16" aria-hidden="true" tabindex="-1"></a><span class="st">            delta21 =~ 1*pext8;  delta21 ~~ 0*delta21</span></span>
+<span id="cb108-17"><a href="04-shape.html#cb108-17" aria-hidden="true" tabindex="-1"></a><span class="st">            delta32 =~ 1*pext10; delta32 ~~ 0*delta32</span></span>
+<span id="cb108-18"><a href="04-shape.html#cb108-18" aria-hidden="true" tabindex="-1"></a><span class="st">            delta43 =~ 1*pext12; delta43 ~~ 0*delta43</span></span>
+<span id="cb108-19"><a href="04-shape.html#cb108-19" aria-hidden="true" tabindex="-1"></a><span class="st">            delta54 =~ 1*pext14; delta54 ~~ 0*delta54</span></span>
+<span id="cb108-20"><a href="04-shape.html#cb108-20" aria-hidden="true" tabindex="-1"></a><span class="st">        </span></span>
+<span id="cb108-21"><a href="04-shape.html#cb108-21" aria-hidden="true" tabindex="-1"></a><span class="st">            # Define Intercept and Slope</span></span>
+<span id="cb108-22"><a href="04-shape.html#cb108-22" aria-hidden="true" tabindex="-1"></a><span class="st">            int =~ 1*pext6</span></span>
+<span id="cb108-23"><a href="04-shape.html#cb108-23" aria-hidden="true" tabindex="-1"></a><span class="st">            slp =~ 2*delta21 + 2*delta32 + 2*delta43 + 2*delta54</span></span>
+<span id="cb108-24"><a href="04-shape.html#cb108-24" aria-hidden="true" tabindex="-1"></a><span class="st">        </span></span>
+<span id="cb108-25"><a href="04-shape.html#cb108-25" aria-hidden="true" tabindex="-1"></a><span class="st">            int ~ 1</span></span>
+<span id="cb108-26"><a href="04-shape.html#cb108-26" aria-hidden="true" tabindex="-1"></a><span class="st">            slp ~ 1</span></span>
+<span id="cb108-27"><a href="04-shape.html#cb108-27" aria-hidden="true" tabindex="-1"></a><span class="st">            </span></span>
+<span id="cb108-28"><a href="04-shape.html#cb108-28" aria-hidden="true" tabindex="-1"></a><span class="st">            int ~~ slp</span></span>
+<span id="cb108-29"><a href="04-shape.html#cb108-29" aria-hidden="true" tabindex="-1"></a><span class="st">            slp ~~ slp</span></span>
+<span id="cb108-30"><a href="04-shape.html#cb108-30" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span>
+<span id="cb108-31"><a href="04-shape.html#cb108-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-32"><a href="04-shape.html#cb108-32" aria-hidden="true" tabindex="-1"></a>lin.lcsm.fit <span class="ot">&lt;-</span> <span class="fu">sem</span>(lin.lcsm, </span>
+<span id="cb108-33"><a href="04-shape.html#cb108-33" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> external.math, </span>
+<span id="cb108-34"><a href="04-shape.html#cb108-34" aria-hidden="true" tabindex="-1"></a>                    <span class="at">estimator =</span> <span class="st">&quot;ML&quot;</span>,</span>
+<span id="cb108-35"><a href="04-shape.html#cb108-35" aria-hidden="true" tabindex="-1"></a>                    <span class="at">missing =</span> <span class="st">&quot;FIML&quot;</span>)</span>
+<span id="cb108-36"><a href="04-shape.html#cb108-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-37"><a href="04-shape.html#cb108-37" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lin.lcsm.fit, <span class="at">fit.measures =</span> <span class="cn">FALSE</span>, <span class="at">estimates =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb108-38"><a href="04-shape.html#cb108-38" aria-hidden="true" tabindex="-1"></a>        <span class="at">standardize =</span> <span class="cn">FALSE</span>, <span class="at">rsquare =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## lavaan 0.6-9 ended normally after 36 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        10
+##                                                       
+##   Number of observations                           405
+##   Number of missing patterns                        21
+##                                                       
+## Model Test User Model:
+##                                                       
+##   Test statistic                                19.507
+##   Degrees of freedom                                10
+##   P-value (Chi-square)                           0.034
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##   pext6 =~                                            
+##     ext6              1.000                           
+##   pext8 =~                                            
+##     ext8              1.000                           
+##   pext10 =~                                           
+##     ext10             1.000                           
+##   pext12 =~                                           
+##     ext12             1.000                           
+##   pext14 =~                                           
+##     ext14             1.000                           
+##   delta21 =~                                          
+##     pext8             1.000                           
+##   delta32 =~                                          
+##     pext10            1.000                           
+##   delta43 =~                                          
+##     pext12            1.000                           
+##   delta54 =~                                          
+##     pext14            1.000                           
+##   int =~                                              
+##     pext6             1.000                           
+##   slp =~                                              
+##     delta21           2.000                           
+##     delta32           2.000                           
+##     delta43           2.000                           
+##     delta54           2.000                           
+## 
+## Regressions:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##   pext8 ~                                             
+##     pext6             1.000                           
+##   pext10 ~                                            
+##     pext8             1.000                           
+##   pext12 ~                                            
+##     pext10            1.000                           
+##   pext14 ~                                            
+##     pext12            1.000                           
+## 
+## Covariances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##   int ~~                                              
+##     slp               0.084    0.042    2.003    0.045
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##    .ext6              0.000                           
+##    .ext8              0.000                           
+##    .ext10             0.000                           
+##    .ext12             0.000                           
+##    .ext14             0.000                           
+##     int               1.664    0.081   20.459    0.000
+##     slp               0.074    0.018    4.135    0.000
+##    .pext6             0.000                           
+##    .pext8             0.000                           
+##    .pext10            0.000                           
+##    .pext12            0.000                           
+##    .pext14            0.000                           
+##    .delta21           0.000                           
+##    .delta32           0.000                           
+##    .delta43           0.000                           
+##    .delta54           0.000                           
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##    .ext6              1.653    0.239    6.914    0.000
+##    .pext6             0.000                           
+##    .ext8              1.844    0.188    9.807    0.000
+##    .pext8             0.000                           
+##    .ext10             1.910    0.199    9.593    0.000
+##    .pext10            0.000                           
+##    .ext12             1.592    0.227    7.007    0.000
+##    .pext12            0.000                           
+##    .ext14             1.618    0.372    4.346    0.000
+##    .pext14            0.000                           
+##    .delta21           0.000                           
+##    .delta32           0.000                           
+##    .delta43           0.000                           
+##    .delta54           0.000                           
+##     slp               0.024    0.011    2.066    0.039
+##     int               1.068    0.227    4.710    0.000</code></pre>
+</div>
+<div id="quadratic-model" class="section level3">
+<h3>Quadratic Model</h3>
+<p>Next, we can add an additional factor to capture quadratic curvature in our data. Below is the LCM syntax for this model. Note that this is an extremely straightforward expansion of the syntax we have seen thus far. While this won’t be the case here, sometimes we need to worry about numerically large factor loadings causing some estimation issues in practice (nothing theoretical is wrong with large factor loadings). In those instances, we could divide our factor loadings by some constant to control those values from getting to large (although this will change the interpretation of a per-unit change).</p>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="04-shape.html#cb110-1" aria-hidden="true" tabindex="-1"></a>quad.lcm <span class="ot">&lt;-</span> <span class="st">&quot;int  =~ 1*ext6 + 1*ext8 + 1*ext10 + 1*ext12 + 1*ext14</span></span>
+<span id="cb110-2"><a href="04-shape.html#cb110-2" aria-hidden="true" tabindex="-1"></a><span class="st">             slp  =~ 0*ext6 + 2*ext8 + 4*ext10 + 6*ext12 + 8*ext14</span></span>
+<span id="cb110-3"><a href="04-shape.html#cb110-3" aria-hidden="true" tabindex="-1"></a><span class="st">             quad =~ 0*ext6 + 4*ext8 + 16*ext10 + 36*ext12 + 64*ext14&quot;</span></span>
+<span id="cb110-4"><a href="04-shape.html#cb110-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb110-5"><a href="04-shape.html#cb110-5" aria-hidden="true" tabindex="-1"></a>quad.lcm.fit <span class="ot">&lt;-</span> <span class="fu">growth</span>(quad.lcm, </span>
+<span id="cb110-6"><a href="04-shape.html#cb110-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> external.math,</span>
+<span id="cb110-7"><a href="04-shape.html#cb110-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">estimator =</span> <span class="st">&quot;ML&quot;</span>,</span>
+<span id="cb110-8"><a href="04-shape.html#cb110-8" aria-hidden="true" tabindex="-1"></a>                       <span class="at">missing =</span> <span class="st">&quot;FIML&quot;</span>)</span>
+<span id="cb110-9"><a href="04-shape.html#cb110-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb110-10"><a href="04-shape.html#cb110-10" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(quad.lcm.fit, <span class="at">fit.measures =</span> <span class="cn">FALSE</span>, <span class="at">estimates =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb110-11"><a href="04-shape.html#cb110-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">standardize =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## lavaan 0.6-9 ended normally after 95 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        14
+##                                                       
+##   Number of observations                           405
+##   Number of missing patterns                        21
+##                                                       
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 5.437
+##   Degrees of freedom                                 6
+##   P-value (Chi-square)                           0.489
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   int =~                                                       
+##     ext6              1.000                               1.166
+##     ext8              1.000                               1.166
+##     ext10             1.000                               1.166
+##     ext12             1.000                               1.166
+##     ext14             1.000                               1.166
+##   slp =~                                                       
+##     ext6              0.000                               0.000
+##     ext8              2.000                               1.040
+##     ext10             4.000                               2.079
+##     ext12             6.000                               3.119
+##     ext14             8.000                               4.159
+##   quad =~                                                      
+##     ext6              0.000                               0.000
+##     ext8              4.000                               0.228
+##     ext10            16.000                               0.912
+##     ext12            36.000                               2.051
+##     ext14            64.000                               3.647
+##   Std.all
+##          
+##     0.731
+##     0.625
+##     0.566
+##     0.546
+##     0.551
+##          
+##     0.000
+##     0.558
+##     1.010
+##     1.461
+##     1.964
+##          
+##     0.000
+##     0.122
+##     0.443
+##     0.961
+##     1.722
+## 
+## Covariances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   int ~~                                                       
+##     slp              -0.108    0.209   -0.514    0.607   -0.177
+##     quad              0.018    0.023    0.772    0.440    0.270
+##   slp ~~                                                       
+##     quad             -0.029    0.015   -1.933    0.053   -0.970
+##   Std.all
+##          
+##    -0.177
+##     0.270
+##          
+##    -0.970
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .ext6              0.000                               0.000
+##    .ext8              0.000                               0.000
+##    .ext10             0.000                               0.000
+##    .ext12             0.000                               0.000
+##    .ext14             0.000                               0.000
+##     int               1.567    0.088   17.809    0.000    1.344
+##     slp               0.182    0.051    3.535    0.000    0.349
+##     quad             -0.015    0.007   -2.300    0.021   -0.271
+##   Std.all
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     1.344
+##     0.349
+##    -0.271
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .ext6              1.188    0.431    2.758    0.006    1.188
+##    .ext8              1.731    0.191    9.076    0.000    1.731
+##    .ext10             1.691    0.215    7.858    0.000    1.691
+##    .ext12             1.672    0.227    7.379    0.000    1.672
+##    .ext14             1.381    0.649    2.128    0.033    1.381
+##     int               1.360    0.431    3.159    0.002    1.000
+##     slp               0.270    0.124    2.175    0.030    1.000
+##     quad              0.003    0.002    1.705    0.088    1.000
+##   Std.all
+##     0.466
+##     0.498
+##     0.399
+##     0.367
+##     0.308
+##     1.000
+##     1.000
+##     1.000</code></pre>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="04-shape.html#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lavTestLRT</span>(lin.lcm.fit, quad.lcm.fit)</span></code></pre></div>
+<pre><code>## Chi-Squared Difference Test
+## 
+##              Df    AIC    BIC   Chisq Chisq diff Df diff Pr(&gt;Chisq)
+## quad.lcm.fit  6 5272.2 5328.2  5.4373                              
+## lin.lcm.fit  10 5278.2 5318.3 19.5065     14.069       4   0.007077
+##                
+## quad.lcm.fit   
+## lin.lcm.fit  **
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>The MLM syntax is similarly straightforward. To add a powered term, we can use the <code>I()</code> function, or the <code>poly()</code> function if we wished to use orthogonal polynomials.</p>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="04-shape.html#cb114-1" aria-hidden="true" tabindex="-1"></a>quad.mlm <span class="ot">&lt;-</span> <span class="fu">lmer</span>(ext <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">|</span> id),</span>
+<span id="cb114-2"><a href="04-shape.html#cb114-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">na.action =</span> na.omit,</span>
+<span id="cb114-3"><a href="04-shape.html#cb114-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">REML =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb114-4"><a href="04-shape.html#cb114-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> external.math.long,</span>
+<span id="cb114-5"><a href="04-shape.html#cb114-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">control =</span> <span class="fu">lmerControl</span>(<span class="at">optimizer =</span> <span class="st">&quot;bobyqa&quot;</span>,</span>
+<span id="cb114-6"><a href="04-shape.html#cb114-6" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">optCtrl =</span> <span class="fu">list</span>(<span class="at">maxfun =</span> <span class="fl">2e5</span>)))</span>
+<span id="cb114-7"><a href="04-shape.html#cb114-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb114-8"><a href="04-shape.html#cb114-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(quad.mlm, <span class="at">correlation =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## Linear mixed model fit by REML. t-tests use Satterthwaite&#39;s method [
+## lmerModLmerTest]
+## Formula: ext ~ 1 + age + I(age^2) + (1 + age + I(age^2) | id)
+##    Data: external.math.long
+## Control: 
+## lmerControl(optimizer = &quot;bobyqa&quot;, optCtrl = list(maxfun = 2e+05))
+## 
+## REML criterion at convergence: 5263.6
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -3.2948 -0.5378 -0.1802  0.4328  4.1605 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev. Corr       
+##  id       (Intercept) 0.942787 0.97097             
+##           age         0.162793 0.40348   0.27      
+##           I(age^2)    0.001871 0.04325  -0.12 -0.96
+##  Residual             1.684821 1.29801             
+## Number of obs: 1357, groups:  id, 405
+## 
+## Fixed effects:
+##               Estimate Std. Error         df t value Pr(&gt;|t|)    
+## (Intercept)   1.574442   0.087961 345.809227  17.899  &lt; 2e-16 ***
+## age           0.178331   0.051186 357.020201   3.484 0.000555 ***
+## I(age^2)     -0.015107   0.006678 299.946299  -2.262 0.024398 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>While these models converge without too much issue here, note the strong correlation between the linear and quadratic terms, suggesting that the quadratic term is largely redundant. This is often the case with low numbers of repeated measures. We can technically fit some non-linearities, but they may not be particularly well-specified.</p>
+<p>The LCSM syntax requires a bit more explanation. The quadratic model is shown below.</p>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="04-shape.html#cb116-1" aria-hidden="true" tabindex="-1"></a>quad.lcsm <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb116-2"><a href="04-shape.html#cb116-2" aria-hidden="true" tabindex="-1"></a><span class="st">             # Define Phantom Variables (p = phantom)</span></span>
+<span id="cb116-3"><a href="04-shape.html#cb116-3" aria-hidden="true" tabindex="-1"></a><span class="st">             pext6 =~ 1*ext6; ext6 ~ 0; ext6 ~~ ext6; pext6 ~~ 0*pext6</span></span>
+<span id="cb116-4"><a href="04-shape.html#cb116-4" aria-hidden="true" tabindex="-1"></a><span class="st">             pext8 =~ 1*ext8; ext8 ~ 0; ext8 ~~ ext8; pext8 ~~ 0*pext8</span></span>
+<span id="cb116-5"><a href="04-shape.html#cb116-5" aria-hidden="true" tabindex="-1"></a><span class="st">             pext10 =~ 1*ext10; ext10 ~ 0; ext10 ~~ ext10; pext10 ~~ 0*pext10</span></span>
+<span id="cb116-6"><a href="04-shape.html#cb116-6" aria-hidden="true" tabindex="-1"></a><span class="st">             pext12 =~ 1*ext12; ext12 ~ 0; ext12 ~~ ext12; pext12 ~~ 0*pext12</span></span>
+<span id="cb116-7"><a href="04-shape.html#cb116-7" aria-hidden="true" tabindex="-1"></a><span class="st">             pext14 =~ 1*ext14; ext14 ~ 0; ext14 ~~ ext14; pext14 ~~ 0*pext14</span></span>
+<span id="cb116-8"><a href="04-shape.html#cb116-8" aria-hidden="true" tabindex="-1"></a><span class="st">        </span></span>
+<span id="cb116-9"><a href="04-shape.html#cb116-9" aria-hidden="true" tabindex="-1"></a><span class="st">             # Regressions Between Adjacent Observations</span></span>
+<span id="cb116-10"><a href="04-shape.html#cb116-10" aria-hidden="true" tabindex="-1"></a><span class="st">             pext8 ~ 1*pext6</span></span>
+<span id="cb116-11"><a href="04-shape.html#cb116-11" aria-hidden="true" tabindex="-1"></a><span class="st">             pext10 ~ 1*pext8</span></span>
+<span id="cb116-12"><a href="04-shape.html#cb116-12" aria-hidden="true" tabindex="-1"></a><span class="st">             pext12 ~ 1*pext10</span></span>
+<span id="cb116-13"><a href="04-shape.html#cb116-13" aria-hidden="true" tabindex="-1"></a><span class="st">             pext14 ~ 1*pext12</span></span>
+<span id="cb116-14"><a href="04-shape.html#cb116-14" aria-hidden="true" tabindex="-1"></a><span class="st">        </span></span>
+<span id="cb116-15"><a href="04-shape.html#cb116-15" aria-hidden="true" tabindex="-1"></a><span class="st">             # Define Change Latent Variables (delta)</span></span>
+<span id="cb116-16"><a href="04-shape.html#cb116-16" aria-hidden="true" tabindex="-1"></a><span class="st">             delta21 =~ 1*pext8;  delta21 ~~ 0*delta21</span></span>
+<span id="cb116-17"><a href="04-shape.html#cb116-17" aria-hidden="true" tabindex="-1"></a><span class="st">             delta32 =~ 1*pext10; delta32 ~~ 0*delta32</span></span>
+<span id="cb116-18"><a href="04-shape.html#cb116-18" aria-hidden="true" tabindex="-1"></a><span class="st">             delta43 =~ 1*pext12; delta43 ~~ 0*delta43</span></span>
+<span id="cb116-19"><a href="04-shape.html#cb116-19" aria-hidden="true" tabindex="-1"></a><span class="st">             delta54 =~ 1*pext14; delta54 ~~ 0*delta54</span></span>
+<span id="cb116-20"><a href="04-shape.html#cb116-20" aria-hidden="true" tabindex="-1"></a><span class="st">        </span></span>
+<span id="cb116-21"><a href="04-shape.html#cb116-21" aria-hidden="true" tabindex="-1"></a><span class="st">             # Define Intercept and Slope</span></span>
+<span id="cb116-22"><a href="04-shape.html#cb116-22" aria-hidden="true" tabindex="-1"></a><span class="st">             int  =~ 1*pext6</span></span>
+<span id="cb116-23"><a href="04-shape.html#cb116-23" aria-hidden="true" tabindex="-1"></a><span class="st">             slp  =~ 2*delta21 + 2*delta32 + 2*delta43 + 2*delta54</span></span>
+<span id="cb116-24"><a href="04-shape.html#cb116-24" aria-hidden="true" tabindex="-1"></a><span class="st">             quad =~ 4*delta21 + 12*delta32 + 20*delta43 + 28*delta54 </span></span>
+<span id="cb116-25"><a href="04-shape.html#cb116-25" aria-hidden="true" tabindex="-1"></a><span class="st">        </span></span>
+<span id="cb116-26"><a href="04-shape.html#cb116-26" aria-hidden="true" tabindex="-1"></a><span class="st">             int  ~ 1</span></span>
+<span id="cb116-27"><a href="04-shape.html#cb116-27" aria-hidden="true" tabindex="-1"></a><span class="st">             slp  ~ 1</span></span>
+<span id="cb116-28"><a href="04-shape.html#cb116-28" aria-hidden="true" tabindex="-1"></a><span class="st">             quad ~ 1</span></span>
+<span id="cb116-29"><a href="04-shape.html#cb116-29" aria-hidden="true" tabindex="-1"></a><span class="st">            </span></span>
+<span id="cb116-30"><a href="04-shape.html#cb116-30" aria-hidden="true" tabindex="-1"></a><span class="st">             int ~~ slp</span></span>
+<span id="cb116-31"><a href="04-shape.html#cb116-31" aria-hidden="true" tabindex="-1"></a><span class="st">             int ~~ quad</span></span>
+<span id="cb116-32"><a href="04-shape.html#cb116-32" aria-hidden="true" tabindex="-1"></a><span class="st">             slp ~~ slp</span></span>
+<span id="cb116-33"><a href="04-shape.html#cb116-33" aria-hidden="true" tabindex="-1"></a><span class="st">             slp ~~ quad</span></span>
+<span id="cb116-34"><a href="04-shape.html#cb116-34" aria-hidden="true" tabindex="-1"></a><span class="st">             quad ~~ quad</span></span>
+<span id="cb116-35"><a href="04-shape.html#cb116-35" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span></code></pre></div>
+<p>We talked in the <a href="02-canonical.html#canon">Canonical</a> chapter about how the loadings for the linear factor were all <span class="math inline">\(1\)</span>, and this could be thought of as summing across the difference factors. Another way to think of this specification is that the factor loadings for the LCSM are the <em>differences</em> between successive loadings for the LCM. In the standard linear case, these are all <span class="math inline">\(1\)</span>s to indicate a constant effect across units of time, whereas in our example in this chapter, they are all differences of <span class="math inline">\(2\)</span> to reflect biannual observations. The same principle can be applied to the loadings for higher-order factors in the LCSM. For a quadratic factor, the LCM loadings are [<span class="math inline">\(0\)</span>, <span class="math inline">\(4\)</span>, <span class="math inline">\(16\)</span>, <span class="math inline">\(36\)</span>, <span class="math inline">\(64\)</span>], and therefore the LCSM loadings should be [(<span class="math inline">\(4 - 0\)</span>), (<span class="math inline">\(16 - 4\)</span>), (<span class="math inline">\(36 - 16\)</span>), (<span class="math inline">\(64 - 36\)</span>)] = [<span class="math inline">\(4\)</span>, <span class="math inline">\(12\)</span>, <span class="math inline">\(20\)</span>, <span class="math inline">\(28\)</span>]. As a sanity check, we can fit this model and the parameter estimates should match the LCM results exactly.</p>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="04-shape.html#cb117-1" aria-hidden="true" tabindex="-1"></a>quad.lcsm.fit <span class="ot">&lt;-</span> <span class="fu">sem</span>(quad.lcsm,</span>
+<span id="cb117-2"><a href="04-shape.html#cb117-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> external.math, </span>
+<span id="cb117-3"><a href="04-shape.html#cb117-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">estimator =</span> <span class="st">&quot;ML&quot;</span>,</span>
+<span id="cb117-4"><a href="04-shape.html#cb117-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">missing =</span> <span class="st">&quot;FIML&quot;</span>)</span>
+<span id="cb117-5"><a href="04-shape.html#cb117-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb117-6"><a href="04-shape.html#cb117-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(quad.lcsm.fit, <span class="at">fit.measures =</span> <span class="cn">FALSE</span>, <span class="at">estimates =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb117-7"><a href="04-shape.html#cb117-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">standardize =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## lavaan 0.6-9 ended normally after 95 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        14
+##                                                       
+##   Number of observations                           405
+##   Number of missing patterns                        21
+##                                                       
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 5.437
+##   Degrees of freedom                                 6
+##   P-value (Chi-square)                           0.489
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   pext6 =~                                                     
+##     ext6              1.000                               1.166
+##   pext8 =~                                                     
+##     ext8              1.000                               1.322
+##   pext10 =~                                                    
+##     ext10             1.000                               1.597
+##   pext12 =~                                                    
+##     ext12             1.000                               1.698
+##   pext14 =~                                                    
+##     ext14             1.000                               1.761
+##   delta21 =~                                                   
+##     pext8             1.000                               0.621
+##   delta32 =~                                                   
+##     pext10            1.000                               0.257
+##   delta43 =~                                                   
+##     pext12            1.000                               0.167
+##   delta54 =~                                                   
+##     pext14            1.000                               0.362
+##   int =~                                                       
+##     pext6             1.000                               1.000
+##   slp =~                                                       
+##     delta21           2.000                               1.267
+##     delta32           2.000                               2.529
+##     delta43           2.000                               3.665
+##     delta54           2.000                               1.629
+##   quad =~                                                      
+##     delta21           4.000                               0.278
+##     delta32          12.000                               1.663
+##     delta43          20.000                               4.017
+##     delta54          28.000                               2.499
+##   Std.all
+##          
+##     0.731
+##          
+##     0.709
+##          
+##     0.775
+##          
+##     0.796
+##          
+##     0.832
+##          
+##     0.621
+##          
+##     0.257
+##          
+##     0.167
+##          
+##     0.362
+##          
+##     1.000
+##          
+##     1.267
+##     2.529
+##     3.665
+##     1.629
+##          
+##     0.278
+##     1.663
+##     4.017
+##     2.499
+## 
+## Regressions:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   pext8 ~                                                      
+##     pext6             1.000                               0.882
+##   pext10 ~                                                     
+##     pext8             1.000                               0.828
+##   pext12 ~                                                     
+##     pext10            1.000                               0.941
+##   pext14 ~                                                     
+##     pext12            1.000                               0.964
+##   Std.all
+##          
+##     0.882
+##          
+##     0.828
+##          
+##     0.941
+##          
+##     0.964
+## 
+## Covariances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   int ~~                                                       
+##     slp              -0.108    0.209   -0.514    0.607   -0.177
+##     quad              0.018    0.023    0.772    0.440    0.270
+##   slp ~~                                                       
+##     quad             -0.029    0.015   -1.933    0.053   -0.970
+##   Std.all
+##          
+##    -0.177
+##     0.270
+##          
+##    -0.970
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .ext6              0.000                               0.000
+##    .ext8              0.000                               0.000
+##    .ext10             0.000                               0.000
+##    .ext12             0.000                               0.000
+##    .ext14             0.000                               0.000
+##     int               1.567    0.088   17.809    0.000    1.344
+##     slp               0.182    0.051    3.535    0.000    0.349
+##     quad             -0.015    0.007   -2.300    0.021   -0.271
+##    .pext6             0.000                               0.000
+##    .pext8             0.000                               0.000
+##    .pext10            0.000                               0.000
+##    .pext12            0.000                               0.000
+##    .pext14            0.000                               0.000
+##    .delta21           0.000                               0.000
+##    .delta32           0.000                               0.000
+##    .delta43           0.000                               0.000
+##    .delta54           0.000                               0.000
+##   Std.all
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     1.344
+##     0.349
+##    -0.271
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .ext6              1.188    0.431    2.758    0.006    1.188
+##    .pext6             0.000                               0.000
+##    .ext8              1.731    0.191    9.076    0.000    1.731
+##    .pext8             0.000                               0.000
+##    .ext10             1.691    0.215    7.858    0.000    1.691
+##    .pext10            0.000                               0.000
+##    .ext12             1.672    0.227    7.379    0.000    1.672
+##    .pext12            0.000                               0.000
+##    .ext14             1.381    0.649    2.128    0.033    1.381
+##    .pext14            0.000                               0.000
+##    .delta21           0.000                               0.000
+##    .delta32           0.000                               0.000
+##    .delta43           0.000                               0.000
+##    .delta54           0.000                               0.000
+##     slp               0.270    0.124    2.175    0.030    1.000
+##     quad              0.003    0.002    1.705    0.088    1.000
+##     int               1.360    0.431    3.159    0.002    1.000
+##   Std.all
+##     0.466
+##     0.000
+##     0.498
+##     0.000
+##     0.399
+##     0.000
+##     0.367
+##     0.000
+##     0.308
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     1.000
+##     1.000
+##     1.000</code></pre>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="04-shape.html#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lavTestLRT</span>(lin.lcsm.fit, quad.lcsm.fit)</span></code></pre></div>
+<pre><code>## Chi-Squared Difference Test
+## 
+##               Df    AIC    BIC   Chisq Chisq diff Df diff Pr(&gt;Chisq)
+## quad.lcsm.fit  6 5272.2 5328.2  5.4373                              
+## lin.lcsm.fit  10 5278.2 5318.3 19.5065     14.069       4   0.007077
+##                 
+## quad.lcsm.fit   
+## lin.lcsm.fit  **
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+<div id="inverse-model" class="section level3">
+<h3>Inverse Model</h3>
+<p>The final polynomial model we will consider is the inverse model. Unlike the quadratic curvature which reverses, the inverse curve approaches a plateau asymptotically. We can do a quick algebraic transformation to make the factor loadings tractable by inverting the original (i.e., not centered) values and subtracting them from <span class="math inline">\(1\)</span>. So for linear loadings [<span class="math inline">\(1\)</span>, <span class="math inline">\(3\)</span>, <span class="math inline">\(5\)</span>, <span class="math inline">\(7\)</span>, <span class="math inline">\(9\)</span>], we would have inverse factor loadings [<span class="math inline">\(1 - (1/1)\)</span>, <span class="math inline">\(1 - (1/3)\)</span>, <span class="math inline">\(1 - (1/5)\)</span>, <span class="math inline">\(1 - (1/7)\)</span>, <span class="math inline">\(1 - (1/9)\)</span>] or [<span class="math inline">\(0\)</span>, <span class="math inline">\(2/3\)</span>, <span class="math inline">\(4/5\)</span>, <span class="math inline">\(6/7\)</span>, <span class="math inline">\(8/9\)</span>]. Inverting the original loadings avoids trying to take the reciprocal of 0 (which results in 6 more weeks of COVID variants) and subtracting from one specifies an upper rather than lower bound effect (this won’t change the nature of the effect, it just makes the sign easier to interpret).</p>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="04-shape.html#cb121-1" aria-hidden="true" tabindex="-1"></a>inv.lcm <span class="ot">&lt;-</span> <span class="st">&quot;int =~ 1*ext6 + 1*ext8 + 1*ext10 + 1*ext12 + 1*ext14</span></span>
+<span id="cb121-2"><a href="04-shape.html#cb121-2" aria-hidden="true" tabindex="-1"></a><span class="st">            slp =~ 0*ext6 + 2*ext8 + 4*ext10 + 6*ext12 + 8*ext14</span></span>
+<span id="cb121-3"><a href="04-shape.html#cb121-3" aria-hidden="true" tabindex="-1"></a><span class="st">            inv =~ 0*ext6 + (2/3)*ext8 + (4/5)*ext10 + (6/7)*ext12 + (7/8)*ext14&quot;</span></span>
+<span id="cb121-4"><a href="04-shape.html#cb121-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb121-5"><a href="04-shape.html#cb121-5" aria-hidden="true" tabindex="-1"></a>inv.lcm.fit <span class="ot">&lt;-</span> <span class="fu">growth</span>(inv.lcm, </span>
+<span id="cb121-6"><a href="04-shape.html#cb121-6" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data =</span> external.math,</span>
+<span id="cb121-7"><a href="04-shape.html#cb121-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">estimator =</span> <span class="st">&quot;ML&quot;</span>,</span>
+<span id="cb121-8"><a href="04-shape.html#cb121-8" aria-hidden="true" tabindex="-1"></a>                      <span class="at">missing =</span> <span class="st">&quot;FIML&quot;</span>)</span>
+<span id="cb121-9"><a href="04-shape.html#cb121-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb121-10"><a href="04-shape.html#cb121-10" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(inv.lcm.fit, <span class="at">fit.measures =</span> <span class="cn">FALSE</span>, <span class="at">estimates =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb121-11"><a href="04-shape.html#cb121-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">standardize =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## lavaan 0.6-9 ended normally after 64 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        14
+##                                                       
+##   Number of observations                           405
+##   Number of missing patterns                        21
+##                                                       
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 5.839
+##   Degrees of freedom                                 6
+##   P-value (Chi-square)                           0.442
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   int =~                                                       
+##     ext6              1.000                               1.747
+##     ext8              1.000                               1.747
+##     ext10             1.000                               1.747
+##     ext12             1.000                               1.747
+##     ext14             1.000                               1.747
+##   slp =~                                                       
+##     ext6              0.000                               0.000
+##     ext8              2.000                               0.358
+##     ext10             4.000                               0.716
+##     ext12             6.000                               1.073
+##     ext14             8.000                               1.431
+##   inv =~                                                       
+##     ext6              0.000                               0.000
+##     ext8              0.667                               1.816
+##     ext10             0.800                               2.179
+##     ext12             0.857                               2.335
+##     ext14             0.875                               2.384
+##   Std.all
+##          
+##     1.099
+##     0.925
+##     0.855
+##     0.830
+##     0.799
+##          
+##     0.000
+##     0.189
+##     0.350
+##     0.510
+##     0.654
+##          
+##     0.000
+##     0.962
+##     1.066
+##     1.109
+##     1.090
+## 
+## Covariances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   int ~~                                                       
+##     slp               0.175    0.141    1.240    0.215    0.560
+##     inv              -3.251    3.076   -1.057    0.290   -0.683
+##   slp ~~                                                       
+##     inv              -0.335    0.302   -1.109    0.267   -0.688
+##   Std.all
+##          
+##     0.560
+##    -0.683
+##          
+##    -0.688
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .ext6              0.000                               0.000
+##    .ext8              0.000                               0.000
+##    .ext10             0.000                               0.000
+##    .ext12             0.000                               0.000
+##    .ext14             0.000                               0.000
+##     int               1.551    0.091   17.075    0.000    0.887
+##     slp               0.014    0.030    0.458    0.647    0.076
+##     inv               0.513    0.217    2.368    0.018    0.188
+##   Std.all
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.887
+##     0.076
+##     0.188
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .ext6             -0.523    1.838   -0.285    0.776   -0.523
+##    .ext8              1.617    0.240    6.739    0.000    1.617
+##    .ext10             1.811    0.203    8.939    0.000    1.811
+##    .ext12             1.696    0.227    7.461    0.000    1.696
+##    .ext14             1.582    0.447    3.541    0.000    1.582
+##     int               3.052    1.850    1.650    0.099    1.000
+##     slp               0.032    0.033    0.978    0.328    1.000
+##     inv               7.422    5.288    1.404    0.160    1.000
+##   Std.all
+##    -0.207
+##     0.453
+##     0.433
+##     0.383
+##     0.331
+##     1.000
+##     1.000
+##     1.000</code></pre>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="04-shape.html#cb123-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lavTestLRT</span>(lin.lcm.fit, inv.lcm.fit)</span></code></pre></div>
+<pre><code>## Chi-Squared Difference Test
+## 
+##             Df    AIC    BIC   Chisq Chisq diff Df diff Pr(&gt;Chisq)   
+## inv.lcm.fit  6 5272.6 5328.6  5.8386                                 
+## lin.lcm.fit 10 5278.2 5318.3 19.5065     13.668       4   0.008434 **
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Note that we are comparing the inverse and linear models, not the inverse and quadratic. This is because while the linear model is nested within both quadratic and inverse models, the two are not nested with respect to one another. However, we might graphically examine the trends implied by the model for a moment.</p>
+<p><img src="longitudinal_primer_files/figure-html/polynomials%2014-1.png" width="672" /><img src="longitudinal_primer_files/figure-html/polynomials%2014-2.png" width="672" /></p>
+<p>What should be visually apparent is that we get quite a few flips in the direction of curvature in the inverse compared to the quadratic model. Indeed the quadratic effect is negative (<span class="math inline">\(-0.015\)</span>) and the inverse effect is positive (<span class="math inline">\(0.513\)</span>). This sensitivity is likely another indication that curvature is really over-fitting noise in these data rather than reflecting some true non-linearity. Below are how to achieve this model with the MLM:</p>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="04-shape.html#cb125-1" aria-hidden="true" tabindex="-1"></a>external.math.long<span class="sc">$</span>age_inv <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> (external.math.long<span class="sc">$</span>age <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">^</span>(<span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb125-2"><a href="04-shape.html#cb125-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-3"><a href="04-shape.html#cb125-3" aria-hidden="true" tabindex="-1"></a>inv.mlm <span class="ot">&lt;-</span> <span class="fu">lmer</span>(ext <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> age <span class="sc">+</span> age_inv <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> age <span class="sc">+</span> age_inv <span class="sc">|</span> id),</span>
+<span id="cb125-4"><a href="04-shape.html#cb125-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">na.action =</span> na.omit,</span>
+<span id="cb125-5"><a href="04-shape.html#cb125-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">REML =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb125-6"><a href="04-shape.html#cb125-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> external.math.long,</span>
+<span id="cb125-7"><a href="04-shape.html#cb125-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">control =</span> <span class="fu">lmerControl</span>(<span class="at">optimizer =</span> <span class="st">&quot;bobyqa&quot;</span>,</span>
+<span id="cb125-8"><a href="04-shape.html#cb125-8" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">optCtrl =</span> <span class="fu">list</span>(<span class="at">maxfun =</span> <span class="fl">2e5</span>)))</span>
+<span id="cb125-9"><a href="04-shape.html#cb125-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-10"><a href="04-shape.html#cb125-10" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(inv.mlm, <span class="at">correlation =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## Linear mixed model fit by REML. t-tests use Satterthwaite&#39;s method [
+## lmerModLmerTest]
+## Formula: ext ~ 1 + age + age_inv + (1 + age + age_inv | id)
+##    Data: external.math.long
+## Control: 
+## lmerControl(optimizer = &quot;bobyqa&quot;, optCtrl = list(maxfun = 2e+05))
+## 
+## REML criterion at convergence: 5257.8
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -3.2607 -0.5446 -0.1801  0.4579  4.1099 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev. Corr       
+##  id       (Intercept) 0.83374  0.9131              
+##           age         0.01219  0.1104    0.20      
+##           age_inv     0.90843  0.9531    0.51 -0.17
+##  Residual             1.72232  1.3124              
+## Number of obs: 1357, groups:  id, 405
+## 
+## Fixed effects:
+##              Estimate Std. Error        df t value Pr(&gt;|t|)    
+## (Intercept)   1.56085    0.09081 319.40873  17.188   &lt;2e-16 ***
+## age           0.01432    0.02980 283.39325   0.480   0.6313    
+## age_inv       0.49152    0.21733 353.09910   2.262   0.0243 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="04-shape.html#cb127-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lin.mlm, inv.mlm)</span></code></pre></div>
+<pre><code>## Data: external.math.long
+## Models:
+## lin.mlm: ext ~ 1 + age + (1 + age | id)
+## inv.mlm: ext ~ 1 + age + age_inv + (1 + age + age_inv | id)
+##         npar    AIC  BIC  logLik deviance  Chisq Df Pr(&gt;Chisq)  
+## lin.mlm    6 5271.7 5303 -2629.9   5259.7                       
+## inv.mlm   10 5266.9 5319 -2623.4   5246.9 12.825  4    0.01216 *
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>and LCSM (note that the subtraction method gets a little messy for the slope loadings):</p>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="04-shape.html#cb129-1" aria-hidden="true" tabindex="-1"></a>inv.lcsm <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb129-2"><a href="04-shape.html#cb129-2" aria-hidden="true" tabindex="-1"></a><span class="st">            # Define Phantom Variables (p = phantom)</span></span>
+<span id="cb129-3"><a href="04-shape.html#cb129-3" aria-hidden="true" tabindex="-1"></a><span class="st">            pext6 =~ 1*ext6; ext6 ~ 0; ext6 ~~ ext6; pext6 ~~ 0*pext6</span></span>
+<span id="cb129-4"><a href="04-shape.html#cb129-4" aria-hidden="true" tabindex="-1"></a><span class="st">            pext8 =~ 1*ext8; ext8 ~ 0; ext8 ~~ ext8; pext8 ~~ 0*pext8</span></span>
+<span id="cb129-5"><a href="04-shape.html#cb129-5" aria-hidden="true" tabindex="-1"></a><span class="st">            pext10 =~ 1*ext10; ext10 ~ 0; ext10 ~~ ext10; pext10 ~~ 0*pext10</span></span>
+<span id="cb129-6"><a href="04-shape.html#cb129-6" aria-hidden="true" tabindex="-1"></a><span class="st">            pext12 =~ 1*ext12; ext12 ~ 0; ext12 ~~ ext12; pext12 ~~ 0*pext12</span></span>
+<span id="cb129-7"><a href="04-shape.html#cb129-7" aria-hidden="true" tabindex="-1"></a><span class="st">            pext14 =~ 1*ext14; ext14 ~ 0; ext14 ~~ ext14; pext14 ~~ 0*pext14</span></span>
+<span id="cb129-8"><a href="04-shape.html#cb129-8" aria-hidden="true" tabindex="-1"></a><span class="st">        </span></span>
+<span id="cb129-9"><a href="04-shape.html#cb129-9" aria-hidden="true" tabindex="-1"></a><span class="st">            # Regressions Between Adjacent Observations</span></span>
+<span id="cb129-10"><a href="04-shape.html#cb129-10" aria-hidden="true" tabindex="-1"></a><span class="st">            pext8 ~ 1*pext6</span></span>
+<span id="cb129-11"><a href="04-shape.html#cb129-11" aria-hidden="true" tabindex="-1"></a><span class="st">            pext10 ~ 1*pext8</span></span>
+<span id="cb129-12"><a href="04-shape.html#cb129-12" aria-hidden="true" tabindex="-1"></a><span class="st">            pext12 ~ 1*pext10</span></span>
+<span id="cb129-13"><a href="04-shape.html#cb129-13" aria-hidden="true" tabindex="-1"></a><span class="st">            pext14 ~ 1*pext12</span></span>
+<span id="cb129-14"><a href="04-shape.html#cb129-14" aria-hidden="true" tabindex="-1"></a><span class="st">        </span></span>
+<span id="cb129-15"><a href="04-shape.html#cb129-15" aria-hidden="true" tabindex="-1"></a><span class="st">            # Define Change Latent Variables (delta)</span></span>
+<span id="cb129-16"><a href="04-shape.html#cb129-16" aria-hidden="true" tabindex="-1"></a><span class="st">            delta21 =~ 1*pext8;  delta21 ~~ 0*delta21</span></span>
+<span id="cb129-17"><a href="04-shape.html#cb129-17" aria-hidden="true" tabindex="-1"></a><span class="st">            delta32 =~ 1*pext10; delta32 ~~ 0*delta32</span></span>
+<span id="cb129-18"><a href="04-shape.html#cb129-18" aria-hidden="true" tabindex="-1"></a><span class="st">            delta43 =~ 1*pext12; delta43 ~~ 0*delta43</span></span>
+<span id="cb129-19"><a href="04-shape.html#cb129-19" aria-hidden="true" tabindex="-1"></a><span class="st">            delta54 =~ 1*pext14; delta54 ~~ 0*delta54</span></span>
+<span id="cb129-20"><a href="04-shape.html#cb129-20" aria-hidden="true" tabindex="-1"></a><span class="st">        </span></span>
+<span id="cb129-21"><a href="04-shape.html#cb129-21" aria-hidden="true" tabindex="-1"></a><span class="st">            # Define Intercept and Slope</span></span>
+<span id="cb129-22"><a href="04-shape.html#cb129-22" aria-hidden="true" tabindex="-1"></a><span class="st">            int =~ 1*pext6</span></span>
+<span id="cb129-23"><a href="04-shape.html#cb129-23" aria-hidden="true" tabindex="-1"></a><span class="st">            slp =~ 2*delta21 + 2*delta32 + 2*delta43 + 2*delta54</span></span>
+<span id="cb129-24"><a href="04-shape.html#cb129-24" aria-hidden="true" tabindex="-1"></a><span class="st">            inv =~ (2/3)*delta21 + (2/15)*delta32 + (2/35)*delta43 + (1/56)*delta54 </span></span>
+<span id="cb129-25"><a href="04-shape.html#cb129-25" aria-hidden="true" tabindex="-1"></a><span class="st">        </span></span>
+<span id="cb129-26"><a href="04-shape.html#cb129-26" aria-hidden="true" tabindex="-1"></a><span class="st">            int ~ 1</span></span>
+<span id="cb129-27"><a href="04-shape.html#cb129-27" aria-hidden="true" tabindex="-1"></a><span class="st">            slp ~ 1</span></span>
+<span id="cb129-28"><a href="04-shape.html#cb129-28" aria-hidden="true" tabindex="-1"></a><span class="st">            inv ~ 1</span></span>
+<span id="cb129-29"><a href="04-shape.html#cb129-29" aria-hidden="true" tabindex="-1"></a><span class="st">            </span></span>
+<span id="cb129-30"><a href="04-shape.html#cb129-30" aria-hidden="true" tabindex="-1"></a><span class="st">            int ~~ slp</span></span>
+<span id="cb129-31"><a href="04-shape.html#cb129-31" aria-hidden="true" tabindex="-1"></a><span class="st">            int ~~ inv</span></span>
+<span id="cb129-32"><a href="04-shape.html#cb129-32" aria-hidden="true" tabindex="-1"></a><span class="st">            slp ~~ slp</span></span>
+<span id="cb129-33"><a href="04-shape.html#cb129-33" aria-hidden="true" tabindex="-1"></a><span class="st">            slp ~~ inv</span></span>
+<span id="cb129-34"><a href="04-shape.html#cb129-34" aria-hidden="true" tabindex="-1"></a><span class="st">            inv ~~ inv</span></span>
+<span id="cb129-35"><a href="04-shape.html#cb129-35" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span>
+<span id="cb129-36"><a href="04-shape.html#cb129-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb129-37"><a href="04-shape.html#cb129-37" aria-hidden="true" tabindex="-1"></a>inv.lcsm.fit <span class="ot">&lt;-</span> <span class="fu">sem</span>(inv.lcsm,</span>
+<span id="cb129-38"><a href="04-shape.html#cb129-38" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> external.math, </span>
+<span id="cb129-39"><a href="04-shape.html#cb129-39" aria-hidden="true" tabindex="-1"></a>                    <span class="at">estimator =</span> <span class="st">&quot;ML&quot;</span>,</span>
+<span id="cb129-40"><a href="04-shape.html#cb129-40" aria-hidden="true" tabindex="-1"></a>                    <span class="at">missing =</span> <span class="st">&quot;FIML&quot;</span>)</span>
+<span id="cb129-41"><a href="04-shape.html#cb129-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb129-42"><a href="04-shape.html#cb129-42" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(inv.lcsm.fit, <span class="at">fit.measures =</span> <span class="cn">FALSE</span>, <span class="at">estimates =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb129-43"><a href="04-shape.html#cb129-43" aria-hidden="true" tabindex="-1"></a>        <span class="at">standardize =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## lavaan 0.6-9 ended normally after 64 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        14
+##                                                       
+##   Number of observations                           405
+##   Number of missing patterns                        21
+##                                                       
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 5.839
+##   Degrees of freedom                                 6
+##   P-value (Chi-square)                           0.442
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   pext6 =~                                                     
+##     ext6              1.000                               1.747
+##   pext8 =~                                                     
+##     ext8              1.000                               1.397
+##   pext10 =~                                                    
+##     ext10             1.000                               1.539
+##   pext12 =~                                                    
+##     ext12             1.000                               1.655
+##   pext14 =~                                                    
+##     ext14             1.000                               1.790
+##   delta21 =~                                                   
+##     pext8             1.000                               1.140
+##   delta32 =~                                                   
+##     pext10            1.000                               0.185
+##   delta43 =~                                                   
+##     pext12            1.000                               0.166
+##   delta54 =~                                                   
+##     pext14            1.000                               0.182
+##   int =~                                                       
+##     pext6             1.000                               1.000
+##   slp =~                                                       
+##     delta21           2.000                               0.225
+##     delta32           2.000                               1.255
+##     delta43           2.000                               1.301
+##     delta54           2.000                               1.097
+##   inv =~                                                       
+##     delta21           0.667                               1.141
+##     delta32           0.133                               1.274
+##     delta43           0.057                               0.566
+##     delta54           0.018                               0.149
+##   Std.all
+##          
+##     1.099
+##          
+##     0.739
+##          
+##     0.753
+##          
+##     0.786
+##          
+##     0.818
+##          
+##     1.140
+##          
+##     0.185
+##          
+##     0.166
+##          
+##     0.182
+##          
+##     1.000
+##          
+##     0.225
+##     1.255
+##     1.301
+##     1.097
+##          
+##     1.141
+##     1.274
+##     0.566
+##     0.149
+## 
+## Regressions:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   pext8 ~                                                      
+##     pext6             1.000                               1.251
+##   pext10 ~                                                     
+##     pext8             1.000                               0.908
+##   pext12 ~                                                     
+##     pext10            1.000                               0.930
+##   pext14 ~                                                     
+##     pext12            1.000                               0.925
+##   Std.all
+##          
+##     1.251
+##          
+##     0.908
+##          
+##     0.930
+##          
+##     0.925
+## 
+## Covariances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   int ~~                                                       
+##     slp               0.175    0.141    1.240    0.215    0.560
+##     inv              -3.251    3.076   -1.057    0.290   -0.683
+##   slp ~~                                                       
+##     inv              -0.335    0.302   -1.109    0.267   -0.688
+##   Std.all
+##          
+##     0.560
+##    -0.683
+##          
+##    -0.688
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .ext6              0.000                               0.000
+##    .ext8              0.000                               0.000
+##    .ext10             0.000                               0.000
+##    .ext12             0.000                               0.000
+##    .ext14             0.000                               0.000
+##     int               1.551    0.091   17.075    0.000    0.887
+##     slp               0.014    0.030    0.458    0.647    0.076
+##     inv               0.513    0.217    2.368    0.018    0.188
+##    .pext6             0.000                               0.000
+##    .pext8             0.000                               0.000
+##    .pext10            0.000                               0.000
+##    .pext12            0.000                               0.000
+##    .pext14            0.000                               0.000
+##    .delta21           0.000                               0.000
+##    .delta32           0.000                               0.000
+##    .delta43           0.000                               0.000
+##    .delta54           0.000                               0.000
+##   Std.all
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.887
+##     0.076
+##     0.188
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .ext6             -0.523    1.838   -0.285    0.776   -0.523
+##    .pext6             0.000                               0.000
+##    .ext8              1.617    0.240    6.739    0.000    1.617
+##    .pext8             0.000                               0.000
+##    .ext10             1.811    0.203    8.939    0.000    1.811
+##    .pext10            0.000                               0.000
+##    .ext12             1.696    0.227    7.461    0.000    1.696
+##    .pext12            0.000                               0.000
+##    .ext14             1.582    0.447    3.541    0.000    1.582
+##    .pext14            0.000                               0.000
+##    .delta21           0.000                               0.000
+##    .delta32           0.000                               0.000
+##    .delta43           0.000                               0.000
+##    .delta54           0.000                               0.000
+##     slp               0.032    0.033    0.978    0.328    1.000
+##     inv               7.422    5.288    1.404    0.160    1.000
+##     int               3.052    1.850    1.650    0.099    1.000
+##   Std.all
+##    -0.207
+##     0.000
+##     0.453
+##     0.000
+##     0.433
+##     0.000
+##     0.383
+##     0.000
+##     0.331
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     1.000
+##     1.000
+##     1.000</code></pre>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="04-shape.html#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lavTestLRT</span>(lin.lcsm.fit, inv.lcsm.fit)</span></code></pre></div>
+<pre><code>## Chi-Squared Difference Test
+## 
+##              Df    AIC    BIC   Chisq Chisq diff Df diff Pr(&gt;Chisq)
+## inv.lcsm.fit  6 5272.6 5328.6  5.8386                              
+## lin.lcsm.fit 10 5278.2 5318.3 19.5065     13.668       4   0.008434
+##                
+## inv.lcsm.fit   
+## lin.lcsm.fit **
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
 </div>
 <div id="piecewise-trajectories" class="section level2">
 <h2>Piecewise Trajectories</h2>
-<p><em>Show linear/linear and linear/quadratic trajectories for MLM &amp; LCM, cubic splines with GAMM?’</em>
-<em>Show both 2-rate and added-rate</em></p>
+<p>If we do not think that a single polynomial function can sufficiently capture a complex trajectory, we might consider bolting two (or more) polynomial functions together using a piecewise approach. Here we will use the <code>adversity</code> data which covers <span class="math inline">\(8\)</span> years of childhood (ages <span class="math inline">\(4-11\)</span>). The simplest piecewise trajectory can be constructed two distinct linear pieces joined at a knot point. We need at least 3 time points to specify a line but the pieces can share a time point at the knot point. This means we need a minimum of <span class="math inline">\(5\)</span> time points in order to fit even the simplest piecewise model. Note that with this minimum, the knot point is constrained to be at the middle time point, and the knot can never be placed at the first or last two time points because of the 3 time point requirement to estimate the linear slope. Note that as we discussed before, these time point requirements can be accomodated at the group level, and no one individual need be observed <span class="math inline">\(5\)</span> or more times. Indeed this is the case here, where no individual is measured more than <span class="math inline">\(4\)</span> times.</p>
+<p>There are two general approaches for specifying piecewise models. The first, and more common, approach is the two-rate specification, where each effect can be interpreted in isolation like a regular linear model. We specify the two-rate LCM using the syntax below. Note that we code the factor loadings in such a way that the intercept is at the knot point (age 8).</p>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="04-shape.html#cb133-1" aria-hidden="true" tabindex="-1"></a>two.rate <span class="ot">&lt;-</span> <span class="st">&quot;int  =~ 1*fmin4 + 1*fmin5 + 1*fmin6 + 1*fmin7 + </span></span>
+<span id="cb133-2"><a href="04-shape.html#cb133-2" aria-hidden="true" tabindex="-1"></a><span class="st">                     1*fmin8 + 1*fmin9 + 1*fmin10 + 1*fmin11</span></span>
+<span id="cb133-3"><a href="04-shape.html#cb133-3" aria-hidden="true" tabindex="-1"></a><span class="st">             slp1 =~ -3*fmin4 + -2*fmin5 + -1*fmin6 + 0*fmin7 + </span></span>
+<span id="cb133-4"><a href="04-shape.html#cb133-4" aria-hidden="true" tabindex="-1"></a><span class="st">                     0*fmin8 + 0*fmin9 + 0*fmin10 + 0*fmin11</span></span>
+<span id="cb133-5"><a href="04-shape.html#cb133-5" aria-hidden="true" tabindex="-1"></a><span class="st">             slp2 =~ 0*fmin4 + 0*fmin5 + 0*fmin6 + 0*fmin7 + </span></span>
+<span id="cb133-6"><a href="04-shape.html#cb133-6" aria-hidden="true" tabindex="-1"></a><span class="st">                     1*fmin8 + 2*fmin9 + 3*fmin10 + 4*fmin11</span></span>
+<span id="cb133-7"><a href="04-shape.html#cb133-7" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span>
+<span id="cb133-8"><a href="04-shape.html#cb133-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb133-9"><a href="04-shape.html#cb133-9" aria-hidden="true" tabindex="-1"></a>two.rate.fit <span class="ot">&lt;-</span> <span class="fu">growth</span>(two.rate,</span>
+<span id="cb133-10"><a href="04-shape.html#cb133-10" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> adversity,</span>
+<span id="cb133-11"><a href="04-shape.html#cb133-11" aria-hidden="true" tabindex="-1"></a>                       <span class="at">estimator =</span> <span class="st">&quot;ML&quot;</span>,</span>
+<span id="cb133-12"><a href="04-shape.html#cb133-12" aria-hidden="true" tabindex="-1"></a>                       <span class="at">missing =</span> <span class="st">&quot;FIML&quot;</span>)</span>
+<span id="cb133-13"><a href="04-shape.html#cb133-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb133-14"><a href="04-shape.html#cb133-14" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(two.rate.fit, <span class="at">fit.measures =</span> <span class="cn">FALSE</span>, <span class="at">estimates =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb133-15"><a href="04-shape.html#cb133-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">standardize =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## lavaan 0.6-9 ended normally after 50 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        17
+##                                                       
+##   Number of observations                           398
+##   Number of missing patterns                        40
+##                                                       
+## Model Test User Model:
+##                                                       
+##   Test statistic                                35.322
+##   Degrees of freedom                                27
+##   P-value (Chi-square)                           0.131
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   int =~                                                       
+##     fmin4             1.000                               0.886
+##     fmin5             1.000                               0.886
+##     fmin6             1.000                               0.886
+##     fmin7             1.000                               0.886
+##     fmin8             1.000                               0.886
+##     fmin9             1.000                               0.886
+##     fmin10            1.000                               0.886
+##     fmin11            1.000                               0.886
+##   slp1 =~                                                      
+##     fmin4            -3.000                              -0.985
+##     fmin5            -2.000                              -0.657
+##     fmin6            -1.000                              -0.328
+##     fmin7             0.000                               0.000
+##     fmin8             0.000                               0.000
+##     fmin9             0.000                               0.000
+##     fmin10            0.000                               0.000
+##     fmin11            0.000                               0.000
+##   slp2 =~                                                      
+##     fmin4             0.000                               0.000
+##     fmin5             0.000                               0.000
+##     fmin6             0.000                               0.000
+##     fmin7             0.000                               0.000
+##     fmin8             1.000                               0.068
+##     fmin9             2.000                               0.136
+##     fmin10            3.000                               0.204
+##     fmin11            4.000                               0.272
+##   Std.all
+##          
+##     0.888
+##     0.942
+##     0.824
+##     0.761
+##     0.706
+##     0.720
+##     0.739
+##     0.661
+##          
+##    -0.987
+##    -0.698
+##    -0.305
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##          
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.054
+##     0.111
+##     0.170
+##     0.203
+## 
+## Covariances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   int ~~                                                       
+##     slp1              0.138    0.062    2.233    0.026    0.475
+##     slp2              0.027    0.045    0.602    0.547    0.449
+##   slp1 ~~                                                      
+##     slp2              0.011    0.019    0.548    0.584    0.475
+##   Std.all
+##          
+##     0.475
+##     0.449
+##          
+##     0.475
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .fmin4             0.000                               0.000
+##    .fmin5             0.000                               0.000
+##    .fmin6             0.000                               0.000
+##    .fmin7             0.000                               0.000
+##    .fmin8             0.000                               0.000
+##    .fmin9             0.000                               0.000
+##    .fmin10            0.000                               0.000
+##    .fmin11            0.000                               0.000
+##     int               0.216    0.062    3.495    0.000    0.244
+##     slp1              0.079    0.029    2.741    0.006    0.239
+##     slp2              0.031    0.020    1.576    0.115    0.455
+##   Std.all
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.244
+##     0.239
+##     0.455
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .fmin4             0.069    0.388    0.178    0.859    0.069
+##    .fmin5             0.221    0.190    1.161    0.246    0.221
+##    .fmin6             0.539    0.103    5.231    0.000    0.539
+##    .fmin7             0.570    0.156    3.653    0.000    0.570
+##    .fmin8             0.731    0.129    5.671    0.000    0.731
+##    .fmin9             0.605    0.099    6.108    0.000    0.605
+##    .fmin10            0.450    0.123    3.664    0.000    0.450
+##    .fmin11            0.722    0.172    4.191    0.000    0.722
+##     int               0.786    0.151    5.215    0.000    1.000
+##     slp1              0.108    0.056    1.919    0.055    1.000
+##     slp2              0.005    0.019    0.240    0.810    1.000
+##   Std.all
+##     0.069
+##     0.250
+##     0.466
+##     0.420
+##     0.464
+##     0.399
+##     0.312
+##     0.401
+##     1.000
+##     1.000
+##     1.000</code></pre>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="04-shape.html#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="at">id=</span>two.rate.fit<span class="sc">@</span>Data<span class="sc">@</span>case.idx[[<span class="dv">1</span>]], </span>
+<span id="cb135-2"><a href="04-shape.html#cb135-2" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">lavPredict</span>(two.rate.fit,<span class="at">type=</span><span class="st">&quot;ov&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb135-3"><a href="04-shape.html#cb135-3" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">&quot;fmin&quot;</span>), </span>
+<span id="cb135-4"><a href="04-shape.html#cb135-4" aria-hidden="true" tabindex="-1"></a>                               <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;.value&quot;</span>, <span class="st">&quot;age&quot;</span>), </span>
+<span id="cb135-5"><a href="04-shape.html#cb135-5" aria-hidden="true" tabindex="-1"></a>                               <span class="at">names_pattern =</span> <span class="st">&quot;(fmin)(.+)&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb135-6"><a href="04-shape.html#cb135-6" aria-hidden="true" tabindex="-1"></a>                  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">age =</span> <span class="fu">as.numeric</span>(age)), </span>
+<span id="cb135-7"><a href="04-shape.html#cb135-7" aria-hidden="true" tabindex="-1"></a>                <span class="fu">aes</span>(<span class="at">x =</span> age, </span>
+<span id="cb135-8"><a href="04-shape.html#cb135-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">y =</span> fmin, </span>
+<span id="cb135-9"><a href="04-shape.html#cb135-9" aria-hidden="true" tabindex="-1"></a>                    <span class="at">group =</span> id, </span>
+<span id="cb135-10"><a href="04-shape.html#cb135-10" aria-hidden="true" tabindex="-1"></a>                    <span class="at">color =</span> <span class="fu">factor</span>(id))) <span class="sc">+</span></span>
+<span id="cb135-11"><a href="04-shape.html#cb135-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb135-12"><a href="04-shape.html#cb135-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;2-Rate Piecewise LCM Trajectories&quot;</span>,</span>
+<span id="cb135-13"><a href="04-shape.html#cb135-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Age&quot;</span>,</span>
+<span id="cb135-14"><a href="04-shape.html#cb135-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Predicted Forceps Minor Microstructure&quot;</span>) <span class="sc">+</span></span>
+<span id="cb135-15"><a href="04-shape.html#cb135-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>) </span></code></pre></div>
+<p><img src="longitudinal_primer_files/figure-html/piecewise%2001-1.png" width="672" /></p>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="04-shape.html#cb136-1" aria-hidden="true" tabindex="-1"></a>add.rate <span class="ot">&lt;-</span> <span class="st">&quot;int  =~ 1*fmin4 + 1*fmin5 + 1*fmin6 + 1*fmin7 + </span></span>
+<span id="cb136-2"><a href="04-shape.html#cb136-2" aria-hidden="true" tabindex="-1"></a><span class="st">                     1*fmin8 + 1*fmin9 + 1*fmin10 + 1*fmin11</span></span>
+<span id="cb136-3"><a href="04-shape.html#cb136-3" aria-hidden="true" tabindex="-1"></a><span class="st">             slp1 =~ -3*fmin4 + -2*fmin5 + -1*fmin6 + 0*fmin7 + </span></span>
+<span id="cb136-4"><a href="04-shape.html#cb136-4" aria-hidden="true" tabindex="-1"></a><span class="st">                     1*fmin8 + 2*fmin9 + 3*fmin10 + 4*fmin11</span></span>
+<span id="cb136-5"><a href="04-shape.html#cb136-5" aria-hidden="true" tabindex="-1"></a><span class="st">             slp2 =~ 0*fmin4 + 0*fmin5 + 0*fmin6 + 0*fmin7 + </span></span>
+<span id="cb136-6"><a href="04-shape.html#cb136-6" aria-hidden="true" tabindex="-1"></a><span class="st">                     1*fmin8 + 2*fmin9 + 3*fmin10 + 4*fmin11</span></span>
+<span id="cb136-7"><a href="04-shape.html#cb136-7" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span>
+<span id="cb136-8"><a href="04-shape.html#cb136-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb136-9"><a href="04-shape.html#cb136-9" aria-hidden="true" tabindex="-1"></a>add.rate.fit <span class="ot">&lt;-</span> <span class="fu">growth</span>(add.rate,</span>
+<span id="cb136-10"><a href="04-shape.html#cb136-10" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> adversity,</span>
+<span id="cb136-11"><a href="04-shape.html#cb136-11" aria-hidden="true" tabindex="-1"></a>                       <span class="at">estimator =</span> <span class="st">&quot;ML&quot;</span>,</span>
+<span id="cb136-12"><a href="04-shape.html#cb136-12" aria-hidden="true" tabindex="-1"></a>                       <span class="at">missing =</span> <span class="st">&quot;FIML&quot;</span>)</span>
+<span id="cb136-13"><a href="04-shape.html#cb136-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb136-14"><a href="04-shape.html#cb136-14" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(add.rate.fit, <span class="at">fit.measures =</span> <span class="cn">FALSE</span>, <span class="at">estimates =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb136-15"><a href="04-shape.html#cb136-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">standardize =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## lavaan 0.6-9 ended normally after 44 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        17
+##                                                       
+##   Number of observations                           398
+##   Number of missing patterns                        40
+##                                                       
+## Model Test User Model:
+##                                                       
+##   Test statistic                                35.322
+##   Degrees of freedom                                27
+##   P-value (Chi-square)                           0.131
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   int =~                                                       
+##     fmin4             1.000                               0.886
+##     fmin5             1.000                               0.886
+##     fmin6             1.000                               0.886
+##     fmin7             1.000                               0.886
+##     fmin8             1.000                               0.886
+##     fmin9             1.000                               0.886
+##     fmin10            1.000                               0.886
+##     fmin11            1.000                               0.886
+##   slp1 =~                                                      
+##     fmin4            -3.000                              -0.985
+##     fmin5            -2.000                              -0.657
+##     fmin6            -1.000                              -0.328
+##     fmin7             0.000                               0.000
+##     fmin8             1.000                               0.328
+##     fmin9             2.000                               0.657
+##     fmin10            3.000                               0.985
+##     fmin11            4.000                               1.314
+##   slp2 =~                                                      
+##     fmin4             0.000                               0.000
+##     fmin5             0.000                               0.000
+##     fmin6             0.000                               0.000
+##     fmin7             0.000                               0.000
+##     fmin8             1.000                               0.302
+##     fmin9             2.000                               0.604
+##     fmin10            3.000                               0.906
+##     fmin11            4.000                               1.209
+##   Std.all
+##          
+##     0.888
+##     0.942
+##     0.824
+##     0.761
+##     0.706
+##     0.720
+##     0.739
+##     0.661
+##          
+##    -0.987
+##    -0.698
+##    -0.305
+##     0.000
+##     0.262
+##     0.533
+##     0.821
+##     0.980
+##          
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.241
+##     0.491
+##     0.755
+##     0.901
+## 
+## Covariances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   int ~~                                                       
+##     slp1              0.138    0.062    2.233    0.026    0.475
+##     slp2             -0.111    0.101   -1.099    0.272   -0.415
+##   slp1 ~~                                                      
+##     slp2             -0.097    0.067   -1.441    0.149   -0.980
+##   Std.all
+##          
+##     0.475
+##    -0.415
+##          
+##    -0.980
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .fmin4             0.000                               0.000
+##    .fmin5             0.000                               0.000
+##    .fmin6             0.000                               0.000
+##    .fmin7             0.000                               0.000
+##    .fmin8             0.000                               0.000
+##    .fmin9             0.000                               0.000
+##    .fmin10            0.000                               0.000
+##    .fmin11            0.000                               0.000
+##     int               0.216    0.062    3.495    0.000    0.244
+##     slp1              0.079    0.029    2.741    0.006    0.239
+##     slp2             -0.048    0.041   -1.150    0.250   -0.157
+##   Std.all
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.244
+##     0.239
+##    -0.157
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .fmin4             0.069    0.388    0.178    0.859    0.069
+##    .fmin5             0.221    0.190    1.161    0.246    0.221
+##    .fmin6             0.539    0.103    5.231    0.000    0.539
+##    .fmin7             0.570    0.156    3.653    0.000    0.570
+##    .fmin8             0.731    0.129    5.671    0.000    0.731
+##    .fmin9             0.605    0.099    6.108    0.000    0.605
+##    .fmin10            0.450    0.123    3.664    0.000    0.450
+##    .fmin11            0.722    0.172    4.191    0.000    0.722
+##     int               0.786    0.151    5.215    0.000    1.000
+##     slp1              0.108    0.056    1.919    0.055    1.000
+##     slp2              0.091    0.094    0.968    0.333    1.000
+##   Std.all
+##     0.069
+##     0.250
+##     0.466
+##     0.420
+##     0.464
+##     0.399
+##     0.312
+##     0.401
+##     1.000
+##     1.000
+##     1.000</code></pre>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="04-shape.html#cb138-1" aria-hidden="true" tabindex="-1"></a>trials <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/trials.csv&quot;</span>)</span>
+<span id="cb138-2"><a href="04-shape.html#cb138-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb138-3"><a href="04-shape.html#cb138-3" aria-hidden="true" tabindex="-1"></a>quad.rate <span class="ot">&lt;-</span> <span class="st">&quot;int =~ 1*trial.1 + 1*trial.2 + 1*trial.3 + 1*trial.4 + </span></span>
+<span id="cb138-4"><a href="04-shape.html#cb138-4" aria-hidden="true" tabindex="-1"></a><span class="st">                     1*trial.5 + 1*trial.6 + 1*trial.7</span></span>
+<span id="cb138-5"><a href="04-shape.html#cb138-5" aria-hidden="true" tabindex="-1"></a><span class="st">             slp1 =~ -3*trial.1 + -2*trial.2 + -1*trial.3 + 0*trial.4 + </span></span>
+<span id="cb138-6"><a href="04-shape.html#cb138-6" aria-hidden="true" tabindex="-1"></a><span class="st">                     0*trial.5 + 0*trial.6 + 0*trial.7</span></span>
+<span id="cb138-7"><a href="04-shape.html#cb138-7" aria-hidden="true" tabindex="-1"></a><span class="st">             quad =~ 9*trial.1 + 4*trial.2 + 1*trial.3 + 0*trial.4 + </span></span>
+<span id="cb138-8"><a href="04-shape.html#cb138-8" aria-hidden="true" tabindex="-1"></a><span class="st">                     0*trial.5 + 0*trial.6 + 0*trial.7        </span></span>
+<span id="cb138-9"><a href="04-shape.html#cb138-9" aria-hidden="true" tabindex="-1"></a><span class="st">             slp2 =~ 0*trial.1 + 0*trial.2 + 0*trial.3 + 0*trial.4 + </span></span>
+<span id="cb138-10"><a href="04-shape.html#cb138-10" aria-hidden="true" tabindex="-1"></a><span class="st">                     1*trial.5 + 2*trial.6 + 3*trial.7</span></span>
+<span id="cb138-11"><a href="04-shape.html#cb138-11" aria-hidden="true" tabindex="-1"></a><span class="st">             </span></span>
+<span id="cb138-12"><a href="04-shape.html#cb138-12" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span>
+<span id="cb138-13"><a href="04-shape.html#cb138-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb138-14"><a href="04-shape.html#cb138-14" aria-hidden="true" tabindex="-1"></a>quad.rate.fit <span class="ot">&lt;-</span> <span class="fu">growth</span>(quad.rate,</span>
+<span id="cb138-15"><a href="04-shape.html#cb138-15" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> trials,</span>
+<span id="cb138-16"><a href="04-shape.html#cb138-16" aria-hidden="true" tabindex="-1"></a>                       <span class="at">estimator =</span> <span class="st">&quot;ML&quot;</span>,</span>
+<span id="cb138-17"><a href="04-shape.html#cb138-17" aria-hidden="true" tabindex="-1"></a>                       <span class="at">missing =</span> <span class="st">&quot;FIML&quot;</span>)</span>
+<span id="cb138-18"><a href="04-shape.html#cb138-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb138-19"><a href="04-shape.html#cb138-19" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(quad.rate.fit, <span class="at">fit.measures =</span> <span class="cn">FALSE</span>, <span class="at">estimates =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb138-20"><a href="04-shape.html#cb138-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">standardize =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## lavaan 0.6-9 ended normally after 55 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        21
+##                                                       
+##   Number of observations                           297
+##   Number of missing patterns                         2
+##                                                       
+## Model Test User Model:
+##                                                       
+##   Test statistic                                46.778
+##   Degrees of freedom                                14
+##   P-value (Chi-square)                           0.000
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   int =~                                                       
+##     trial.1           1.000                               0.900
+##     trial.2           1.000                               0.900
+##     trial.3           1.000                               0.900
+##     trial.4           1.000                               0.900
+##     trial.5           1.000                               0.900
+##     trial.6           1.000                               0.900
+##     trial.7           1.000                               0.900
+##   slp1 =~                                                      
+##     trial.1          -3.000                              -0.846
+##     trial.2          -2.000                              -0.564
+##     trial.3          -1.000                              -0.282
+##     trial.4           0.000                               0.000
+##     trial.5           0.000                               0.000
+##     trial.6           0.000                               0.000
+##     trial.7           0.000                               0.000
+##   quad =~                                                      
+##     trial.1           9.000                               1.028
+##     trial.2           4.000                               0.457
+##     trial.3           1.000                               0.114
+##     trial.4           0.000                               0.000
+##     trial.5           0.000                               0.000
+##     trial.6           0.000                               0.000
+##     trial.7           0.000                               0.000
+##   slp2 =~                                                      
+##     trial.1           0.000                               0.000
+##     trial.2           0.000                               0.000
+##     trial.3           0.000                               0.000
+##     trial.4           0.000                               0.000
+##     trial.5           1.000                               0.167
+##     trial.6           2.000                               0.333
+##     trial.7           3.000                               0.500
+##   Std.all
+##          
+##     0.904
+##     0.866
+##     0.821
+##     0.830
+##     0.819
+##     0.780
+##     0.718
+##          
+##    -0.851
+##    -0.543
+##    -0.257
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##          
+##     1.033
+##     0.440
+##     0.104
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##          
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.152
+##     0.289
+##     0.399
+## 
+## Covariances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   int ~~                                                       
+##     slp1             -0.067    0.061   -1.099    0.272   -0.264
+##     quad             -0.044    0.019   -2.275    0.023   -0.426
+##     slp2             -0.001    0.024   -0.042    0.967   -0.007
+##   slp1 ~~                                                      
+##     quad              0.029    0.027    1.060    0.289    0.895
+##     slp2              0.007    0.023    0.292    0.770    0.140
+##   quad ~~                                                      
+##     slp2              0.003    0.007    0.393    0.694    0.140
+##   Std.all
+##          
+##    -0.264
+##    -0.426
+##    -0.007
+##          
+##     0.895
+##     0.140
+##          
+##     0.140
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .trial.1           0.000                               0.000
+##    .trial.2           0.000                               0.000
+##    .trial.3           0.000                               0.000
+##    .trial.4           0.000                               0.000
+##    .trial.5           0.000                               0.000
+##    .trial.6           0.000                               0.000
+##    .trial.7           0.000                               0.000
+##     int               0.416    0.060    6.956    0.000    0.463
+##     slp1             -0.052    0.052   -1.006    0.314   -0.184
+##     quad             -0.065    0.017   -3.709    0.000   -0.566
+##     slp2              0.164    0.020    8.193    0.000    0.983
+##   Std.all
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.463
+##    -0.184
+##    -0.566
+##     0.983
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .trial.1           0.350    0.115    3.047    0.002    0.350
+##    .trial.2           0.285    0.036    7.954    0.000    0.285
+##    .trial.3           0.311    0.039    7.983    0.000    0.311
+##    .trial.4           0.365    0.049    7.506    0.000    0.365
+##    .trial.5           0.370    0.037    9.896    0.000    0.370
+##    .trial.6           0.414    0.044    9.298    0.000    0.414
+##    .trial.7           0.517    0.071    7.249    0.000    0.517
+##     int               0.810    0.091    8.930    0.000    1.000
+##     slp1              0.080    0.079    1.010    0.312    1.000
+##     quad              0.013    0.011    1.193    0.233    1.000
+##     slp2              0.028    0.012    2.334    0.020    1.000
+##   Std.all
+##     0.354
+##     0.265
+##     0.259
+##     0.311
+##     0.307
+##     0.311
+##     0.329
+##     1.000
+##     1.000
+##     1.000
+##     1.000</code></pre>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="04-shape.html#cb140-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="at">id=</span>quad.rate.fit<span class="sc">@</span>Data<span class="sc">@</span>case.idx[[<span class="dv">1</span>]], </span>
+<span id="cb140-2"><a href="04-shape.html#cb140-2" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">lavPredict</span>(quad.rate.fit,<span class="at">type=</span><span class="st">&quot;ov&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb140-3"><a href="04-shape.html#cb140-3" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">&quot;trial&quot;</span>), </span>
+<span id="cb140-4"><a href="04-shape.html#cb140-4" aria-hidden="true" tabindex="-1"></a>                               <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;.value&quot;</span>, <span class="st">&quot;num&quot;</span>), </span>
+<span id="cb140-5"><a href="04-shape.html#cb140-5" aria-hidden="true" tabindex="-1"></a>                               <span class="at">names_pattern =</span> <span class="st">&quot;(trial).(.)&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb140-6"><a href="04-shape.html#cb140-6" aria-hidden="true" tabindex="-1"></a>                  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">trial =</span> <span class="fu">as.numeric</span>(trial)), </span>
+<span id="cb140-7"><a href="04-shape.html#cb140-7" aria-hidden="true" tabindex="-1"></a>                <span class="fu">aes</span>(<span class="at">x =</span> num, </span>
+<span id="cb140-8"><a href="04-shape.html#cb140-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">y =</span> trial, </span>
+<span id="cb140-9"><a href="04-shape.html#cb140-9" aria-hidden="true" tabindex="-1"></a>                    <span class="at">group =</span> id, </span>
+<span id="cb140-10"><a href="04-shape.html#cb140-10" aria-hidden="true" tabindex="-1"></a>                    <span class="at">color =</span> <span class="fu">factor</span>(id))) <span class="sc">+</span></span>
+<span id="cb140-11"><a href="04-shape.html#cb140-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb140-12"><a href="04-shape.html#cb140-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Inverse LCM Trajectories&quot;</span>,</span>
+<span id="cb140-13"><a href="04-shape.html#cb140-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Age&quot;</span>,</span>
+<span id="cb140-14"><a href="04-shape.html#cb140-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Predicted Externalizing Behavior&quot;</span>) <span class="sc">+</span></span>
+<span id="cb140-15"><a href="04-shape.html#cb140-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>) </span></code></pre></div>
+<p><img src="longitudinal_primer_files/figure-html/piecewise%2003-1.png" width="672" /></p>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="04-shape.html#cb141-1" aria-hidden="true" tabindex="-1"></a>adversity.long <span class="ot">&lt;-</span> adversity <span class="sc">%&gt;%</span> </span>
+<span id="cb141-2"><a href="04-shape.html#cb141-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">&quot;fmin&quot;</span>), </span>
+<span id="cb141-3"><a href="04-shape.html#cb141-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;.value&quot;</span>, <span class="st">&quot;age&quot;</span>), </span>
+<span id="cb141-4"><a href="04-shape.html#cb141-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_pattern =</span> <span class="st">&quot;(fmin)(.+)&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb141-5"><a href="04-shape.html#cb141-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">age =</span> <span class="fu">as.numeric</span>(age),</span>
+<span id="cb141-6"><a href="04-shape.html#cb141-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">slp1 =</span> <span class="fu">ifelse</span>(age <span class="sc">&gt;</span> <span class="dv">7</span>, <span class="dv">0</span>, age <span class="sc">-</span> <span class="dv">7</span>),</span>
+<span id="cb141-7"><a href="04-shape.html#cb141-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">slp2 =</span> <span class="fu">ifelse</span>(age <span class="sc">&lt;</span> <span class="dv">7</span>, <span class="dv">0</span>, age <span class="sc">-</span> <span class="dv">7</span>),</span>
+<span id="cb141-8"><a href="04-shape.html#cb141-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">quad =</span> <span class="fu">ifelse</span>(age <span class="sc">&gt;</span> <span class="dv">7</span>, <span class="dv">0</span>, (age <span class="sc">-</span> <span class="dv">7</span>)<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb141-9"><a href="04-shape.html#cb141-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb141-10"><a href="04-shape.html#cb141-10" aria-hidden="true" tabindex="-1"></a>two.rate.mlm <span class="ot">&lt;-</span> <span class="fu">lmer</span>(fmin <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> slp1 <span class="sc">+</span> slp2 <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> slp1 <span class="sc">+</span> slp2 <span class="sc">|</span> id),</span>
+<span id="cb141-11"><a href="04-shape.html#cb141-11" aria-hidden="true" tabindex="-1"></a>                     <span class="at">na.action =</span> na.omit,</span>
+<span id="cb141-12"><a href="04-shape.html#cb141-12" aria-hidden="true" tabindex="-1"></a>                     <span class="at">REML =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb141-13"><a href="04-shape.html#cb141-13" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> adversity.long,</span>
+<span id="cb141-14"><a href="04-shape.html#cb141-14" aria-hidden="true" tabindex="-1"></a>                     <span class="at">control =</span> <span class="fu">lmerControl</span>(<span class="at">optimizer =</span> <span class="st">&quot;bobyqa&quot;</span>,</span>
+<span id="cb141-15"><a href="04-shape.html#cb141-15" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">optCtrl =</span> <span class="fu">list</span>(<span class="at">maxfun =</span> <span class="fl">2e5</span>)))</span>
+<span id="cb141-16"><a href="04-shape.html#cb141-16" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(two.rate.mlm)</span></code></pre></div>
+<pre><code>## Linear mixed model fit by REML. t-tests use Satterthwaite&#39;s method [
+## lmerModLmerTest]
+## Formula: fmin ~ 1 + slp1 + slp2 + (1 + slp1 + slp2 | id)
+##    Data: adversity.long
+## Control: 
+## lmerControl(optimizer = &quot;bobyqa&quot;, optCtrl = list(maxfun = 2e+05))
+## 
+## REML criterion at convergence: 3565.7
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -3.2040 -0.5616 -0.2004  0.4489  3.9715 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev. Corr     
+##  id       (Intercept) 0.766249 0.8754            
+##           slp1        0.020429 0.1429   1.00     
+##           slp2        0.006305 0.0794   0.42 0.42
+##  Residual             0.635271 0.7970            
+## Number of obs: 1240, groups:  id, 398
+## 
+## Fixed effects:
+##              Estimate Std. Error        df t value Pr(&gt;|t|)    
+## (Intercept)   0.21114    0.06180 403.53944   3.417 0.000698 ***
+## slp1          0.07239    0.02774 555.66344   2.610 0.009304 ** 
+## slp2          0.03752    0.01968 335.58079   1.907 0.057417 .  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Correlation of Fixed Effects:
+##      (Intr) slp1  
+## slp1  0.676       
+## slp2 -0.450 -0.486
+## optimizer (bobyqa) convergence code: 0 (OK)
+## boundary (singular) fit: see ?isSingular</code></pre>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="04-shape.html#cb143-1" aria-hidden="true" tabindex="-1"></a>two.rate.lcsm <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb143-2"><a href="04-shape.html#cb143-2" aria-hidden="true" tabindex="-1"></a><span class="st">            # Define Phantom Variables (p = phantom)</span></span>
+<span id="cb143-3"><a href="04-shape.html#cb143-3" aria-hidden="true" tabindex="-1"></a><span class="st">            pfmin4 =~ 1*fmin4; fmin4 ~ 0; fmin4 ~~ fmin4; pfmin4 ~~ 0*fmin4</span></span>
+<span id="cb143-4"><a href="04-shape.html#cb143-4" aria-hidden="true" tabindex="-1"></a><span class="st">            pfmin5 =~ 1*fmin5; fmin5 ~ 0; fmin5 ~~ fmin5; pfmin5 ~~ 0*fmin5</span></span>
+<span id="cb143-5"><a href="04-shape.html#cb143-5" aria-hidden="true" tabindex="-1"></a><span class="st">            pfmin6 =~ 1*fmin6; fmin6 ~ 0; fmin6 ~~ fmin6; pfmin6 ~~ 0*fmin6</span></span>
+<span id="cb143-6"><a href="04-shape.html#cb143-6" aria-hidden="true" tabindex="-1"></a><span class="st">            pfmin7 =~ 1*fmin7; fmin7 ~ 0; fmin7 ~~ fmin7; pfmin7 ~~ 0*fmin7</span></span>
+<span id="cb143-7"><a href="04-shape.html#cb143-7" aria-hidden="true" tabindex="-1"></a><span class="st">            pfmin8 =~ 1*fmin8; fmin8 ~ 0; fmin8 ~~ fmin8; pfmin8 ~~ 0*fmin8</span></span>
+<span id="cb143-8"><a href="04-shape.html#cb143-8" aria-hidden="true" tabindex="-1"></a><span class="st">            pfmin9 =~ 1*fmin9; fmin9 ~ 0; fmin9 ~~ fmin9; pfmin9 ~~ 0*fmin9</span></span>
+<span id="cb143-9"><a href="04-shape.html#cb143-9" aria-hidden="true" tabindex="-1"></a><span class="st">            pfmin10 =~ 1*fmin10; fmin10 ~ 0; fmin10 ~~ fmin10; pfmin10 ~~ 0*fmin10</span></span>
+<span id="cb143-10"><a href="04-shape.html#cb143-10" aria-hidden="true" tabindex="-1"></a><span class="st">            pfmin11 =~ 1*fmin11; fmin11 ~ 0; fmin11 ~~ fmin11; pfmin11 ~~ 0*fmin11</span></span>
+<span id="cb143-11"><a href="04-shape.html#cb143-11" aria-hidden="true" tabindex="-1"></a><span class="st">            </span></span>
+<span id="cb143-12"><a href="04-shape.html#cb143-12" aria-hidden="true" tabindex="-1"></a><span class="st">            # Regressions Between Adjacent Observations</span></span>
+<span id="cb143-13"><a href="04-shape.html#cb143-13" aria-hidden="true" tabindex="-1"></a><span class="st">            pfmin4 ~ 1*pfmin5  # temporal order reversed before intercept</span></span>
+<span id="cb143-14"><a href="04-shape.html#cb143-14" aria-hidden="true" tabindex="-1"></a><span class="st">            pfmin5 ~ 1*pfmin6</span></span>
+<span id="cb143-15"><a href="04-shape.html#cb143-15" aria-hidden="true" tabindex="-1"></a><span class="st">            pfmin6 ~ 1*pfmin7</span></span>
+<span id="cb143-16"><a href="04-shape.html#cb143-16" aria-hidden="true" tabindex="-1"></a><span class="st">            pfmin8 ~ 1*pfmin7  # intercept time point appears twice</span></span>
+<span id="cb143-17"><a href="04-shape.html#cb143-17" aria-hidden="true" tabindex="-1"></a><span class="st">            pfmin9 ~ 1*pfmin8</span></span>
+<span id="cb143-18"><a href="04-shape.html#cb143-18" aria-hidden="true" tabindex="-1"></a><span class="st">            pfmin10 ~ 1*pfmin9</span></span>
+<span id="cb143-19"><a href="04-shape.html#cb143-19" aria-hidden="true" tabindex="-1"></a><span class="st">            pfmin11 ~ 1*pfmin10</span></span>
+<span id="cb143-20"><a href="04-shape.html#cb143-20" aria-hidden="true" tabindex="-1"></a><span class="st">            </span></span>
+<span id="cb143-21"><a href="04-shape.html#cb143-21" aria-hidden="true" tabindex="-1"></a><span class="st">            # Define Change Latent Variables (delta)</span></span>
+<span id="cb143-22"><a href="04-shape.html#cb143-22" aria-hidden="true" tabindex="-1"></a><span class="st">            # loadings prior to the intercept are negative</span></span>
+<span id="cb143-23"><a href="04-shape.html#cb143-23" aria-hidden="true" tabindex="-1"></a><span class="st">            delta21 =~ -1*pfmin4;  delta21 ~~ 0*delta21 </span></span>
+<span id="cb143-24"><a href="04-shape.html#cb143-24" aria-hidden="true" tabindex="-1"></a><span class="st">            delta32 =~ -1*pfmin5;  delta32 ~~ 0*delta32</span></span>
+<span id="cb143-25"><a href="04-shape.html#cb143-25" aria-hidden="true" tabindex="-1"></a><span class="st">            delta43 =~ -1*pfmin6;  delta43 ~~ 0*delta43</span></span>
+<span id="cb143-26"><a href="04-shape.html#cb143-26" aria-hidden="true" tabindex="-1"></a><span class="st">            </span></span>
+<span id="cb143-27"><a href="04-shape.html#cb143-27" aria-hidden="true" tabindex="-1"></a><span class="st">            # loadings after the intercept are as usual</span></span>
+<span id="cb143-28"><a href="04-shape.html#cb143-28" aria-hidden="true" tabindex="-1"></a><span class="st">            delta54 =~ 1*pfmin8;  delta54 ~~ 0*delta54</span></span>
+<span id="cb143-29"><a href="04-shape.html#cb143-29" aria-hidden="true" tabindex="-1"></a><span class="st">            delta65 =~ 1*pfmin9;  delta65 ~~ 0*delta65</span></span>
+<span id="cb143-30"><a href="04-shape.html#cb143-30" aria-hidden="true" tabindex="-1"></a><span class="st">            delta76 =~ 1*pfmin10;  delta76 ~~ 0*delta76</span></span>
+<span id="cb143-31"><a href="04-shape.html#cb143-31" aria-hidden="true" tabindex="-1"></a><span class="st">            delta87 =~ 1*pfmin11;  delta87 ~~ 0*delta87</span></span>
+<span id="cb143-32"><a href="04-shape.html#cb143-32" aria-hidden="true" tabindex="-1"></a><span class="st">            </span></span>
+<span id="cb143-33"><a href="04-shape.html#cb143-33" aria-hidden="true" tabindex="-1"></a><span class="st">            # Define Intercept and Slope</span></span>
+<span id="cb143-34"><a href="04-shape.html#cb143-34" aria-hidden="true" tabindex="-1"></a><span class="st">            int  =~ 1*pfmin7</span></span>
+<span id="cb143-35"><a href="04-shape.html#cb143-35" aria-hidden="true" tabindex="-1"></a><span class="st">            slp1 =~ 1*delta21 + 1*delta32 + 1*delta43</span></span>
+<span id="cb143-36"><a href="04-shape.html#cb143-36" aria-hidden="true" tabindex="-1"></a><span class="st">            slp2 =~ 1*delta54 + 1*delta65 + 1*delta76 + 1*delta87</span></span>
+<span id="cb143-37"><a href="04-shape.html#cb143-37" aria-hidden="true" tabindex="-1"></a><span class="st">        </span></span>
+<span id="cb143-38"><a href="04-shape.html#cb143-38" aria-hidden="true" tabindex="-1"></a><span class="st">            int ~ 1; slp1 ~ 1; slp2 ~ 1</span></span>
+<span id="cb143-39"><a href="04-shape.html#cb143-39" aria-hidden="true" tabindex="-1"></a><span class="st">            </span></span>
+<span id="cb143-40"><a href="04-shape.html#cb143-40" aria-hidden="true" tabindex="-1"></a><span class="st">            slp1 ~~ slp1</span></span>
+<span id="cb143-41"><a href="04-shape.html#cb143-41" aria-hidden="true" tabindex="-1"></a><span class="st">            slp2 ~~ slp2</span></span>
+<span id="cb143-42"><a href="04-shape.html#cb143-42" aria-hidden="true" tabindex="-1"></a><span class="st">            int ~~ slp1 + slp2</span></span>
+<span id="cb143-43"><a href="04-shape.html#cb143-43" aria-hidden="true" tabindex="-1"></a><span class="st">            slp1 ~~ slp2</span></span>
+<span id="cb143-44"><a href="04-shape.html#cb143-44" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span>
+<span id="cb143-45"><a href="04-shape.html#cb143-45" aria-hidden="true" tabindex="-1"></a>two.rate.lcsm.fit <span class="ot">&lt;-</span> <span class="fu">sem</span>(two.rate.lcsm,</span>
+<span id="cb143-46"><a href="04-shape.html#cb143-46" aria-hidden="true" tabindex="-1"></a>                         <span class="at">data =</span> adversity, </span>
+<span id="cb143-47"><a href="04-shape.html#cb143-47" aria-hidden="true" tabindex="-1"></a>                         <span class="at">estimator =</span> <span class="st">&quot;ML&quot;</span>,</span>
+<span id="cb143-48"><a href="04-shape.html#cb143-48" aria-hidden="true" tabindex="-1"></a>                         <span class="at">missing =</span> <span class="st">&quot;FIML&quot;</span>)</span>
+<span id="cb143-49"><a href="04-shape.html#cb143-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb143-50"><a href="04-shape.html#cb143-50" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(two.rate.lcsm.fit, <span class="at">fit.measures =</span> <span class="cn">FALSE</span>, <span class="at">estimates =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb143-51"><a href="04-shape.html#cb143-51" aria-hidden="true" tabindex="-1"></a>        <span class="at">standardize =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## lavaan 0.6-9 ended normally after 50 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        17
+##                                                       
+##   Number of observations                           398
+##   Number of missing patterns                        40
+##                                                       
+## Model Test User Model:
+##                                                       
+##   Test statistic                                35.322
+##   Degrees of freedom                                27
+##   P-value (Chi-square)                           0.131
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   pfmin4 =~                                                    
+##     fmin4             1.000                               0.963
+##   pfmin5 =~                                                    
+##     fmin5             1.000                               0.815
+##   pfmin6 =~                                                    
+##     fmin6             1.000                               0.786
+##   pfmin7 =~                                                    
+##     fmin7             1.000                               0.886
+##   pfmin8 =~                                                    
+##     fmin8             1.000                               0.919
+##   pfmin9 =~                                                    
+##     fmin9             1.000                               0.955
+##   pfmin10 =~                                                   
+##     fmin10            1.000                               0.995
+##   pfmin11 =~                                                   
+##     fmin11            1.000                               1.038
+##   delta21 =~                                                   
+##     pfmin4           -1.000                              -0.341
+##   delta32 =~                                                   
+##     pfmin5           -1.000                              -0.403
+##   delta43 =~                                                   
+##     pfmin6           -1.000                              -0.418
+##   delta54 =~                                                   
+##     pfmin8            1.000                               0.074
+##   delta65 =~                                                   
+##     pfmin9            1.000                               0.071
+##   delta76 =~                                                   
+##     pfmin10           1.000                               0.068
+##   delta87 =~                                                   
+##     pfmin11           1.000                               0.066
+##   int =~                                                       
+##     pfmin7            1.000                               1.000
+##   slp1 =~                                                      
+##     delta21           1.000                               1.000
+##     delta32           1.000                               1.000
+##     delta43           1.000                               1.000
+##   slp2 =~                                                      
+##     delta54           1.000                               1.000
+##     delta65           1.000                               1.000
+##     delta76           1.000                               1.000
+##     delta87           1.000                               1.000
+##   Std.all
+##          
+##     0.965
+##          
+##     0.866
+##          
+##     0.731
+##          
+##     0.761
+##          
+##     0.732
+##          
+##     0.776
+##          
+##     0.829
+##          
+##     0.774
+##          
+##    -0.341
+##          
+##    -0.403
+##          
+##    -0.418
+##          
+##     0.074
+##          
+##     0.071
+##          
+##     0.068
+##          
+##     0.066
+##          
+##     1.000
+##          
+##     1.000
+##     1.000
+##     1.000
+##          
+##     1.000
+##     1.000
+##     1.000
+##     1.000
+## 
+## Regressions:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   pfmin4 ~                                                     
+##     pfmin5            1.000                               0.846
+##   pfmin5 ~                                                     
+##     pfmin6            1.000                               0.964
+##   pfmin6 ~                                                     
+##     pfmin7            1.000                               1.128
+##   pfmin8 ~                                                     
+##     pfmin7            1.000                               0.965
+##   pfmin9 ~                                                     
+##     pfmin8            1.000                               0.962
+##   pfmin10 ~                                                    
+##     pfmin9            1.000                               0.960
+##   pfmin11 ~                                                    
+##     pfmin10           1.000                               0.959
+##   Std.all
+##          
+##     0.846
+##          
+##     0.964
+##          
+##     1.128
+##          
+##     0.965
+##          
+##     0.962
+##          
+##     0.960
+##          
+##     0.959
+## 
+## Covariances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##  .pfmin4 ~~                                                    
+##    .fmin4             0.000                                 NaN
+##  .pfmin5 ~~                                                    
+##    .fmin5             0.000                                 NaN
+##  .pfmin6 ~~                                                    
+##    .fmin6             0.000                                 NaN
+##  .pfmin7 ~~                                                    
+##    .fmin7             0.000                                 NaN
+##  .pfmin8 ~~                                                    
+##    .fmin8             0.000                                 NaN
+##  .pfmin9 ~~                                                    
+##    .fmin9             0.000                                 NaN
+##  .pfmin10 ~~                                                   
+##    .fmin10            0.000                                 NaN
+##  .pfmin11 ~~                                                   
+##    .fmin11            0.000                                 NaN
+##   int ~~                                                       
+##     slp1              0.138    0.062    2.233    0.026    0.475
+##     slp2              0.027    0.045    0.602    0.547    0.449
+##   slp1 ~~                                                      
+##     slp2              0.011    0.019    0.548    0.584    0.475
+##   Std.all
+##          
+##       NaN
+##          
+##       NaN
+##          
+##       NaN
+##          
+##       NaN
+##          
+##       NaN
+##          
+##       NaN
+##          
+##       NaN
+##          
+##       NaN
+##          
+##     0.475
+##     0.449
+##          
+##     0.475
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .fmin4             0.000                               0.000
+##    .fmin5             0.000                               0.000
+##    .fmin6             0.000                               0.000
+##    .fmin7             0.000                               0.000
+##    .fmin8             0.000                               0.000
+##    .fmin9             0.000                               0.000
+##    .fmin10            0.000                               0.000
+##    .fmin11            0.000                               0.000
+##     int               0.216    0.062    3.495    0.000    0.244
+##     slp1              0.079    0.029    2.741    0.006    0.239
+##     slp2              0.031    0.020    1.576    0.115    0.455
+##    .pfmin4            0.000                               0.000
+##    .pfmin5            0.000                               0.000
+##    .pfmin6            0.000                               0.000
+##    .pfmin7            0.000                               0.000
+##    .pfmin8            0.000                               0.000
+##    .pfmin9            0.000                               0.000
+##    .pfmin10           0.000                               0.000
+##    .pfmin11           0.000                               0.000
+##    .delta21           0.000                               0.000
+##    .delta32           0.000                               0.000
+##    .delta43           0.000                               0.000
+##    .delta54           0.000                               0.000
+##    .delta65           0.000                               0.000
+##    .delta76           0.000                               0.000
+##    .delta87           0.000                               0.000
+##   Std.all
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.244
+##     0.239
+##     0.455
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .fmin4             0.069    0.388    0.178    0.859    0.069
+##    .fmin5             0.221    0.190    1.161    0.246    0.221
+##    .fmin6             0.539    0.103    5.231    0.000    0.539
+##    .fmin7             0.570    0.156    3.653    0.000    0.570
+##    .fmin8             0.731    0.129    5.671    0.000    0.731
+##    .fmin9             0.605    0.099    6.108    0.000    0.605
+##    .fmin10            0.450    0.123    3.664    0.000    0.450
+##    .fmin11            0.722    0.172    4.191    0.000    0.722
+##    .delta21           0.000                               0.000
+##    .delta32           0.000                               0.000
+##    .delta43           0.000                               0.000
+##    .delta54           0.000                               0.000
+##    .delta65           0.000                               0.000
+##    .delta76           0.000                               0.000
+##    .delta87           0.000                               0.000
+##     slp1              0.108    0.056    1.919    0.055    1.000
+##     slp2              0.005    0.019    0.240    0.810    1.000
+##    .pfmin4            0.000                               0.000
+##    .pfmin5            0.000                               0.000
+##    .pfmin6            0.000                               0.000
+##    .pfmin7            0.000                               0.000
+##    .pfmin8            0.000                               0.000
+##    .pfmin9            0.000                               0.000
+##    .pfmin10           0.000                               0.000
+##    .pfmin11           0.000                               0.000
+##     int               0.786    0.151    5.215    0.000    1.000
+##   Std.all
+##     0.069
+##     0.250
+##     0.466
+##     0.420
+##     0.464
+##     0.399
+##     0.312
+##     0.401
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     1.000
+##     1.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     1.000</code></pre>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="04-shape.html#cb145-1" aria-hidden="true" tabindex="-1"></a>two.rate.prop.lcsm <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb145-2"><a href="04-shape.html#cb145-2" aria-hidden="true" tabindex="-1"></a><span class="st">            # Define Phantom Variables (p = phantom)</span></span>
+<span id="cb145-3"><a href="04-shape.html#cb145-3" aria-hidden="true" tabindex="-1"></a><span class="st">            pfmin4 =~ 1*fmin4; fmin4 ~ 0; fmin4 ~~ fmin4; pfmin4 ~~ 0*fmin4</span></span>
+<span id="cb145-4"><a href="04-shape.html#cb145-4" aria-hidden="true" tabindex="-1"></a><span class="st">            pfmin5 =~ 1*fmin5; fmin5 ~ 0; fmin5 ~~ fmin5; pfmin5 ~~ 0*fmin5</span></span>
+<span id="cb145-5"><a href="04-shape.html#cb145-5" aria-hidden="true" tabindex="-1"></a><span class="st">            pfmin6 =~ 1*fmin6; fmin6 ~ 0; fmin6 ~~ fmin6; pfmin6 ~~ 0*fmin6</span></span>
+<span id="cb145-6"><a href="04-shape.html#cb145-6" aria-hidden="true" tabindex="-1"></a><span class="st">            pfmin7 =~ 1*fmin7; fmin7 ~ 0; fmin7 ~~ fmin7; pfmin7 ~~ 0*fmin7</span></span>
+<span id="cb145-7"><a href="04-shape.html#cb145-7" aria-hidden="true" tabindex="-1"></a><span class="st">            pfmin8 =~ 1*fmin8; fmin8 ~ 0; fmin8 ~~ fmin8; pfmin8 ~~ 0*fmin8</span></span>
+<span id="cb145-8"><a href="04-shape.html#cb145-8" aria-hidden="true" tabindex="-1"></a><span class="st">            pfmin9 =~ 1*fmin9; fmin9 ~ 0; fmin9 ~~ fmin9; pfmin9 ~~ 0*fmin9</span></span>
+<span id="cb145-9"><a href="04-shape.html#cb145-9" aria-hidden="true" tabindex="-1"></a><span class="st">            pfmin10 =~ 1*fmin10; fmin10 ~ 0; fmin10 ~~ fmin10; pfmin10 ~~ 0*fmin10</span></span>
+<span id="cb145-10"><a href="04-shape.html#cb145-10" aria-hidden="true" tabindex="-1"></a><span class="st">            pfmin11 =~ 1*fmin11; fmin11 ~ 0; fmin11 ~~ fmin11; pfmin11 ~~ 0*fmin11</span></span>
+<span id="cb145-11"><a href="04-shape.html#cb145-11" aria-hidden="true" tabindex="-1"></a><span class="st">            </span></span>
+<span id="cb145-12"><a href="04-shape.html#cb145-12" aria-hidden="true" tabindex="-1"></a><span class="st">            # Regressions Between Adjacent Observations</span></span>
+<span id="cb145-13"><a href="04-shape.html#cb145-13" aria-hidden="true" tabindex="-1"></a><span class="st">            pfmin4 ~ 1*pfmin5  # temporal order reversed before intercept</span></span>
+<span id="cb145-14"><a href="04-shape.html#cb145-14" aria-hidden="true" tabindex="-1"></a><span class="st">            pfmin5 ~ 1*pfmin6</span></span>
+<span id="cb145-15"><a href="04-shape.html#cb145-15" aria-hidden="true" tabindex="-1"></a><span class="st">            pfmin6 ~ 1*pfmin7</span></span>
+<span id="cb145-16"><a href="04-shape.html#cb145-16" aria-hidden="true" tabindex="-1"></a><span class="st">            pfmin8 ~ 1*pfmin7  # intercept time point appears twice</span></span>
+<span id="cb145-17"><a href="04-shape.html#cb145-17" aria-hidden="true" tabindex="-1"></a><span class="st">            pfmin9 ~ 1*pfmin8</span></span>
+<span id="cb145-18"><a href="04-shape.html#cb145-18" aria-hidden="true" tabindex="-1"></a><span class="st">            pfmin10 ~ 1*pfmin9</span></span>
+<span id="cb145-19"><a href="04-shape.html#cb145-19" aria-hidden="true" tabindex="-1"></a><span class="st">            pfmin11 ~ 1*pfmin10</span></span>
+<span id="cb145-20"><a href="04-shape.html#cb145-20" aria-hidden="true" tabindex="-1"></a><span class="st">            </span></span>
+<span id="cb145-21"><a href="04-shape.html#cb145-21" aria-hidden="true" tabindex="-1"></a><span class="st">            # Define Change Latent Variables (delta)</span></span>
+<span id="cb145-22"><a href="04-shape.html#cb145-22" aria-hidden="true" tabindex="-1"></a><span class="st">            # loadings prior to the intercept are negative</span></span>
+<span id="cb145-23"><a href="04-shape.html#cb145-23" aria-hidden="true" tabindex="-1"></a><span class="st">            delta21 =~ -1*pfmin4;  delta21 ~~ 0*delta21 </span></span>
+<span id="cb145-24"><a href="04-shape.html#cb145-24" aria-hidden="true" tabindex="-1"></a><span class="st">            delta32 =~ -1*pfmin5;  delta32 ~~ 0*delta32</span></span>
+<span id="cb145-25"><a href="04-shape.html#cb145-25" aria-hidden="true" tabindex="-1"></a><span class="st">            delta43 =~ -1*pfmin6;  delta43 ~~ 0*delta43</span></span>
+<span id="cb145-26"><a href="04-shape.html#cb145-26" aria-hidden="true" tabindex="-1"></a><span class="st">            </span></span>
+<span id="cb145-27"><a href="04-shape.html#cb145-27" aria-hidden="true" tabindex="-1"></a><span class="st">            # loadings after the intercept are as usual</span></span>
+<span id="cb145-28"><a href="04-shape.html#cb145-28" aria-hidden="true" tabindex="-1"></a><span class="st">            delta54 =~ 1*pfmin8;  delta54 ~~ 0*delta54</span></span>
+<span id="cb145-29"><a href="04-shape.html#cb145-29" aria-hidden="true" tabindex="-1"></a><span class="st">            delta65 =~ 1*pfmin9;  delta65 ~~ 0*delta65</span></span>
+<span id="cb145-30"><a href="04-shape.html#cb145-30" aria-hidden="true" tabindex="-1"></a><span class="st">            delta76 =~ 1*pfmin10;  delta76 ~~ 0*delta76</span></span>
+<span id="cb145-31"><a href="04-shape.html#cb145-31" aria-hidden="true" tabindex="-1"></a><span class="st">            delta87 =~ 1*pfmin11;  delta87 ~~ 0*delta87</span></span>
+<span id="cb145-32"><a href="04-shape.html#cb145-32" aria-hidden="true" tabindex="-1"></a><span class="st">            </span></span>
+<span id="cb145-33"><a href="04-shape.html#cb145-33" aria-hidden="true" tabindex="-1"></a><span class="st">            # Define Proportional Change Regressions (beta = equality constraint)</span></span>
+<span id="cb145-34"><a href="04-shape.html#cb145-34" aria-hidden="true" tabindex="-1"></a><span class="st">            # Nonrecursive Proportional Paths</span></span>
+<span id="cb145-35"><a href="04-shape.html#cb145-35" aria-hidden="true" tabindex="-1"></a><span class="st">            delta21 ~ beta*pfmin4</span></span>
+<span id="cb145-36"><a href="04-shape.html#cb145-36" aria-hidden="true" tabindex="-1"></a><span class="st">            delta32 ~ beta*pfmin5</span></span>
+<span id="cb145-37"><a href="04-shape.html#cb145-37" aria-hidden="true" tabindex="-1"></a><span class="st">            delta43 ~ beta*pfmin6</span></span>
+<span id="cb145-38"><a href="04-shape.html#cb145-38" aria-hidden="true" tabindex="-1"></a><span class="st">            </span></span>
+<span id="cb145-39"><a href="04-shape.html#cb145-39" aria-hidden="true" tabindex="-1"></a><span class="st">            # Standard Proportional Paths</span></span>
+<span id="cb145-40"><a href="04-shape.html#cb145-40" aria-hidden="true" tabindex="-1"></a><span class="st">            delta54 ~ beta*pfmin7</span></span>
+<span id="cb145-41"><a href="04-shape.html#cb145-41" aria-hidden="true" tabindex="-1"></a><span class="st">            delta65 ~ beta*pfmin8</span></span>
+<span id="cb145-42"><a href="04-shape.html#cb145-42" aria-hidden="true" tabindex="-1"></a><span class="st">            delta76 ~ beta*pfmin9</span></span>
+<span id="cb145-43"><a href="04-shape.html#cb145-43" aria-hidden="true" tabindex="-1"></a><span class="st">            delta87 ~ beta*pfmin10</span></span>
+<span id="cb145-44"><a href="04-shape.html#cb145-44" aria-hidden="true" tabindex="-1"></a><span class="st">            </span></span>
+<span id="cb145-45"><a href="04-shape.html#cb145-45" aria-hidden="true" tabindex="-1"></a><span class="st">            # Define Intercept and Slope</span></span>
+<span id="cb145-46"><a href="04-shape.html#cb145-46" aria-hidden="true" tabindex="-1"></a><span class="st">            int  =~ 1*pfmin7</span></span>
+<span id="cb145-47"><a href="04-shape.html#cb145-47" aria-hidden="true" tabindex="-1"></a><span class="st">            slp1 =~ 1*delta21 + 1*delta32 + 1*delta43</span></span>
+<span id="cb145-48"><a href="04-shape.html#cb145-48" aria-hidden="true" tabindex="-1"></a><span class="st">            slp2 =~ 1*delta54 + 1*delta65 + 1*delta76 + 1*delta87</span></span>
+<span id="cb145-49"><a href="04-shape.html#cb145-49" aria-hidden="true" tabindex="-1"></a><span class="st">        </span></span>
+<span id="cb145-50"><a href="04-shape.html#cb145-50" aria-hidden="true" tabindex="-1"></a><span class="st">            int ~ 1; slp1 ~ 1; slp2 ~ 1</span></span>
+<span id="cb145-51"><a href="04-shape.html#cb145-51" aria-hidden="true" tabindex="-1"></a><span class="st">            </span></span>
+<span id="cb145-52"><a href="04-shape.html#cb145-52" aria-hidden="true" tabindex="-1"></a><span class="st">            slp1 ~~ slp1</span></span>
+<span id="cb145-53"><a href="04-shape.html#cb145-53" aria-hidden="true" tabindex="-1"></a><span class="st">            slp2 ~~ slp2</span></span>
+<span id="cb145-54"><a href="04-shape.html#cb145-54" aria-hidden="true" tabindex="-1"></a><span class="st">            int ~~ slp1 + slp2</span></span>
+<span id="cb145-55"><a href="04-shape.html#cb145-55" aria-hidden="true" tabindex="-1"></a><span class="st">            slp1 ~~ slp2</span></span>
+<span id="cb145-56"><a href="04-shape.html#cb145-56" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span>
+<span id="cb145-57"><a href="04-shape.html#cb145-57" aria-hidden="true" tabindex="-1"></a>two.rate.prop.lcsm.fit <span class="ot">&lt;-</span> <span class="fu">sem</span>(two.rate.prop.lcsm,</span>
+<span id="cb145-58"><a href="04-shape.html#cb145-58" aria-hidden="true" tabindex="-1"></a>                              <span class="at">data =</span> adversity, </span>
+<span id="cb145-59"><a href="04-shape.html#cb145-59" aria-hidden="true" tabindex="-1"></a>                              <span class="at">estimator =</span> <span class="st">&quot;ML&quot;</span>,</span>
+<span id="cb145-60"><a href="04-shape.html#cb145-60" aria-hidden="true" tabindex="-1"></a>                              <span class="at">missing =</span> <span class="st">&quot;FIML&quot;</span>)</span>
+<span id="cb145-61"><a href="04-shape.html#cb145-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb145-62"><a href="04-shape.html#cb145-62" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(two.rate.prop.lcsm.fit, <span class="at">fit.measures =</span> <span class="cn">FALSE</span>, <span class="at">estimates =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb145-63"><a href="04-shape.html#cb145-63" aria-hidden="true" tabindex="-1"></a>        <span class="at">standardize =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## lavaan 0.6-9 ended normally after 773 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        24
+##   Number of equality constraints                     6
+##                                                       
+##   Number of observations                           398
+##   Number of missing patterns                        40
+##                                                       
+## Model Test User Model:
+##                                                       
+##   Test statistic                                34.156
+##   Degrees of freedom                                26
+##   P-value (Chi-square)                           0.131
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   pfmin4 =~                                                    
+##     fmin4             1.000                               0.763
+##   pfmin5 =~                                                    
+##     fmin5             1.000                               0.747
+##   pfmin6 =~                                                    
+##     fmin6             1.000                               0.741
+##   pfmin7 =~                                                    
+##     fmin7             1.000                               0.881
+##   pfmin8 =~                                                    
+##     fmin8             1.000                               0.893
+##   pfmin9 =~                                                    
+##     fmin9             1.000                               0.919
+##   pfmin10 =~                                                   
+##     fmin10            1.000                               0.974
+##   pfmin11 =~                                                   
+##     fmin11            1.000                               1.070
+##   delta21 =~                                                   
+##     pfmin4           -1.000                              -0.103
+##   delta32 =~                                                   
+##     pfmin5           -1.000                              -0.242
+##   delta43 =~                                                   
+##     pfmin6           -1.000                              -0.560
+##   delta54 =~                                                   
+##     pfmin8            1.000                                  NA
+##   delta65 =~                                                   
+##     pfmin9            1.000                                  NA
+##   delta76 =~                                                   
+##     pfmin10           1.000                                  NA
+##   delta87 =~                                                   
+##     pfmin11           1.000                                  NA
+##   int =~                                                       
+##     pfmin7            1.000                               1.000
+##   slp1 =~                                                      
+##     delta21           1.000                              12.917
+##     delta32           1.000                               5.618
+##     delta43           1.000                               2.444
+##   slp2 =~                                                      
+##     delta54           1.000                                  NA
+##     delta65           1.000                                  NA
+##     delta76           1.000                                  NA
+##     delta87           1.000                                  NA
+##   Std.all
+##          
+##     0.741
+##          
+##     0.800
+##          
+##     0.705
+##          
+##     0.747
+##          
+##     0.720
+##          
+##     0.757
+##          
+##     0.820
+##          
+##     0.779
+##          
+##    -0.103
+##          
+##    -0.242
+##          
+##    -0.560
+##          
+##        NA
+##          
+##        NA
+##          
+##        NA
+##          
+##        NA
+##          
+##     1.000
+##          
+##    12.917
+##     5.618
+##     2.444
+##          
+##        NA
+##        NA
+##        NA
+##        NA
+## 
+## Regressions:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   pfmin4 ~                                                     
+##     pfmin5            1.000                               0.979
+##   pfmin5 ~                                                     
+##     pfmin6            1.000                               0.992
+##   pfmin6 ~                                                     
+##     pfmin7            1.000                               1.189
+##   pfmin8 ~                                                     
+##     pfmin7            1.000                               0.986
+##   pfmin9 ~                                                     
+##     pfmin8            1.000                               0.971
+##   pfmin10 ~                                                    
+##     pfmin9            1.000                               0.944
+##   pfmin11 ~                                                    
+##     pfmin10           1.000                               0.910
+##   delta21 ~                                                    
+##     pfmin4  (beta)    1.299    1.790    0.725    0.468   12.627
+##   delta32 ~                                                    
+##     pfmin5  (beta)    1.299    1.790    0.725    0.468    5.377
+##   delta43 ~                                                    
+##     pfmin6  (beta)    1.299    1.790    0.725    0.468    2.320
+##   delta54 ~                                                    
+##     pfmin7  (beta)    1.299    1.790    0.725    0.468       NA
+##   delta65 ~                                                    
+##     pfmin8  (beta)    1.299    1.790    0.725    0.468       NA
+##   delta76 ~                                                    
+##     pfmin9  (beta)    1.299    1.790    0.725    0.468       NA
+##   delta87 ~                                                    
+##     pfmin10 (beta)    1.299    1.790    0.725    0.468       NA
+##   Std.all
+##          
+##     0.979
+##          
+##     0.992
+##          
+##     1.189
+##          
+##     0.986
+##          
+##     0.971
+##          
+##     0.944
+##          
+##     0.910
+##          
+##    12.627
+##          
+##     5.377
+##          
+##     2.320
+##          
+##        NA
+##          
+##        NA
+##          
+##        NA
+##          
+##        NA
+## 
+## Covariances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##  .pfmin4 ~~                                                    
+##    .fmin4             0.000                                 NaN
+##  .pfmin5 ~~                                                    
+##    .fmin5             0.000                                 NaN
+##  .pfmin6 ~~                                                    
+##    .fmin6             0.000                                 NaN
+##  .pfmin7 ~~                                                    
+##    .fmin7             0.000                                 NaN
+##  .pfmin8 ~~                                                    
+##    .fmin8             0.000                                 NaN
+##  .pfmin9 ~~                                                    
+##    .fmin9             0.000                                 NaN
+##  .pfmin10 ~~                                                   
+##    .fmin10            0.000                                 NaN
+##  .pfmin11 ~~                                                   
+##    .fmin11            0.000                                 NaN
+##   int ~~                                                       
+##     slp1             -0.550    0.925   -0.594    0.552   -0.615
+##     slp2             -0.997    1.445   -0.690    0.490   -1.000
+##   slp1 ~~                                                      
+##     slp2              0.713    2.177    0.327    0.743    0.621
+##   Std.all
+##          
+##       NaN
+##          
+##       NaN
+##          
+##       NaN
+##          
+##       NaN
+##          
+##       NaN
+##          
+##       NaN
+##          
+##       NaN
+##          
+##       NaN
+##          
+##    -0.615
+##    -1.000
+##          
+##     0.621
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .fmin4             0.000                               0.000
+##    .fmin5             0.000                               0.000
+##    .fmin6             0.000                               0.000
+##    .fmin7             0.000                               0.000
+##    .fmin8             0.000                               0.000
+##    .fmin9             0.000                               0.000
+##    .fmin10            0.000                               0.000
+##    .fmin11            0.000                               0.000
+##     int               0.212    0.058    3.626    0.000    0.241
+##     slp1             -0.026    0.156   -0.165    0.869   -0.025
+##     slp2             -0.265    0.410   -0.647    0.518   -0.234
+##    .pfmin4            0.000                               0.000
+##    .pfmin5            0.000                               0.000
+##    .pfmin6            0.000                               0.000
+##    .pfmin7            0.000                               0.000
+##    .pfmin8            0.000                               0.000
+##    .pfmin9            0.000                               0.000
+##    .pfmin10           0.000                               0.000
+##    .pfmin11           0.000                               0.000
+##    .delta21           0.000                               0.000
+##    .delta32           0.000                               0.000
+##    .delta43           0.000                               0.000
+##    .delta54           0.000                                  NA
+##    .delta65           0.000                                  NA
+##    .delta76           0.000                                  NA
+##    .delta87           0.000                                  NA
+##   Std.all
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.241
+##    -0.025
+##    -0.234
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##        NA
+##        NA
+##        NA
+##        NA
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .fmin4             0.478    0.284    1.685    0.092    0.478
+##    .fmin5             0.315    0.203    1.550    0.121    0.315
+##    .fmin6             0.555    0.112    4.945    0.000    0.555
+##    .fmin7             0.613    0.118    5.190    0.000    0.613
+##    .fmin8             0.743    0.136    5.478    0.000    0.743
+##    .fmin9             0.630    0.102    6.191    0.000    0.630
+##    .fmin10            0.463    0.121    3.840    0.000    0.463
+##    .fmin11            0.742    0.500    1.483    0.138    0.742
+##    .delta21           0.000                               0.000
+##    .delta32           0.000                               0.000
+##    .delta43           0.000                               0.000
+##    .delta54           0.000                                  NA
+##    .delta65           0.000                                  NA
+##    .delta76           0.000                                  NA
+##    .delta87           0.000                                  NA
+##     slp1              1.029    2.469    0.417    0.677    1.000
+##     slp2              1.281    3.663    0.350    0.726    1.000
+##    .pfmin4            0.000                               0.000
+##    .pfmin5            0.000                               0.000
+##    .pfmin6            0.000                               0.000
+##    .pfmin7            0.000                               0.000
+##    .pfmin8            0.000                               0.000
+##    .pfmin9            0.000                               0.000
+##    .pfmin10           0.000                               0.000
+##    .pfmin11           0.000                               0.000
+##     int               0.776    0.114    6.816    0.000    1.000
+##   Std.all
+##     0.451
+##     0.361
+##     0.502
+##     0.441
+##     0.482
+##     0.427
+##     0.328
+##     0.393
+##     0.000
+##     0.000
+##     0.000
+##        NA
+##        NA
+##        NA
+##        NA
+##     1.000
+##     1.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     1.000</code></pre>
 </div>
 <div id="nonlinear-trajectories" class="section level2">
 <h2>Nonlinear Trajectories</h2>

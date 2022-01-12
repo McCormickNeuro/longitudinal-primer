@@ -185,7 +185,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html"><i class="fa fa-check"></i>The Shape of Development</a>
 <ul>
-<li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#polynomial-trajectories"><i class="fa fa-check"></i>Polynomial Trajectories</a></li>
+<li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#polynomial-trajectories"><i class="fa fa-check"></i>Polynomial Trajectories</a>
+<ul>
+<li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#intercept-only-model"><i class="fa fa-check"></i>Intercept-Only Model</a></li>
+<li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#linear-model"><i class="fa fa-check"></i>Linear Model</a></li>
+<li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#quadratic-model"><i class="fa fa-check"></i>Quadratic Model</a></li>
+<li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#inverse-model"><i class="fa fa-check"></i>Inverse Model</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#piecewise-trajectories"><i class="fa fa-check"></i>Piecewise Trajectories</a></li>
 <li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#nonlinear-trajectories"><i class="fa fa-check"></i>Nonlinear Trajectories</a></li>
 <li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#additional-considerations-1"><i class="fa fa-check"></i>Additional Considerations</a>
@@ -251,7 +257,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-10"><a href="02-canonical.html#cb3-10" aria-hidden="true" tabindex="-1"></a>feedback.learning <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/feedback-learning.csv&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb3-11"><a href="02-canonical.html#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id, age, modularity)</span></code></pre></div>
 <p>While we will usually read in the wide and long versions of the data directly, here we will demonstrate how to reformat the more common wide data format (i.e., each row corresponds to a different individual and repeated measures are new variables) into the long data format (i.e., each row corresponds to a different repeated measure with multiple rows per person). We can use the <code>pivot_longer()</code> function from the <a href="https://tidyr.tidyverse.org/"><strong>tidyr</strong></a> package (alternatives include <code>melt()</code> from the <a href="https://cran.r-project.org/web/packages/reshape2/index.html"><strong>reshape</strong></a> package). We will collect all the columns that begin with the string <code>dlpfc</code> and pass the values into one column, while creating a new column <code>wave</code> from their number indices (e.g., <code>1</code> for <code>dlpfc1</code>). We can then use the <code>mutate()</code> function from the <a href="https://dplyr.tidyverse.org/"><strong>dplyr</strong></a> package to change the wave colum from a character to a numeric variable and subtract <span class="math inline">\(1\)</span> from every value so that the first wave is coded as <span class="math inline">\(0\)</span> (this will be important for interpretations later).</p>
-<p>Details regarding these datasets can be found in <a href="07-datasets.html#datasets">Datasets</a>. However, shortly, the <code>executive-function.csv</code> file contains data for 342 adolescents measured up to 5 times. At each wave, adolescents played an executive function task while in an fMRI scanner. For now, we will only use the DLPFC measures to build the canonical growth models. The first 5 individuals are shown below. These data are in wide format.</p>
+<p>Details regarding these datasets can be found in <a href="07-datasets.html#datasets">Datasets</a>. However, shortly, the <code>executive-function.csv</code> file contains data for <span class="math inline">\(342\)</span> adolescents measured up to <span class="math inline">\(4\)</span> times. At each wave, adolescents played an executive function task while in an fMRI scanner. For now, we will only use the DLPFC measures to build the canonical growth models. The first <span class="math inline">\(5\)</span> individuals are shown below. These data are in wide format.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="02-canonical.html#cb4-1" aria-hidden="true" tabindex="-1"></a>executive.function <span class="sc">%&gt;%</span> <span class="fu">filter</span>(id <span class="sc">&lt;=</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb4-2"><a href="02-canonical.html#cb4-2" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable</span>(<span class="at">label =</span> <span class="cn">NA</span>,</span>
 <span id="cb4-3"><a href="02-canonical.html#cb4-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">format =</span> <span class="st">&quot;html&quot;</span>,</span>
@@ -624,7 +630,7 @@ dlpfc
 </tr>
 </tbody>
 </table>
-<p>The <code>feedback-learning.csv</code> file contains data for 297 adolescents and young adults measured up to 3 times. At each wave, individuals played a feedback learning task while in an fMRI scanner. ROI timeseries were then used to construct a brain network graph and the modularity of that graph was calculated. Here we will focus on these modularity values. The first 5 individuals are shown below.</p>
+<p>The <code>feedback-learning.csv</code> file contains data for <span class="math inline">\(297\)</span> adolescents and young adults measured up to <span class="math inline">\(3\)</span> times. At each wave, individuals played a feedback learning task while in an fMRI scanner. ROI timeseries were then used to construct a brain network graph and the modularity of that graph was calculated. Here we will focus on these modularity values. The first <span class="math inline">\(5\)</span> individuals are shown below.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="02-canonical.html#cb6-1" aria-hidden="true" tabindex="-1"></a>feedback.learning <span class="sc">%&gt;%</span> <span class="fu">filter</span>(id <span class="sc">&lt;=</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb6-2"><a href="02-canonical.html#cb6-2" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable</span>(<span class="at">label =</span> <span class="cn">NA</span>,</span>
 <span id="cb6-3"><a href="02-canonical.html#cb6-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">format =</span> <span class="st">&quot;html&quot;</span>,</span>
@@ -805,7 +811,7 @@ modularity
 <span id="cb7-4"><a href="02-canonical.html#cb7-4" aria-hidden="true" tabindex="-1"></a>                                    <span class="fu">paste0</span>(<span class="st">&quot;external/&quot;</span>,filename,<span class="st">&quot;.dat&quot;</span>)),</span>
 <span id="cb7-5"><a href="02-canonical.html#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">file=</span><span class="fu">paste0</span>(<span class="st">&quot;external/&quot;</span>,filename,<span class="st">&quot;_MplusAutomation.txt&quot;</span>))</span></code></pre></div>
 <p>Although we do not show the running and output of these models in-depth, all the <strong>Mplus</strong> files needed to recreate the MLM and SEM models are available to be downloaded below.</p>
-<a href="data:application/zip;base64,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" download="02-canonical-mpluscode.zip">
+<a href="data:application/zip;base64,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" download="02-canonical-mpluscode.zip">
 <button class="btn btn-default"><i class="fa fa-save"></i> Download Mplus files</button>
 </a>
 <p>For readers interested in how to automate running <strong>Mplus</strong> models through <strong>R</strong>, please consult the extrememly useful functions in <a href="https://michaelhallquist.github.io/MplusAutomation/articles/vignette.html"><strong>MplusAutomation</strong></a> that allow you to generate syntax, run saved input files, and re-import <strong>Mplus</strong> models into the R environment. Please note that a local <strong>Mplus</strong> license is still necessary to run these models.</p>
@@ -815,7 +821,7 @@ modularity
 <span id="cb8-3"><a href="02-canonical.html#cb8-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">codefile =</span> <span class="fu">paste0</span>(<span class="st">&quot;external/import_&quot;</span>,filename,<span class="st">&quot;.sas&quot;</span>), </span>
 <span id="cb8-4"><a href="02-canonical.html#cb8-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">package=</span><span class="st">&quot;SAS&quot;</span>)</span></code></pre></div>
 <p>For convenience, all the <strong>SAS</strong> files needed to recreate the MLM analyses are available for download below.</p>
-<a href="data:application/zip;base64,UEsDBBQACAgIAAalh1MAAAAAAAAAAAAAAAAWAAAAZXhlY3V0aXZlLWZ1bmN0aW9uLnR4dHWdW9IjuQqE33stczrETYL9b+yUZfeL/WVMxF8Rag+WESkQpCj7b/33v/XXOsa6qqv3OvPH/nv++2vePZ0+fXacZ9Bfn+1c4WeVt51Y8QzHf+tvHs+eidpZlvuPP4Kfz661J639PGKrn1GQ649c+mg8H806tnyfPR5r/4kr9fu7gqTGlWqZ3rW7y6cintGA0USx+YilUcdRUkK9tfutsXoE+1+zKDM7ZvXM5hl89PA38xmolxr2zDMWP2P7kfnzP++rgS9l7UciDJICDpvBuRr4/TDIPaiAfsstc3PvVWfZHnuGjYfRwPpawtfyziP5ZxJDhjA03QHN2iKZzyhhYV2pp+v5zPgz4953lLRghvZlhgZmhhZmRmowZ9HOGjYXGH6hjfaBN+C+LcDiLf5HzAt0r78007za/R0Fy7W8YPgyckvaEqxQbqHcwk3BSvz6fUV/LzKCzd5o+57Gvnb2/UMObo522B4Qb3ZQGc2SG4FsjUbc14h/ZAyLRszZvO3sR6ND+vDF24+vt5nBOFqxLzI8N4K1o4tzY1/0wl78XdPmz1S8lpn/caet2B1X0Z1W0d9e7msFnFHnF3XPnPfzcfN5pPv4axjnHGzU/sLhI6U9J+Y8/8tOy9cw6eMFxNffeP4Wu/RC2/J6r9H3DuQCa75ZOoLNN+0PvnGVrm979vq2yH5+XvjOfA3jDukvtD0ft0fFmSuff14dr+Eg3bew3OalatzavdEp+9D24wg4H5Y8iOVYbxvI2Seq8qx8vuQ1bD9eMdDTBXu6YE8XxsoOhltwSBnOyg5HCwznPSicpcdF89ePD9JIkPWFwFt88PZlCpHsQuPt+h5LH5u9Kx5R9hqFfSIYkVG4A0WxsotNZPNK7isbPu08DBtyHPLYcTCKPywYvV80Cu4r+Ft3zecDdn4xHMnHsOkJ9xfDNpILN/xcKD0XH0EW2UgamHUarmIyHNOu0/4yyeTIM9n9pfOcGYsZuD/ldYA/e3MGyxaATHHaE8e9ZJ0k2kkWafuFxx+/lEVAzyIflpvNL19ofP31+xewloctC8GWh802+XCXHGxmk8vOhvNtNsE4OdLMgb042e/lkODCA16R16tFx3FEWBmquIyD1zIOjMooNC5H71HO3qNcCP+c737Gg3bMCtx3KkgnASfpSvbUle+w6Cv2rKSzUyUZdJUQXbilFZ/4ip1ebdb2Fku5KTQqBGIxEItTLHV42gcDxRJplmrWSaO6Mc1SjMUawngNzxrBuBdFt3vhlPfCXBae9zbHoJt93jac8zacs7OiN0egW2Rb9geNP+OBKgmeeNAq7kDD3ph82ezyNqc4N+c4Nwehu3iH2oXTLgox9kbMbAHHzUHo3jxvkfPcB49u+/rGn5BkMyJ3sw0yIDcCcnMouoeVwpHoZv+4h/3BWZTSOCIPc/BoeNBLHszCHKPY/BiFRgcheZws+zjtT8dJz8fJ8Z7A+b6w+Prr9++TFTnJW8JJXOpzEyoneQM4omBwis/PpzhgOyLJcjjJcjbuA2ej7ZyN63CEHg7vA+eDp69Q4DCeTgvFiErCaY6DDmdaDnu5M6yX4W39DArvhcKbPV3z4a4XbgZtLBuTm21k/m0smQt4zce7RmQ1n+6aq3gdvMt08Fo21/I6cX/sxP2xLx4b0yuNlYUu1G1RTqjxNNdbVMU2St6M8UYYNuZWGo97zbmVZgg2u7TG7EpzorMxxuzBOQ8KHjQ0jDCHgTcMvFmojWHgDQeZwyW94SBzjMxuRJpzxJlvEHvjuIrD2BssoQ+GmBPkLwcjzEnG9HBWZTirMsWTLiG8eH8e4RWHveJg6WFusmVe4PszCLZBsM1BRMzB4jZjbbiMN5zKnIaT+QxLxvPcINiGawq2GG6vcSxrrvWOAL4C7dc4yzchXxQXXv/AX2Ci3LvE8e71D6b+4VXwXi+wPQ8G12vcxDjVjFcIBSTzE5IJCokHltc4S+c6+uK8ymvc+eNU+198knuNM5Fg7bdi91ux4qz2+gcsbK/Dszvit4uy+WqxcI3b12uc5Y8wjCEm0GsYZz+oW+PigRlXD8zY0dklr5CRm9Gh0C59BYdp8oa+zj78ld9JOu/tZo6cBXsj0DCfaZevch/MrGHCinHlzuyTxfxGlqUQn0gCsRK7jWGEaR/yyq/4UusmQGdb8I42q3bzyh1W9UF2jB0xeYFIa0GZ6vdKtuCXXPIKrZlA4KWv0AZkI1DChzzzJYhYwvs5ZjTNhfNzLjKYc1bTXJDInEvr5o4VN7tslt9jul06C4/Hq0TXa6q8op4Jr3rGhWt0DDxNcFrMMfY0T96/PYXyEyoZ5skMuxKqZ+KLOXtGLyRsuSjt2WW+0IpsReHbnFQyZ6S6yMzYpcDcB+8rLrzlJb38arXZ0JuVLVhmPkLZAqYuYBpYdbAP8+Xbri735ef8boEZThPkFwvB8xTsFwtMdFoIV/mhv/yKQcaZfegvvx8P4Y4iRPAbTLG2YJBGqi8Qh0SL5F+QwjCjxALUdRqXAAOrWbwlxlbz3WyLggRjsYXGBQ00jlhQ4UPjiB8gyGkWzdaOZQiLZnMUSA08SlpwTBsCpync6aXEgH9PEdTmEme9NKYj2zWVy4S5D6CJpwPJwxLvNtglvvzUMuwSX35t8RJfcNh4mAK2DLaH5MyoCeaLJcNPUF/scl9gkm/wJYMv2SsqwoulqP1ZCvDlxiU8wrw4ek2BPEGMsRTR64ca82MjLcS3AAdefrBLkAEVD2t+0AKZI2Mfksy3GdcShPrFVH0RxSqujBUfJktEscVFCyvnXaOcxTsfIkoEsYIvYyUcZIkETwmAlnKQleILBERLOMhixqiVui9RGADVFg6nmDVqpWLZEi7zsmggKC7GbR3OANYRCywi20ukAayINFCJNFCNiChqhP5FdFvD9s+cGhOkGvuwan7urIgz6BYJ2M23BbcIbzdfZNoCu5srjraZUWrbhW7Yte7AWGgjx9s21xxtM6fUdgrNpzD8S7J5Hio3pGg1tkV26DJrwNT3xvjncmtASxt9yN5E27F98IqJbRHYbr7htA/uMpdb8+PRBbXGLrfmPtDohgGDtUfb7Ek3XiY8CxV8+DrhYSheLs2vgg9nZJlNY4ed6BFO9AggHnHOZFaNHUeNH+S42QmeusjYHhHiHuFBD1f/7STPPRnmp4RqOGN7im/usfc8Il17hPM8nK49m/V+cPu79BywJK6fHL50eITbPO9k7XlD8HJvKDoQ7Bv70G9o3MU4XolETps1p3x64Xnt8m9+1Xf5N7RPt8jLfjg4P1cu7W77jWQ2u6Qb+HLH7aj5aNlIaLPmBGwL4HWg7V7SDSgz8dTQImztxN2uBeXbWhAArBl4re75tjpuXkrO7+VB63d5st/lyWZut7W40NviONlHZHC7lZm1CAda3KW3bpE861E6EKnXS8W5j5cOBNnGRtQ/ZqkbwkjqtqF7TDaGcf8ggdQGr/HaiNrHOGfgx9l8R2RWJ4T9jsqsjjg4jrjSZCMKICPiz8u/uQ82hsu4oZ9ejIcR0eeUUInwdSN83WxeUPZ1I/B4mTn34e/HNdzmKq8g29hwPWNErmZGzEU4txHObfjI54J144vPfL6YX+qCdeOLixq++P78YqabLzz0+XK+jL4E180v4QZucy9sF+MLnZ6v4MkjH8cvH+f3XvkS9QxfHGz6St7yfHG46auE7kv1RSih/RLGIy7dr03RuC9EoS++d7+w7OjrsO4PBUa+8Azoq1l2s2zO0/hqNspRC8tX79cI8dzswhY7WreF/saNiXJ+CTvPQ8SgbngcdMMQ1A1v+bqJRk7Gp0E37nNhzrrgjKobM+bc2DG68XnQLcXsse2MW4r2H8gPd6Pbvn7pO/fBsuq9auwB3bbQK1/GcNvilx9sHnHpOffBesQDnn/YOL8fb7YwgbdPZ5nfuQ7qcVj44CZ0eTl/3IU79IXCfGEjEcfyhTvFoH4pONAcBmNQd+TBufM9X7/8m/vgbiqXb/M8MKvil11zH04zDES8J8tK/pnvDjGfFjEuLjC5K5flHDm6F/tE3zy7LbrucKcY5/qCu7jF5M63At2PaEXkR8yfPZdz+tK91cIz0c19REcaF0w3d7616y7uCHqodk3BZz2PJToUcRMZDy40+IdI89sXSVyp9+CoM4RPE0waDy41uKDS+D8qzY+qQ/RN8+DIMwL3oXhnW76BGwn8K/+QaH5aTCWrRhQe/HJoIDi5pBpqSlXKejaG5IGXnzw2K2az9XNrGY8jDOcowznCMhtbfgXHndG4+QSHnTGi69fcTTyGhVHxwXORp8qFUY/oJ+Mp4JkCningmSbk881DTya6eQpOuKfyjinaXniG+AkKoB+qzY/q+Gh4mTY4bDyM22Niv0NPkQ71LG7hJi4JewoXe8k3ME0+FCYfCpF348n4TC4MeoowVfBuPEWe1JMvcniKNKlnC9tU7vWSb2BHuuyb+8DUrpc6DZZqflgCriXgWiamrFg3XoZbTQm8FudPvRRey9ln1DuYrcBNtrBS74UkOC+80+GFd6i8uPthse8svNDhxURxLxX7loh9SwCzuCeb1xYtGG+Vwi+Z5nkw9upQjcYvdQaHAdal2iCWwF2psLZEK8QSzrE4JSM60XipmHYz39Q3nxuZOePckMa3ytBshcBteHnPt7F6toCgaEzjW/RGdNWaxrfI1DB/xjf1ivLNJ87NVXsX7BnfSEz1nWSbG+81+i5uLCoguUUGVbSo8S3SOFukcZhJ46pJje+jLOeILzj8BXwc3QK3W2R2PvSaH5hgYmczZjcHuMiu8cOXHv2IsscRR9AjnOYRZY9LsbkPxs8RPvKIS/1+lJO8tJr7eG3eJ9T/H6qPrUiVCuqMnxS/ON+/OIU4PkceUbr4MGW+DYWZMs5MGRdtbPxws+CzxdqLJNA5wrZky2CmmfoRTYOPSKcekQQ6eDHDD4PujFA91/Fd0Gn80mmgNtcCei2yP72Erxc9bbxNfAFzapz72rhobOMfks232phk4+24KzU37m5xrmz2ks2nyua0j+hs4y1aCXsn22WL9lPeosU397xxptl4l1A8p24vxwZ0w5nbFvWOPmLqXG5sbufmjf04XBFwvEUDKm9xQ9lbRLgtItwe9Q2Dh5NPL5yfruGiMDLqmDkKtiOuVPmoMHdEYmhElDvilTIj8raD3d58xItlBpmpPqLrvmLp+IRY4n80nR98cZMcn0QEDIe5w8VI0STHhxt4+DB4512eFD1xfBisw2la5uf4HC52jQpq5yhNM1wFp8en1RdwCx2fVrYunKyg9Ti30vEZispj4SWsWHgJKxYeRuMyep4He9NYyA6IZdzu397C8JUXsfDuYyy8+xhLNOBfQWWNWNz/NJitE5etA/32Vwo9JM89efuLlaLP/xK1z1iFPRRiiT5Vcek6v33OY4n7VaHa6MSHsfP9Rgd+CVQwYycuY+cnMgpm7MRl7DwPvgIZC7uDx2o2lRamgvc2Yg0Lx1dABffTCWNPGfwiqDBGnyGFIEy9IIN7BMSHrANi6H0QRjeT41J1fkHLnXTC+MVrJg6gYYGFwbAQ7/bgy48hqDphjM9L1bkPfg8J52LD2BuGiSJJWLGRbDFb8X4M27yOm5V9hHTRsiPsqOkzDSFMNFQNa/EDWixnX7jbCH0Pr556QYaNePULHzrj3yuifrZp9Y6ocBG+Br8nKvhFUSHeFBXOp85wjl3DHd2w47EzHEPXcGx7FdxcJ5wdp+PVjnDhNz8vjIKPk6E75WbDS73Rh9kG4eIdNv655fjzeQHTSxe6D9TEZk0IclC4iFtDsYNC9dYJ0VsnBD8oLj/o1zdfdhAMc9QazvePQ7xVKpw9Z4haZgR37YgQl0AiODUUghkUwamhUC+Y4hY7ERzeBoe34UI45oYixMtLIzBoCeE/5XumIoX8ZPncrS5CeNQo3B6Du2BFlBAvXjel3jcVG9/AtYV0fuFUcEY3gi9oRTDvIOId24YAaQiQRovZtlpKDm+DnWlweBvi3W+5xAvJRCYoUqH0X3Od33eYGc4/sWNkpNEhJfF9OJHOoh2PxsluNDHG/T9QSwcI8CLVQ8URAAAMeQAAUEsDBBQACAgIAAalh1MAAAAAAAAAAAAAAAAdAAAAaW1wb3J0X2V4ZWN1dGl2ZS1mdW5jdGlvbi5zYXNFjMsKglAURefnKzaOInrRKJIGkgaCSJjS+KZHuSBXseOjv09DbI/2i7XGs9EibPD6ILJpDeRVw7ow53M/Lryb44oHTlvR3di0JhVdmV1ZmWKDTInKdcm4oFZv4cPK4kG4MarcWxvAJnKd2AGa6TlGP7z5gQf8bwt7u7BlEAuESe7DnV0QedfgguPpR7knMUFnhF51TMjKOk/JpigJbfoCUEsHCGeuCoygAAAA2AAAAFBLAQIXAxQACAgIAAalh1PwItVDxREAAAx5AAAWAAAAAAAAAAAAAACkgQAAAABleGVjdXRpdmUtZnVuY3Rpb24udHh0UEsBAhcDFAAICAgABqWHU2euCoygAAAA2AAAAB0AAAAAAAAAAAAAAKSBCRIAAGltcG9ydF9leGVjdXRpdmUtZnVuY3Rpb24uc2FzUEsFBgAAAAACAAIAjwAAAPQSAAAAAA==" download="02-canonical-sascode.zip">
+<a href="data:application/zip;base64,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" download="02-canonical-sascode.zip">
 <button class="btn btn-default"><i class="fa fa-save"></i> Download SAS files</button>
 </a>
 <div id="multilevel-model" class="section level2">
@@ -830,7 +836,7 @@ modularity
 <span id="cb9-4"><a href="02-canonical.html#cb9-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">method =</span> <span class="st">&quot;REML&quot;</span>,</span>
 <span id="cb9-5"><a href="02-canonical.html#cb9-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data =</span> executive.function.long)</span>
 <span id="cb9-6"><a href="02-canonical.html#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-7"><a href="02-canonical.html#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mlm.nlme, <span class="at">correlation=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<span id="cb9-7"><a href="02-canonical.html#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mlm.nlme, <span class="at">correlation =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## Linear mixed-effects model fit by REML
 ##   Data: executive.function.long 
 ##        AIC      BIC    logLik
@@ -870,7 +876,7 @@ modularity
 <span id="cb11-3"><a href="02-canonical.html#cb11-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">REML =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb11-4"><a href="02-canonical.html#cb11-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> executive.function.long)</span>
 <span id="cb11-5"><a href="02-canonical.html#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-6"><a href="02-canonical.html#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mlm.lme4, <span class="at">correlation=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<span id="cb11-6"><a href="02-canonical.html#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mlm.lme4, <span class="at">correlation =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## Linear mixed model fit by REML [&#39;lmerMod&#39;]
 ## Formula: dlpfc ~ 1 + wave + (1 + wave | id)
 ##    Data: executive.function.long
@@ -902,8 +908,9 @@ modularity
 <span id="cb13-3"><a href="02-canonical.html#cb13-3" aria-hidden="true" tabindex="-1"></a>                               <span class="at">REML =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb13-4"><a href="02-canonical.html#cb13-4" aria-hidden="true" tabindex="-1"></a>                               <span class="at">data =</span> executive.function.long)</span>
 <span id="cb13-5"><a href="02-canonical.html#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-6"><a href="02-canonical.html#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mlm.lmerTest, <span class="at">correlation=</span><span class="cn">FALSE</span>)</span></code></pre></div>
-<pre><code>## Linear mixed model fit by REML. t-tests use Satterthwaite&#39;s method [&#39;lmerModLmerTest&#39;]
+<span id="cb13-6"><a href="02-canonical.html#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mlm.lmerTest, <span class="at">correlation =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## Linear mixed model fit by REML. t-tests use Satterthwaite&#39;s method [
+## lmerModLmerTest]
 ## Formula: dlpfc ~ 1 + wave + (1 + wave | id)
 ##    Data: executive.function.long
 ## 
@@ -1184,7 +1191,7 @@ Marginal R<sup>2</sup> / Conditional R<sup>2</sup>
 <span id="cb22-2"><a href="02-canonical.html#cb22-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">pnames =</span> <span class="fu">c</span>(<span class="st">&quot;Intercept&quot;</span>), <span class="at">snames =</span> <span class="fu">c</span>(<span class="st">&quot;s(Age)&quot;</span>),</span>
 <span id="cb22-3"><a href="02-canonical.html#cb22-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">caption =</span> <span class="st">&quot;Modularity as a Function of Age&quot;</span>)</span></code></pre></div>
 <!-- html table generated in R 4.1.1 by xtable 1.8-4 package -->
-<!-- Tue Dec  7 20:40:13 2021 -->
+<!-- Wed Jan 12 10:10:03 2022 -->
 <table border="1">
 <caption align="bottom">
 Modularity as a Function of Age
@@ -1357,40 +1364,68 @@ s(Age)
 ##   Observed information based on                Hessian
 ## 
 ## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   int =~                                                                
-##     dlpfc1            1.000                               0.880    0.878
-##     dlpfc2            1.000                               0.880    0.813
-##     dlpfc3            1.000                               0.880    0.810
-##     dlpfc4            1.000                               0.880    0.820
-##   slp =~                                                                
-##     dlpfc1            0.000                               0.000    0.000
-##     dlpfc2            1.000                               0.287    0.265
-##     dlpfc3            2.000                               0.574    0.528
-##     dlpfc4            3.000                               0.861    0.802
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   int =~                                                       
+##     dlpfc1            1.000                               0.880
+##     dlpfc2            1.000                               0.880
+##     dlpfc3            1.000                               0.880
+##     dlpfc4            1.000                               0.880
+##   slp =~                                                       
+##     dlpfc1            0.000                               0.000
+##     dlpfc2            1.000                               0.287
+##     dlpfc3            2.000                               0.574
+##     dlpfc4            3.000                               0.861
+##   Std.all
+##          
+##     0.878
+##     0.813
+##     0.810
+##     0.820
+##          
+##     0.000
+##     0.265
+##     0.528
+##     0.802
 ## 
 ## Covariances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   int ~~                                                                
-##     slp              -0.126    0.031   -4.102    0.000   -0.499   -0.499
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   int ~~                                                       
+##     slp              -0.126    0.031   -4.102    0.000   -0.499
+##   Std.all
+##          
+##    -0.499
 ## 
 ## Intercepts:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##     int               0.543    0.053   10.181    0.000    0.617    0.617
-##     slp               0.121    0.021    5.705    0.000    0.420    0.420
-##    .dlpfc1            0.000                               0.000    0.000
-##    .dlpfc2            0.000                               0.000    0.000
-##    .dlpfc3            0.000                               0.000    0.000
-##    .dlpfc4            0.000                               0.000    0.000
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##     int               0.543    0.053   10.181    0.000    0.617
+##     slp               0.121    0.021    5.705    0.000    0.420
+##    .dlpfc1            0.000                               0.000
+##    .dlpfc2            0.000                               0.000
+##    .dlpfc3            0.000                               0.000
+##    .dlpfc4            0.000                               0.000
+##   Std.all
+##     0.617
+##     0.420
+##     0.000
+##     0.000
+##     0.000
+##     0.000
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##     int               0.775    0.086    9.009    0.000    1.000    1.000
-##     slp               0.082    0.016    5.180    0.000    1.000    1.000
-##    .dlpfc1            0.231    0.063    3.675    0.000    0.231    0.229
-##    .dlpfc2            0.568    0.055   10.261    0.000    0.568    0.484
-##    .dlpfc3            0.582    0.058   10.117    0.000    0.582    0.493
-##    .dlpfc4            0.393    0.074    5.308    0.000    0.393    0.341
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##     int               0.775    0.086    9.009    0.000    1.000
+##     slp               0.082    0.016    5.180    0.000    1.000
+##    .dlpfc1            0.231    0.063    3.675    0.000    0.231
+##    .dlpfc2            0.568    0.055   10.261    0.000    0.568
+##    .dlpfc3            0.582    0.058   10.117    0.000    0.582
+##    .dlpfc4            0.393    0.074    5.308    0.000    0.393
+##   Std.all
+##     1.000
+##     1.000
+##     0.229
+##     0.484
+##     0.493
+##     0.341
 ## 
 ## R-Square:
 ##                    Estimate
@@ -1490,40 +1525,68 @@ s(Age)
 ##   Observed information based on                Hessian
 ## 
 ## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   int =~                                                                
-##     dlpfc1            1.000                               0.880    0.878
-##     dlpfc2            1.000                               0.880    0.813
-##     dlpfc3            1.000                               0.880    0.810
-##     dlpfc4            1.000                               0.880    0.820
-##   slp =~                                                                
-##     dlpfc1            0.000                               0.000    0.000
-##     dlpfc2            1.000                               0.287    0.265
-##     dlpfc3            2.000                               0.574    0.528
-##     dlpfc4            3.000                               0.861    0.802
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   int =~                                                       
+##     dlpfc1            1.000                               0.880
+##     dlpfc2            1.000                               0.880
+##     dlpfc3            1.000                               0.880
+##     dlpfc4            1.000                               0.880
+##   slp =~                                                       
+##     dlpfc1            0.000                               0.000
+##     dlpfc2            1.000                               0.287
+##     dlpfc3            2.000                               0.574
+##     dlpfc4            3.000                               0.861
+##   Std.all
+##          
+##     0.878
+##     0.813
+##     0.810
+##     0.820
+##          
+##     0.000
+##     0.265
+##     0.528
+##     0.802
 ## 
 ## Covariances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   int ~~                                                                
-##     slp              -0.126    0.037   -3.406    0.001   -0.499   -0.499
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   int ~~                                                       
+##     slp              -0.126    0.037   -3.406    0.001   -0.499
+##   Std.all
+##          
+##    -0.499
 ## 
 ## Intercepts:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##     int               0.543    0.053   10.180    0.000    0.617    0.617
-##     slp               0.121    0.021    5.704    0.000    0.420    0.420
-##    .dlpfc1            0.000                               0.000    0.000
-##    .dlpfc2            0.000                               0.000    0.000
-##    .dlpfc3            0.000                               0.000    0.000
-##    .dlpfc4            0.000                               0.000    0.000
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##     int               0.543    0.053   10.180    0.000    0.617
+##     slp               0.121    0.021    5.704    0.000    0.420
+##    .dlpfc1            0.000                               0.000
+##    .dlpfc2            0.000                               0.000
+##    .dlpfc3            0.000                               0.000
+##    .dlpfc4            0.000                               0.000
+##   Std.all
+##     0.617
+##     0.420
+##     0.000
+##     0.000
+##     0.000
+##     0.000
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##     int               0.775    0.093    8.335    0.000    1.000    1.000
-##     slp               0.082    0.017    4.761    0.000    1.000    1.000
-##    .dlpfc1            0.231    0.075    3.060    0.002    0.231    0.229
-##    .dlpfc2            0.568    0.057    9.884    0.000    0.568    0.484
-##    .dlpfc3            0.582    0.062    9.332    0.000    0.582    0.493
-##    .dlpfc4            0.393    0.076    5.138    0.000    0.393    0.341
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##     int               0.775    0.093    8.335    0.000    1.000
+##     slp               0.082    0.017    4.761    0.000    1.000
+##    .dlpfc1            0.231    0.075    3.060    0.002    0.231
+##    .dlpfc2            0.568    0.057    9.884    0.000    0.568
+##    .dlpfc3            0.582    0.062    9.332    0.000    0.582
+##    .dlpfc4            0.393    0.076    5.138    0.000    0.393
+##   Std.all
+##     1.000
+##     1.000
+##     0.229
+##     0.484
+##     0.493
+##     0.341
 ## 
 ## R-Square:
 ##                    Estimate
@@ -2199,73 +2262,132 @@ NA
 ##   Observed information based on                Hessian
 ## 
 ## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   pdlpfc1 =~                                                            
-##     dlpfc1            1.000                               0.880    0.878
-##   pdlpfc2 =~                                                            
-##     dlpfc2            1.000                               0.778    0.718
-##   pdlpfc3 =~                                                            
-##     dlpfc3            1.000                               0.775    0.712
-##   pdlpfc4 =~                                                            
-##     dlpfc4            1.000                               0.872    0.812
-##   delta21 =~                                                            
-##     pdlpfc2           1.000                               0.369    0.369
-##   delta32 =~                                                            
-##     pdlpfc3           1.000                               0.370    0.370
-##   delta43 =~                                                            
-##     pdlpfc4           1.000                               0.329    0.329
-##   int =~                                                                
-##     pdlpfc1           1.000                               1.000    1.000
-##   slp =~                                                                
-##     delta21           1.000                               1.000    1.000
-##     delta32           1.000                               1.000    1.000
-##     delta43           1.000                               1.000    1.000
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   pdlpfc1 =~                                                   
+##     dlpfc1            1.000                               0.880
+##   pdlpfc2 =~                                                   
+##     dlpfc2            1.000                               0.778
+##   pdlpfc3 =~                                                   
+##     dlpfc3            1.000                               0.775
+##   pdlpfc4 =~                                                   
+##     dlpfc4            1.000                               0.872
+##   delta21 =~                                                   
+##     pdlpfc2           1.000                               0.369
+##   delta32 =~                                                   
+##     pdlpfc3           1.000                               0.370
+##   delta43 =~                                                   
+##     pdlpfc4           1.000                               0.329
+##   int =~                                                       
+##     pdlpfc1           1.000                               1.000
+##   slp =~                                                       
+##     delta21           1.000                               1.000
+##     delta32           1.000                               1.000
+##     delta43           1.000                               1.000
+##   Std.all
+##          
+##     0.878
+##          
+##     0.718
+##          
+##     0.712
+##          
+##     0.812
+##          
+##     0.369
+##          
+##     0.370
+##          
+##     0.329
+##          
+##     1.000
+##          
+##     1.000
+##     1.000
+##     1.000
 ## 
 ## Regressions:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   pdlpfc2 ~                                                             
-##     pdlpfc1           1.000                               1.132    1.132
-##   pdlpfc3 ~                                                             
-##     pdlpfc2           1.000                               1.004    1.004
-##   pdlpfc4 ~                                                             
-##     pdlpfc3           1.000                               0.889    0.889
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   pdlpfc2 ~                                                    
+##     pdlpfc1           1.000                               1.132
+##   pdlpfc3 ~                                                    
+##     pdlpfc2           1.000                               1.004
+##   pdlpfc4 ~                                                    
+##     pdlpfc3           1.000                               0.889
+##   Std.all
+##          
+##     1.132
+##          
+##     1.004
+##          
+##     0.889
 ## 
 ## Covariances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   int ~~                                                                
-##     slp              -0.126    0.031   -4.102    0.000   -0.499   -0.499
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   int ~~                                                       
+##     slp              -0.126    0.031   -4.102    0.000   -0.499
+##   Std.all
+##          
+##    -0.499
 ## 
 ## Intercepts:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .dlpfc1            0.000                               0.000    0.000
-##    .dlpfc2            0.000                               0.000    0.000
-##    .dlpfc3            0.000                               0.000    0.000
-##    .dlpfc4            0.000                               0.000    0.000
-##     int               0.543    0.053   10.181    0.000    0.617    0.617
-##     slp               0.121    0.021    5.705    0.000    0.420    0.420
-##    .pdlpfc1           0.000                               0.000    0.000
-##    .pdlpfc2           0.000                               0.000    0.000
-##    .pdlpfc3           0.000                               0.000    0.000
-##    .pdlpfc4           0.000                               0.000    0.000
-##    .delta21           0.000                               0.000    0.000
-##    .delta32           0.000                               0.000    0.000
-##    .delta43           0.000                               0.000    0.000
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .dlpfc1            0.000                               0.000
+##    .dlpfc2            0.000                               0.000
+##    .dlpfc3            0.000                               0.000
+##    .dlpfc4            0.000                               0.000
+##     int               0.543    0.053   10.181    0.000    0.617
+##     slp               0.121    0.021    5.705    0.000    0.420
+##    .pdlpfc1           0.000                               0.000
+##    .pdlpfc2           0.000                               0.000
+##    .pdlpfc3           0.000                               0.000
+##    .pdlpfc4           0.000                               0.000
+##    .delta21           0.000                               0.000
+##    .delta32           0.000                               0.000
+##    .delta43           0.000                               0.000
+##   Std.all
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.617
+##     0.420
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .dlpfc1            0.231    0.063    3.675    0.000    0.231    0.229
-##    .pdlpfc1           0.000                               0.000    0.000
-##    .dlpfc2            0.568    0.055   10.261    0.000    0.568    0.484
-##    .pdlpfc2           0.000                               0.000    0.000
-##    .dlpfc3            0.582    0.058   10.117    0.000    0.582    0.493
-##    .pdlpfc3           0.000                               0.000    0.000
-##    .dlpfc4            0.393    0.074    5.308    0.000    0.393    0.341
-##    .pdlpfc4           0.000                               0.000    0.000
-##    .delta21           0.000                               0.000    0.000
-##    .delta32           0.000                               0.000    0.000
-##    .delta43           0.000                               0.000    0.000
-##     slp               0.082    0.016    5.180    0.000    1.000    1.000
-##     int               0.775    0.086    9.009    0.000    1.000    1.000
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .dlpfc1            0.231    0.063    3.675    0.000    0.231
+##    .pdlpfc1           0.000                               0.000
+##    .dlpfc2            0.568    0.055   10.261    0.000    0.568
+##    .pdlpfc2           0.000                               0.000
+##    .dlpfc3            0.582    0.058   10.117    0.000    0.582
+##    .pdlpfc3           0.000                               0.000
+##    .dlpfc4            0.393    0.074    5.308    0.000    0.393
+##    .pdlpfc4           0.000                               0.000
+##    .delta21           0.000                               0.000
+##    .delta32           0.000                               0.000
+##    .delta43           0.000                               0.000
+##     slp               0.082    0.016    5.180    0.000    1.000
+##     int               0.775    0.086    9.009    0.000    1.000
+##   Std.all
+##     0.229
+##     0.000
+##     0.484
+##     0.000
+##     0.493
+##     0.000
+##     0.341
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     1.000
+##     1.000
 ## 
 ## R-Square:
 ##                    Estimate

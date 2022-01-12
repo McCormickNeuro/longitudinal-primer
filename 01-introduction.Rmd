@@ -7,9 +7,10 @@ packages <- c("utils", "tidyverse", "downloadthis",     # packages for data mana
               "foreign", "MplusAutomation",             # packages for writing data         
               "sjPlot", "broom", "kableExtra",          # packages for generating tables
               "nlme", "lme4", "lmerTest",               # packages for MLMs
-              "mgcv", "gamm4",                          # packages for GAMMs
+              "mgcv", "gamm4", "itsadug",               # packages for GAMMs
               "lavaan",                                 # packages for SEMs
-              "ggplot2", "semPlot")                     # packages for visualization                     
+              "ggplot2", "semPlot", "ggeffects",        # packages for visualization   
+              "interactions")                         
 
 if (length(setdiff(packages, rownames(installed.packages()))) > 0) {
   install.packages(setdiff(packages, 

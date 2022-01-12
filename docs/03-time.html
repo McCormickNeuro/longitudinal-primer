@@ -185,7 +185,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html"><i class="fa fa-check"></i>The Shape of Development</a>
 <ul>
-<li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#polynomial-trajectories"><i class="fa fa-check"></i>Polynomial Trajectories</a></li>
+<li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#polynomial-trajectories"><i class="fa fa-check"></i>Polynomial Trajectories</a>
+<ul>
+<li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#intercept-only-model"><i class="fa fa-check"></i>Intercept-Only Model</a></li>
+<li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#linear-model"><i class="fa fa-check"></i>Linear Model</a></li>
+<li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#quadratic-model"><i class="fa fa-check"></i>Quadratic Model</a></li>
+<li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#inverse-model"><i class="fa fa-check"></i>Inverse Model</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#piecewise-trajectories"><i class="fa fa-check"></i>Piecewise Trajectories</a></li>
 <li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#nonlinear-trajectories"><i class="fa fa-check"></i>Nonlinear Trajectories</a></li>
 <li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#additional-considerations-1"><i class="fa fa-check"></i>Additional Considerations</a>
@@ -288,21 +294,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb50-9"><a href="03-time.html#cb50-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">estimator =</span> <span class="st">&quot;ML&quot;</span>,</span>
 <span id="cb50-10"><a href="03-time.html#cb50-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">missing =</span> <span class="st">&quot;FIML&quot;</span>)</span></code></pre></div>
 <p>The real leverage that FIML gives us is apparent using this model. We can measure across <span class="math inline">\(8\)</span> ages despite no individual having more than <span class="math inline">\(4\)</span> observations. We can see the abbreviated results below.</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="03-time.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mc.wm, <span class="at">fit.measures =</span> <span class="cn">FALSE</span>, <span class="at">estimates =</span> <span class="cn">TRUE</span>, <span class="at">standardize =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-<pre><code>## lavaan 0.6-9 ended normally after 34 iterations
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="03-time.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mc.wm, <span class="at">fit.measures =</span> <span class="cn">FALSE</span>, <span class="at">estimates =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb51-2"><a href="03-time.html#cb51-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">standardize =</span> <span class="cn">TRUE</span>, <span class="at">rsquare =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## lavaan 0.6-9 ended normally after 33 iterations
 ## 
 ##   Estimator                                         ML
 ##   Optimization method                           NLMINB
 ##   Number of model parameters                        13
 ##                                                       
-##   Number of observations                           405
+##   Number of observations                           398
 ##   Number of missing patterns                        40
 ##                                                       
 ## Model Test User Model:
 ##                                                       
-##   Test statistic                                43.254
+##   Test statistic                                42.960
 ##   Degrees of freedom                                31
-##   P-value (Chi-square)                           0.071
+##   P-value (Chi-square)                           0.075
 ## 
 ## Parameter Estimates:
 ## 
@@ -311,67 +318,111 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   Observed information based on                Hessian
 ## 
 ## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   int =~                                                                
-##     fmin4             1.000                               0.651    0.636
-##     fmin5             1.000                               0.651    0.682
-##     fmin6             1.000                               0.651    0.620
-##     fmin7             1.000                               0.651    0.578
-##     fmin8             1.000                               0.651    0.532
-##     fmin9             1.000                               0.651    0.534
-##     fmin10            1.000                               0.651    0.541
-##     fmin11            1.000                               0.651    0.479
-##   slp =~                                                                
-##     fmin4             0.000                               0.000    0.000
-##     fmin5             1.000                               0.123    0.129
-##     fmin6             2.000                               0.245    0.234
-##     fmin7             3.000                               0.368    0.327
-##     fmin8             4.000                               0.491    0.401
-##     fmin9             5.000                               0.614    0.503
-##     fmin10            6.000                               0.736    0.612
-##     fmin11            7.000                               0.859    0.632
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   int =~                                                       
+##     fmin4             1.000                               0.656
+##     fmin5             1.000                               0.656
+##     fmin6             1.000                               0.656
+##     fmin7             1.000                               0.656
+##     fmin8             1.000                               0.656
+##     fmin9             1.000                               0.656
+##     fmin10            1.000                               0.656
+##     fmin11            1.000                               0.656
+##   slp =~                                                       
+##     fmin4             0.000                               0.000
+##     fmin5             1.000                               0.125
+##     fmin6             2.000                               0.249
+##     fmin7             3.000                               0.374
+##     fmin8             4.000                               0.499
+##     fmin9             5.000                               0.623
+##     fmin10            6.000                               0.748
+##     fmin11            7.000                               0.872
+##   Std.all
+##          
+##     0.638
+##     0.685
+##     0.623
+##     0.582
+##     0.531
+##     0.535
+##     0.542
+##     0.480
+##          
+##     0.000
+##     0.130
+##     0.237
+##     0.331
+##     0.404
+##     0.508
+##     0.618
+##     0.638
 ## 
 ## Covariances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##   int ~~                                                                
-##     slp               0.007    0.023    0.312    0.755    0.088    0.088
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##   int ~~                                                       
+##     slp               0.006    0.023    0.276    0.783    0.077
+##   Std.all
+##          
+##     0.077
 ## 
 ## Intercepts:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .fmin4             0.000                               0.000    0.000
-##    .fmin5             0.000                               0.000    0.000
-##    .fmin6             0.000                               0.000    0.000
-##    .fmin7             0.000                               0.000    0.000
-##    .fmin8             0.000                               0.000    0.000
-##    .fmin9             0.000                               0.000    0.000
-##    .fmin10            0.000                               0.000    0.000
-##    .fmin11            0.000                               0.000    0.000
-##     int               0.016    0.052    0.299    0.765    0.024    0.024
-##     slp               0.050    0.012    4.144    0.000    0.406    0.406
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .fmin4             0.000                               0.000
+##    .fmin5             0.000                               0.000
+##    .fmin6             0.000                               0.000
+##    .fmin7             0.000                               0.000
+##    .fmin8             0.000                               0.000
+##    .fmin9             0.000                               0.000
+##    .fmin10            0.000                               0.000
+##    .fmin11            0.000                               0.000
+##     int               0.026    0.053    0.485    0.628    0.039
+##     slp               0.049    0.012    4.020    0.000    0.393
+##   Std.all
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.000
+##     0.039
+##     0.393
 ## 
 ## Variances:
-##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-##    .fmin4             0.626    0.139    4.499    0.000    0.626    0.596
-##    .fmin5             0.458    0.101    4.512    0.000    0.458    0.503
-##    .fmin6             0.591    0.103    5.726    0.000    0.591    0.535
-##    .fmin7             0.668    0.090    7.406    0.000    0.668    0.526
-##    .fmin8             0.779    0.121    6.427    0.000    0.779    0.519
-##    .fmin9             0.616    0.093    6.612    0.000    0.616    0.414
-##    .fmin10            0.398    0.114    3.498    0.000    0.398    0.275
-##    .fmin11            0.585    0.124    4.730    0.000    0.585    0.317
-##     int               0.424    0.115    3.680    0.000    1.000    1.000
-##     slp               0.015    0.006    2.645    0.008    1.000    1.000</code></pre>
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv
+##    .fmin4             0.627    0.141    4.440    0.000    0.627
+##    .fmin5             0.458    0.102    4.475    0.000    0.458
+##    .fmin6             0.591    0.105    5.646    0.000    0.591
+##    .fmin7             0.664    0.091    7.315    0.000    0.664
+##    .fmin8             0.796    0.125    6.389    0.000    0.796
+##    .fmin9             0.621    0.095    6.565    0.000    0.621
+##    .fmin10            0.398    0.116    3.438    0.001    0.398
+##    .fmin11            0.589    0.125    4.694    0.000    0.589
+##     int               0.431    0.117    3.690    0.000    1.000
+##     slp               0.016    0.006    2.685    0.007    1.000
+##   Std.all
+##     0.593
+##     0.500
+##     0.533
+##     0.522
+##     0.522
+##     0.413
+##     0.272
+##     0.315
+##     1.000
+##     1.000</code></pre>
 <p>With this model, we will be warned that coverage for certain pairwise combinations is <span class="math inline">\(&lt; 10\%\)</span>, which just reflects the fact that almost no individuals gave data at adjacent ages. We could inspect the model coverage using the <code>lavInspect()</code> function using the argument <code>what = "coverage"</code>. Note the values at or near <span class="math inline">\(0\)</span> on the 1-off diagonal (e.g., <code>fmin5</code> and <code>fmin4</code>).</p>
 <div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="03-time.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lavInspect</span>(mc.wm, <span class="at">what =</span> <span class="st">&quot;coverage&quot;</span>)</span></code></pre></div>
 <pre><code>##        fmin4 fmin5 fmin6 fmin7 fmin8 fmin9 fmin10 fmin11
-## fmin4  0.301                                            
-## fmin5  0.000 0.415                                      
-## fmin6  0.077 0.000 0.360                                
-## fmin7  0.212 0.262 0.000 0.474                          
-## fmin8  0.030 0.121 0.242 0.007 0.373                    
-## fmin9  0.198 0.202 0.069 0.343 0.002 0.430              
-## fmin10 0.069 0.111 0.200 0.040 0.244 0.035 0.333        
-## fmin11 0.151 0.237 0.054 0.341 0.040 0.358 0.030  0.427</code></pre>
+## fmin4  0.299                                            
+## fmin5  0.000 0.420                                      
+## fmin6  0.078 0.000 0.359                                
+## fmin7  0.209 0.264 0.000 0.472                          
+## fmin8  0.030 0.123 0.239 0.008 0.372                    
+## fmin9  0.196 0.204 0.070 0.342 0.003 0.430              
+## fmin10 0.070 0.113 0.198 0.040 0.244 0.035 0.334        
+## fmin11 0.151 0.239 0.055 0.342 0.040 0.359 0.030  0.430</code></pre>
 <p>Finally, we can generate a path diagram, highlighting that the intercept and slope are estimated from all ages even though no individual is measured across all of those ages.</p>
 <div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="03-time.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(mc.wm, </span>
 <span id="cb55-2"><a href="03-time.html#cb55-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">intercepts =</span> <span class="cn">TRUE</span>,</span>
@@ -380,6 +431,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="accelerated-design" class="section level3">
 <h3>Accelerated Design</h3>
+<p>The most complex assessment schedule is the accelerated longitudinal design, where no two individual are assessed at the same maturational state (usually age). While it isn’t strictly necessary that we have some smooth continuum of starting ages, accelerated longitudinal studies most often follow this approach. We can see an example below.</p>
 <div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="03-time.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
 <span id="cb56-2"><a href="03-time.html#cb56-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb56-3"><a href="03-time.html#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(accelerated <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(id) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">length</span>(<span class="fu">unique</span>(wave)) <span class="sc">==</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span> </span>
@@ -389,14 +441,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb56-7"><a href="03-time.html#cb56-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="fu">as.factor</span>(wave))) <span class="sc">+</span> </span>
 <span id="cb56-8"><a href="03-time.html#cb56-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Age&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Individual&quot;</span>, <span class="at">color =</span> <span class="st">&quot;Wave&quot;</span>, <span class="at">shape =</span> <span class="st">&quot;Cohort&quot;</span>) <span class="sc">+</span> </span>
 <span id="cb56-9"><a href="03-time.html#cb56-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;top&quot;</span>)</span></code></pre></div>
-<p><img src="longitudinal_primer_files/figure-html/accelerated-1.png" width="672" /></p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="03-time.html#cb57-1" aria-hidden="true" tabindex="-1"></a>mlm.lmerTest <span class="ot">&lt;-</span> <span class="fu">lmer</span>(<span class="fu">scale</span>(modularity) <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id), </span>
-<span id="cb57-2"><a href="03-time.html#cb57-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">na.action =</span> na.omit,</span>
-<span id="cb57-3"><a href="03-time.html#cb57-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">REML =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb57-4"><a href="03-time.html#cb57-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> accelerated)</span>
-<span id="cb57-5"><a href="03-time.html#cb57-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-6"><a href="03-time.html#cb57-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mlm.lmerTest)</span></code></pre></div>
-<pre><code>## Linear mixed model fit by REML. t-tests use Satterthwaite&#39;s method [&#39;lmerModLmerTest&#39;]
+<p><img src="longitudinal_primer_files/figure-html/accelerated%2001-1.png" width="672" /></p>
+<p>Unlike the single or multiple-cohort data, where we have discrete timepoints of observations, here we have as many as three unique timepoints per person since individuals are unlikely to be the <em>exact</em> same age. While it is possible to fit this type of model using definition variables in an SEM (see the <strong>Mplus</strong> code for the TSCORE option), it is far more common to fit these assessment schedules with mixed effects models, where we can include precise age into the model as a continuous predictor. We can use the multilevel model to fit a quadratic growth curve to this data. Note that the linear and quadratic effects are fixed effects that are pooled across individuals, and that only the random intercept is included. We could include additional random effects if the data support them, although we would need sufficient numbers of observations within-person to do so.</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="03-time.html#cb57-1" aria-hidden="true" tabindex="-1"></a>accel <span class="ot">&lt;-</span> <span class="fu">lmer</span>(<span class="fu">scale</span>(modularity) <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id), </span>
+<span id="cb57-2"><a href="03-time.html#cb57-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">na.action =</span> na.omit,</span>
+<span id="cb57-3"><a href="03-time.html#cb57-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">REML =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb57-4"><a href="03-time.html#cb57-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> accelerated)</span></code></pre></div>
+<p>We can see the results of this model below.</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="03-time.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(accel)</span></code></pre></div>
+<pre><code>## Linear mixed model fit by REML. t-tests use Satterthwaite&#39;s method [
+## lmerModLmerTest]
 ## Formula: scale(modularity) ~ 1 + age + I(age^2) + (1 | id)
 ##    Data: accelerated
 ## 
@@ -424,23 +478,688 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##          (Intr) age   
 ## age      -0.982       
 ## I(age^2)  0.940 -0.986</code></pre>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="03-time.html#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_model</span>(mlm.lmerTest,</span>
-<span id="cb59-2"><a href="03-time.html#cb59-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">show.se =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb59-3"><a href="03-time.html#cb59-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">show.df =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb59-4"><a href="03-time.html#cb59-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">show.ci =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb59-5"><a href="03-time.html#cb59-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">digits =</span> <span class="dv">3</span>,</span>
-<span id="cb59-6"><a href="03-time.html#cb59-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">pred.labels =</span> <span class="fu">c</span>(<span class="st">&quot;Intercept&quot;</span>, <span class="st">&quot;Age&quot;</span>, <span class="st">&quot;Age^2&quot;</span>),</span>
-<span id="cb59-7"><a href="03-time.html#cb59-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">dv.labels =</span> <span class="st">&quot;Modularity&quot;</span>,</span>
-<span id="cb59-8"><a href="03-time.html#cb59-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">string.se =</span> <span class="st">&quot;SE&quot;</span>,</span>
-<span id="cb59-9"><a href="03-time.html#cb59-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">string.p =</span> <span class="st">&quot;P-Value&quot;</span>)</span></code></pre></div>
-<pre><code>## Argument &#39;df_method&#39; is deprecated. Please use &#39;ci_method&#39; instead.</code></pre>
+<p>If we want to get the overall fixed effects trend, rather than individual trajectories (as we did in the <a href="02-canonical.html#canon">Canonical</a> models), we can use the <code>ggpredict()</code> function from the <a href=""><strong>ggeffects</strong></a> package to generate predicted values of the outcome at specific values of the predictor. This package is especially useful for generating <strong>ggplot</strong>-compatible dataframes when plotting interactions, but we can still use it for main effects (although a polynomial is a special form of an interaction). We can specify the levels of the predictor within the brackets (<code>[]</code>) or set them to <code>all</code> as we will here to get the full range of ages in our plot. We can then pass this dataframe to <strong>ggplot</strong> and plot the effect of age with confidence bands shaded.</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="03-time.html#cb60-1" aria-hidden="true" tabindex="-1"></a>accel.effects <span class="ot">=</span> ggeffects<span class="sc">::</span><span class="fu">ggpredict</span>(accel, <span class="at">terms=</span><span class="st">&#39;age [all]&#39;</span>)</span>
+<span id="cb60-2"><a href="03-time.html#cb60-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-3"><a href="03-time.html#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>accel.effects, <span class="fu">aes</span>(<span class="at">x=</span>x,<span class="at">y=</span>predicted)) <span class="sc">+</span> </span>
+<span id="cb60-4"><a href="03-time.html#cb60-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb60-5"><a href="03-time.html#cb60-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>conf.low, <span class="at">ymax=</span>conf.high), <span class="at">alpha=</span>.<span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb60-6"><a href="03-time.html#cb60-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&#39;Age&#39;</span>, <span class="at">y =</span> <span class="st">&#39;Predicted Learning Rate&#39;</span>)</span></code></pre></div>
+<p><img src="longitudinal_primer_files/figure-html/accelerated%2004-1.png" width="672" /></p>
+<p>We can see quite a pronounced inverted-U quadratic effect here, with a peak around twenty. While we have this plot here, we might wish to know if the simple linear slope is significant at various points along the curve (i.e., is modularity significantly increasing or decreasing at a given age). To do so, we can use the <code>simple_slopes()</code> function from the <a href=""><strong>interactions</strong></a> package. One quirk is that this function does not recognize a polynomial term like the one we have here. Instead, the function looks for separate variable labels. Well fortunately we can just trick it into working as we would like by duplicating the age variable under a new name (<code>age_temp</code>). We can then re-estimate our model with the interaction of age and our temporary age variable included (i.e., <code>age:age_temp</code>).</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="03-time.html#cb61-1" aria-hidden="true" tabindex="-1"></a>accelerated <span class="ot">&lt;-</span> accelerated <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">age_temp =</span> age)</span>
+<span id="cb61-2"><a href="03-time.html#cb61-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-3"><a href="03-time.html#cb61-3" aria-hidden="true" tabindex="-1"></a>probe.accel <span class="ot">&lt;-</span> <span class="fu">lmer</span>(<span class="fu">scale</span>(modularity) <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> age <span class="sc">+</span> age<span class="sc">:</span>age_temp <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id), </span>
+<span id="cb61-4"><a href="03-time.html#cb61-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">na.action =</span> na.omit,</span>
+<span id="cb61-5"><a href="03-time.html#cb61-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">REML =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb61-6"><a href="03-time.html#cb61-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> accelerated)</span></code></pre></div>
+<p>We can then pass the new model object to the <code>simple_slopes()</code> function with <code>age</code> as our focal predictor and <code>age_temp</code> as the moderator (of course in this case, it doesn’t matter which variable we put in which position). We can toggle the <code>jnplot</code> argument to <code>TRUE</code> in order to generate a plot of the linear effect of age as a function of age. This plot will show us where within the quadratic curve, we have significant increases or decreases, and where the linear effect is not significant.</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="03-time.html#cb62-1" aria-hidden="true" tabindex="-1"></a>interactions<span class="sc">::</span><span class="fu">sim_slopes</span>(probe.accel, </span>
+<span id="cb62-2"><a href="03-time.html#cb62-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">pred =</span> age, </span>
+<span id="cb62-3"><a href="03-time.html#cb62-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">modx =</span> age_temp, </span>
+<span id="cb62-4"><a href="03-time.html#cb62-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">jnplot =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb62-5"><a href="03-time.html#cb62-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">jnalpha =</span> <span class="fl">0.05</span>)</span></code></pre></div>
+<pre><code>## JOHNSON-NEYMAN INTERVAL 
+## 
+## When age_temp is OUTSIDE the interval [18.79, 27.02], the slope
+## of age is p &lt; .05.
+## 
+## Note: The range of observed values of age_temp is [8.01, 28.46]</code></pre>
+<p><img src="longitudinal_primer_files/figure-html/accelerated%2006-1.png" width="672" /></p>
+<pre><code>## SIMPLE SLOPES ANALYSIS 
+## 
+## Slope of age when age_temp = 13.14157 (- 1 SD): 
+## 
+##   Est.   S.E.   t val.      p
+## ------ ------ -------- ------
+##   0.10   0.02     4.40   0.00
+## 
+## Slope of age when age_temp = 17.17288 (Mean): 
+## 
+##   Est.   S.E.   t val.      p
+## ------ ------ -------- ------
+##   0.05   0.02     3.01   0.00
+## 
+## Slope of age when age_temp = 21.20419 (+ 1 SD): 
+## 
+##   Est.   S.E.   t val.      p
+## ------ ------ -------- ------
+##   0.01   0.02     0.33   0.74</code></pre>
+<p>We can see that from around 19 to 27, the linear effect of age (i.e., the slope of the tangent line) is not significant but is significantly positive before and significantly negative after this age range. We round these numbers because we cannot really think we have such precise measurements to say that linear increases in modularity become non-significant <em>exactly</em> at 18.79. However, this sort of plot can help us distinguish between truly quadratic effects (within increases <em>and</em> decreases) versus a plateauing of the outcome at later ages.</p>
+</div>
+</div>
+<div id="time-coding" class="section level2">
+<h2>Time Coding</h2>
+<p>One point of frequent confusion when modeling data (nevermind longitudinal models) is the role of centering the predictors for model results/fit/etc. In general, centering predictors does not change the fundamental information contained within the model, although sometimes it is necessary for practical reason (e.g., reducing collinearity between main effects and product terms). In longitudinal models, the main centering concern is where to place the intercept (i.e., where time is coded 0). While many of our parameter estimates will indeed change based on where we choose to estimate the intercept (most notably the…wait for it…intercept, as well as covariances with the intercept). Here we will demonstrate with the LCM framework since the factor-loading matrix makes what is happening very explicit, but you could replicate these results with any of the other approaches.</p>
+<p>First, we can fit the linear model to the single-cohort data we showed above. Here we will place the <span class="math inline">\(0\)</span> factor loading at the first time point which will result in the intercept reflecting individual differences in the level of the outcome at the initial assessment (i.e., initial status).</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="03-time.html#cb65-1" aria-hidden="true" tabindex="-1"></a>initial.status <span class="ot">&lt;-</span> <span class="st">&quot;int =~ 1*dlpfc1 + 1*dlpfc2 + 1*dlpfc3 + 1*dlpfc4</span></span>
+<span id="cb65-2"><a href="03-time.html#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="st">                   slp =~ 0*dlpfc1 + 1*dlpfc2 + 2*dlpfc3 + 3*dlpfc4&quot;</span></span>
+<span id="cb65-3"><a href="03-time.html#cb65-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-4"><a href="03-time.html#cb65-4" aria-hidden="true" tabindex="-1"></a>initial.status.fit <span class="ot">&lt;-</span> <span class="fu">growth</span>(initial.status, </span>
+<span id="cb65-5"><a href="03-time.html#cb65-5" aria-hidden="true" tabindex="-1"></a>                             <span class="at">data =</span> single.cohort,</span>
+<span id="cb65-6"><a href="03-time.html#cb65-6" aria-hidden="true" tabindex="-1"></a>                             <span class="at">estimator =</span> <span class="st">&quot;ML&quot;</span>,</span>
+<span id="cb65-7"><a href="03-time.html#cb65-7" aria-hidden="true" tabindex="-1"></a>                             <span class="at">missing=</span><span class="st">&quot;FIML&quot;</span>)</span>
+<span id="cb65-8"><a href="03-time.html#cb65-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-9"><a href="03-time.html#cb65-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(initial.status.fit, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">estimates =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb65-10"><a href="03-time.html#cb65-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">standardize =</span> <span class="cn">FALSE</span>, <span class="at">rsquare =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## lavaan 0.6-9 ended normally after 22 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                         9
+##                                                       
+##   Number of observations                            50
+##   Number of missing patterns                         5
+##                                                       
+## Model Test User Model:
+##                                                       
+##   Test statistic                                12.140
+##   Degrees of freedom                                 5
+##   P-value (Chi-square)                           0.033
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                                72.730
+##   Degrees of freedom                                 6
+##   P-value                                        0.000
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    0.893
+##   Tucker-Lewis Index (TLI)                       0.872
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)               -248.174
+##   Loglikelihood unrestricted model (H1)       -242.104
+##                                                       
+##   Akaike (AIC)                                 514.347
+##   Bayesian (BIC)                               531.555
+##   Sample-size adjusted Bayesian (BIC)          503.306
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.169
+##   90 Percent confidence interval - lower         0.045
+##   90 Percent confidence interval - upper         0.293
+##   P-value RMSEA &lt;= 0.05                          0.055
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.113</code></pre>
+<p>We will focus first on fit and then circle back to parameter estimates later. Here the chi-square test statistics is <span class="math inline">\(12.14\)</span> on <span class="math inline">\(5%\)</span> degrees of freedom (<span class="math inline">\(p = 0.033\)</span>), the <span class="math inline">\(CFI = 0.893\)</span> and the <span class="math inline">\(RMSEA = 0.169\)</span>. We can then re-estimate the model where we code the <em>last</em> factor loading as <span class="math inline">\(0\)</span> instead so the intercept will represent final status.</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="03-time.html#cb67-1" aria-hidden="true" tabindex="-1"></a>final.status <span class="ot">&lt;-</span> <span class="st">&quot;int =~ 1*dlpfc1 + 1*dlpfc2 + 1*dlpfc3 + 1*dlpfc4</span></span>
+<span id="cb67-2"><a href="03-time.html#cb67-2" aria-hidden="true" tabindex="-1"></a><span class="st">                 slp =~ -3*dlpfc1 + -2*dlpfc2 + -1*dlpfc3 + 0*dlpfc4&quot;</span></span>
+<span id="cb67-3"><a href="03-time.html#cb67-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-4"><a href="03-time.html#cb67-4" aria-hidden="true" tabindex="-1"></a>final.status.fit <span class="ot">&lt;-</span> <span class="fu">growth</span>(final.status, </span>
+<span id="cb67-5"><a href="03-time.html#cb67-5" aria-hidden="true" tabindex="-1"></a>                           <span class="at">data =</span> single.cohort,</span>
+<span id="cb67-6"><a href="03-time.html#cb67-6" aria-hidden="true" tabindex="-1"></a>                           <span class="at">estimator =</span> <span class="st">&quot;ML&quot;</span>,</span>
+<span id="cb67-7"><a href="03-time.html#cb67-7" aria-hidden="true" tabindex="-1"></a>                           <span class="at">missing =</span> <span class="st">&quot;FIML&quot;</span>)</span>
+<span id="cb67-8"><a href="03-time.html#cb67-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-9"><a href="03-time.html#cb67-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(final.status.fit, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">estimates =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb67-10"><a href="03-time.html#cb67-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">standardize =</span> <span class="cn">FALSE</span>, <span class="at">rsquare =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## lavaan 0.6-9 ended normally after 25 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                         9
+##                                                       
+##   Number of observations                            50
+##   Number of missing patterns                         5
+##                                                       
+## Model Test User Model:
+##                                                       
+##   Test statistic                                12.140
+##   Degrees of freedom                                 5
+##   P-value (Chi-square)                           0.033
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                                72.730
+##   Degrees of freedom                                 6
+##   P-value                                        0.000
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    0.893
+##   Tucker-Lewis Index (TLI)                       0.872
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)               -248.174
+##   Loglikelihood unrestricted model (H1)       -242.104
+##                                                       
+##   Akaike (AIC)                                 514.347
+##   Bayesian (BIC)                               531.555
+##   Sample-size adjusted Bayesian (BIC)          503.306
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.169
+##   90 Percent confidence interval - lower         0.045
+##   90 Percent confidence interval - upper         0.293
+##   P-value RMSEA &lt;= 0.05                          0.055
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.113</code></pre>
+<p>Looking at the model fit values, they are <em>exactly</em> identical to the initial status model. We have effectively re-arranged deck chairs on the Titanic (and Rose is about to shove Jack off that door; don’t @ me) as far as model fit goes. So why might we wish to reformulate this model? Well, individual differences in level might be interesting to interpret substantively at one point over another depending on our application of interest. While many research hypotheses will lend themselves naturally to the initial status approach, in intervention work or a training study we might be far more interesting in interpreting where individuals end up (spoken with all the authority of someone who does <em>not</em> do intervention work).</p>
+<table>
+<caption>
+<strong>Initial Status LCM</strong>
+</caption>
+<thead>
+<tr>
+<th style="text-align:center;text-align: center;">
+Parameter
+</th>
+<th style="text-align:center;text-align: center;">
+Estimate
+</th>
+<th style="text-align:center;text-align: center;">
+SE
+</th>
+<th style="text-align:center;text-align: center;">
+Statistic
+</th>
+<th style="text-align:center;text-align: center;">
+<em>p</em>-value
+</th>
+<th style="text-align:center;text-align: center;">
+Std.LV
+</th>
+<th style="text-align:center;text-align: center;">
+Std.All
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+dlpfc1 ~~ dlpfc1
+</td>
+<td style="text-align:center;">
+0.280
+</td>
+<td style="text-align:center;">
+0.196
+</td>
+<td style="text-align:center;">
+1.427
+</td>
+<td style="text-align:center;">
+0.154
+</td>
+<td style="text-align:center;">
+0.280
+</td>
+<td style="text-align:center;">
+0.307
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+dlpfc2 ~~ dlpfc2
+</td>
+<td style="text-align:center;">
+0.459
+</td>
+<td style="text-align:center;">
+0.140
+</td>
+<td style="text-align:center;">
+3.275
+</td>
+<td style="text-align:center;">
+0.001
+</td>
+<td style="text-align:center;">
+0.459
+</td>
+<td style="text-align:center;">
+0.435
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+dlpfc3 ~~ dlpfc3
+</td>
+<td style="text-align:center;">
+0.389
+</td>
+<td style="text-align:center;">
+0.128
+</td>
+<td style="text-align:center;">
+3.039
+</td>
+<td style="text-align:center;">
+0.002
+</td>
+<td style="text-align:center;">
+0.389
+</td>
+<td style="text-align:center;">
+0.368
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+dlpfc4 ~~ dlpfc4
+</td>
+<td style="text-align:center;">
+0.640
+</td>
+<td style="text-align:center;">
+0.278
+</td>
+<td style="text-align:center;">
+2.302
+</td>
+<td style="text-align:center;">
+0.021
+</td>
+<td style="text-align:center;">
+0.640
+</td>
+<td style="text-align:center;">
+0.428
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+int ~~ int
+</td>
+<td style="text-align:center;">
+0.631
+</td>
+<td style="text-align:center;">
+0.207
+</td>
+<td style="text-align:center;">
+3.039
+</td>
+<td style="text-align:center;">
+0.002
+</td>
+<td style="text-align:center;">
+1.000
+</td>
+<td style="text-align:center;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+slp ~~ slp
+</td>
+<td style="text-align:center;">
+0.055
+</td>
+<td style="text-align:center;">
+0.054
+</td>
+<td style="text-align:center;">
+1.010
+</td>
+<td style="text-align:center;">
+0.313
+</td>
+<td style="text-align:center;">
+1.000
+</td>
+<td style="text-align:center;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+int ~~ slp
+</td>
+<td style="text-align:center;">
+-0.045
+</td>
+<td style="text-align:center;">
+0.097
+</td>
+<td style="text-align:center;">
+-0.467
+</td>
+<td style="text-align:center;">
+0.641
+</td>
+<td style="text-align:center;">
+-0.243
+</td>
+<td style="text-align:center;">
+-0.243
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+int ~1
+</td>
+<td style="text-align:center;">
+0.628
+</td>
+<td style="text-align:center;">
+0.132
+</td>
+<td style="text-align:center;">
+4.761
+</td>
+<td style="text-align:center;">
+0.000
+</td>
+<td style="text-align:center;">
+0.791
+</td>
+<td style="text-align:center;">
+0.791
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+slp ~1
+</td>
+<td style="text-align:center;">
+0.114
+</td>
+<td style="text-align:center;">
+0.054
+</td>
+<td style="text-align:center;">
+2.120
+</td>
+<td style="text-align:center;">
+0.034
+</td>
+<td style="text-align:center;">
+0.487
+</td>
+<td style="text-align:center;">
+0.487
+</td>
+</tr>
+</tbody>
+</table>
+<table>
+<caption>
+<strong>Final Status LCM</strong>
+</caption>
+<thead>
+<tr>
+<th style="text-align:center;text-align: center;">
+Parameter
+</th>
+<th style="text-align:center;text-align: center;">
+Estimate
+</th>
+<th style="text-align:center;text-align: center;">
+SE
+</th>
+<th style="text-align:center;text-align: center;">
+Statistic
+</th>
+<th style="text-align:center;text-align: center;">
+<em>p</em>-value
+</th>
+<th style="text-align:center;text-align: center;">
+Std.LV
+</th>
+<th style="text-align:center;text-align: center;">
+Std.All
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+dlpfc1 ~~ dlpfc1
+</td>
+<td style="text-align:center;">
+0.280
+</td>
+<td style="text-align:center;">
+0.196
+</td>
+<td style="text-align:center;">
+1.427
+</td>
+<td style="text-align:center;">
+0.154
+</td>
+<td style="text-align:center;">
+0.280
+</td>
+<td style="text-align:center;">
+0.307
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+dlpfc2 ~~ dlpfc2
+</td>
+<td style="text-align:center;">
+0.459
+</td>
+<td style="text-align:center;">
+0.140
+</td>
+<td style="text-align:center;">
+3.275
+</td>
+<td style="text-align:center;">
+0.001
+</td>
+<td style="text-align:center;">
+0.459
+</td>
+<td style="text-align:center;">
+0.435
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+dlpfc3 ~~ dlpfc3
+</td>
+<td style="text-align:center;">
+0.389
+</td>
+<td style="text-align:center;">
+0.128
+</td>
+<td style="text-align:center;">
+3.039
+</td>
+<td style="text-align:center;">
+0.002
+</td>
+<td style="text-align:center;">
+0.389
+</td>
+<td style="text-align:center;">
+0.368
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+dlpfc4 ~~ dlpfc4
+</td>
+<td style="text-align:center;">
+0.640
+</td>
+<td style="text-align:center;">
+0.278
+</td>
+<td style="text-align:center;">
+2.302
+</td>
+<td style="text-align:center;">
+0.021
+</td>
+<td style="text-align:center;">
+0.640
+</td>
+<td style="text-align:center;">
+0.428
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+int ~~ int
+</td>
+<td style="text-align:center;">
+0.853
+</td>
+<td style="text-align:center;">
+0.262
+</td>
+<td style="text-align:center;">
+3.262
+</td>
+<td style="text-align:center;">
+0.001
+</td>
+<td style="text-align:center;">
+1.000
+</td>
+<td style="text-align:center;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+slp ~~ slp
+</td>
+<td style="text-align:center;">
+0.055
+</td>
+<td style="text-align:center;">
+0.054
+</td>
+<td style="text-align:center;">
+1.010
+</td>
+<td style="text-align:center;">
+0.313
+</td>
+<td style="text-align:center;">
+1.000
+</td>
+<td style="text-align:center;">
+1.000
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+int ~~ slp
+</td>
+<td style="text-align:center;">
+0.119
+</td>
+<td style="text-align:center;">
+0.093
+</td>
+<td style="text-align:center;">
+1.284
+</td>
+<td style="text-align:center;">
+0.199
+</td>
+<td style="text-align:center;">
+0.552
+</td>
+<td style="text-align:center;">
+0.552
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+int ~1
+</td>
+<td style="text-align:center;">
+0.970
+</td>
+<td style="text-align:center;">
+0.158
+</td>
+<td style="text-align:center;">
+6.124
+</td>
+<td style="text-align:center;">
+0.000
+</td>
+<td style="text-align:center;">
+1.050
+</td>
+<td style="text-align:center;">
+1.050
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+slp ~1
+</td>
+<td style="text-align:center;">
+0.114
+</td>
+<td style="text-align:center;">
+0.054
+</td>
+<td style="text-align:center;">
+2.120
+</td>
+<td style="text-align:center;">
+0.034
+</td>
+<td style="text-align:center;">
+0.487
+</td>
+<td style="text-align:center;">
+0.487
+</td>
+</tr>
+</tbody>
+</table>
+<p>We can see that some parameters won’t change based on the time-coding. For instance, the residual variances of the repeated measures (and therefore the R-squares), and the mean and variance of the slope factor. However, the mean and variance of the intercept changes, as does the correlation between the slope and intercept (initial status: <span class="math inline">\(r = -0.243\)</span>; final status: <span class="math inline">\(r = 0.552\)</span>). Note that the sign of the correlation flips and the magnitude of the difference is quite substantial. This should urge caution not to interpret the intercept outside of the specific timepoint it is estimated for since it’s parameter values will be context specific (due to rank-order shifts due to random slopes).</p>
+<p>If we wanted to use a mixed effect model, we might be better off just transforming our predictor variable to reflect the code we want. We can transform the <code>single.cohort</code> data below to suit our purposes.</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="03-time.html#cb69-1" aria-hidden="true" tabindex="-1"></a>single.cohort.long <span class="ot">&lt;-</span> single.cohort <span class="sc">%&gt;%</span></span>
+<span id="cb69-2"><a href="03-time.html#cb69-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="fu">starts_with</span>(<span class="fu">c</span>(<span class="st">&quot;age&quot;</span>, <span class="st">&quot;dlpfc&quot;</span>)),</span>
+<span id="cb69-3"><a href="03-time.html#cb69-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;.value&quot;</span>, <span class="st">&quot;wave&quot;</span>), </span>
+<span id="cb69-4"><a href="03-time.html#cb69-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_pattern =</span> <span class="st">&quot;(.+)(.)&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb69-5"><a href="03-time.html#cb69-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">wave =</span> <span class="fu">as.numeric</span>(wave),</span>
+<span id="cb69-6"><a href="03-time.html#cb69-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">age_initial =</span> age <span class="sc">-</span> <span class="fu">min</span>(age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb69-7"><a href="03-time.html#cb69-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">age_final =</span> age <span class="sc">-</span> <span class="fu">max</span>(age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<p>We can then fit the models as we usually do to see the equivalencies.</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="03-time.html#cb70-1" aria-hidden="true" tabindex="-1"></a>initial.status.mlm <span class="ot">&lt;-</span> <span class="fu">lmer</span>(dlpfc <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> age_initial <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> age_initial <span class="sc">|</span> id),</span>
+<span id="cb70-2"><a href="03-time.html#cb70-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">na.action =</span> na.omit,</span>
+<span id="cb70-3"><a href="03-time.html#cb70-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">REML =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb70-4"><a href="03-time.html#cb70-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">data =</span> single.cohort.long)</span>
+<span id="cb70-5"><a href="03-time.html#cb70-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb70-6"><a href="03-time.html#cb70-6" aria-hidden="true" tabindex="-1"></a>final.status.mlm <span class="ot">&lt;-</span> <span class="fu">lmer</span>(dlpfc <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> age_final <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> age_final <span class="sc">|</span> id),</span>
+<span id="cb70-7"><a href="03-time.html#cb70-7" aria-hidden="true" tabindex="-1"></a>                         <span class="at">na.action =</span> na.omit,</span>
+<span id="cb70-8"><a href="03-time.html#cb70-8" aria-hidden="true" tabindex="-1"></a>                         <span class="at">REML =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb70-9"><a href="03-time.html#cb70-9" aria-hidden="true" tabindex="-1"></a>                         <span class="at">data =</span> single.cohort.long)</span></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="03-time.html#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_model</span>(initial.status.mlm, final.status.mlm,</span>
+<span id="cb71-2"><a href="03-time.html#cb71-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">show.se =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb71-3"><a href="03-time.html#cb71-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">show.df =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb71-4"><a href="03-time.html#cb71-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">show.ci =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb71-5"><a href="03-time.html#cb71-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">digits =</span> <span class="dv">3</span>,</span>
+<span id="cb71-6"><a href="03-time.html#cb71-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">pred.labels =</span> <span class="fu">c</span>(<span class="st">&quot;Intercept&quot;</span>, <span class="st">&quot;Age - min(Age)&quot;</span>, <span class="st">&quot;Age - max(Age)&quot;</span>),</span>
+<span id="cb71-7"><a href="03-time.html#cb71-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">dv.labels =</span> <span class="fu">c</span>(<span class="st">&quot;Initial Status&quot;</span>, <span class="st">&quot;Final Status&quot;</span>),</span>
+<span id="cb71-8"><a href="03-time.html#cb71-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">string.se =</span> <span class="st">&quot;SE&quot;</span>,</span>
+<span id="cb71-9"><a href="03-time.html#cb71-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">string.p =</span> <span class="st">&quot;P-Value&quot;</span>)</span></code></pre></div>
 <table style="border-collapse:collapse; border:none;">
 <tr>
 <th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
  
 </th>
 <th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
-Modularity
+Initial Status
+</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+Final Status
 </th>
 </tr>
 <tr>
@@ -456,51 +1175,81 @@ SE
 <td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
 P-Value
 </td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+Estimates
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+SE
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  col7">
+P-Value
+</td>
 </tr>
 <tr>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
 Intercept
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
--4.229
+0.619
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.928
+0.145
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+<strong>&lt;0.001</strong>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.984
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.166
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7">
 <strong>&lt;0.001</strong>
 </td>
 </tr>
 <tr>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
-Age
-</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.461
+Age - min(Age)
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
 0.106
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-<strong>&lt;0.001</strong>
+0.056
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.062
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7">
 </td>
 </tr>
 <tr>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
-Age^2
+Age - max(Age)
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
--0.012
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.003
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-<strong>&lt;0.001</strong>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.106
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.056
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7">
+0.062
 </td>
 </tr>
 <tr>
-<td colspan="4" style="font-weight:bold; text-align:left; padding-top:.8em;">
+<td colspan="7" style="font-weight:bold; text-align:left; padding-top:.8em;">
 Random Effects
 </td>
 </tr>
@@ -509,35 +1258,70 @@ Random Effects
 σ<sup>2</sup>
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
-0.51
+0.43
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.43
 </td>
 <tr>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
-τ<sub>00</sub> <sub>id</sub>
+τ<sub>00</sub>
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
-0.41
+0.66 <sub>id</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.98 <sub>id</sub>
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+τ<sub>11</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.07 <sub>id.age_initial</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.07 <sub>id.age_final</sub>
+</td>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+ρ<sub>01</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+-0.33 <sub>id</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.63 <sub>id</sub>
 </td>
 <tr>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
 ICC
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
-0.44
+0.62
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.62
 </td>
 <tr>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
-N <sub>id</sub>
+N
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
-81
+50 <sub>id</sub>
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+50 <sub>id</sub>
 </td>
 <tr>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">
 Observations
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">
-243
+191
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">
+191
 </td>
 </tr>
 <tr>
@@ -545,1434 +1329,303 @@ Observations
 Marginal R<sup>2</sup> / Conditional R<sup>2</sup>
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
-0.086 / 0.491
+0.012 / 0.624
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">
+0.012 / 0.624
 </td>
 </tr>
 </table>
-<p><em>show with MLM/GAMM, link to Mplus code for the tscore method</em></p>
-</div>
-</div>
-<div id="time-coding" class="section level2">
-<h2>Time Coding</h2>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="03-time.html#cb61-1" aria-hidden="true" tabindex="-1"></a>initial.status <span class="ot">&lt;-</span> <span class="st">&quot;int =~ 1*dlpfc1 + 1*dlpfc2 + 1*dlpfc3 + 1*dlpfc4</span></span>
-<span id="cb61-2"><a href="03-time.html#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="st">                   slp =~ 0*dlpfc1 + 1*dlpfc2 + 2*dlpfc3 + 3*dlpfc4&quot;</span></span>
-<span id="cb61-3"><a href="03-time.html#cb61-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-4"><a href="03-time.html#cb61-4" aria-hidden="true" tabindex="-1"></a>initial.status.fit <span class="ot">&lt;-</span> <span class="fu">growth</span>(initial.status, </span>
-<span id="cb61-5"><a href="03-time.html#cb61-5" aria-hidden="true" tabindex="-1"></a>                             <span class="at">data =</span> single.cohort,</span>
-<span id="cb61-6"><a href="03-time.html#cb61-6" aria-hidden="true" tabindex="-1"></a>                             <span class="at">estimator =</span> <span class="st">&quot;ML&quot;</span>,</span>
-<span id="cb61-7"><a href="03-time.html#cb61-7" aria-hidden="true" tabindex="-1"></a>                             <span class="at">missing=</span><span class="st">&quot;FIML&quot;</span>)</span>
-<span id="cb61-8"><a href="03-time.html#cb61-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-9"><a href="03-time.html#cb61-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-10"><a href="03-time.html#cb61-10" aria-hidden="true" tabindex="-1"></a>final.status <span class="ot">&lt;-</span> <span class="st">&quot;int =~ 1*dlpfc1 + 1*dlpfc2 + 1*dlpfc3 + 1*dlpfc4</span></span>
-<span id="cb61-11"><a href="03-time.html#cb61-11" aria-hidden="true" tabindex="-1"></a><span class="st">                 slp =~ 0*dlpfc1 + 1*dlpfc2 + 2*dlpfc3 + 3*dlpfc4&quot;</span></span>
-<span id="cb61-12"><a href="03-time.html#cb61-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-13"><a href="03-time.html#cb61-13" aria-hidden="true" tabindex="-1"></a>final.status.fit <span class="ot">&lt;-</span> <span class="fu">growth</span>(final.status, </span>
-<span id="cb61-14"><a href="03-time.html#cb61-14" aria-hidden="true" tabindex="-1"></a>                           <span class="at">data =</span> single.cohort,</span>
-<span id="cb61-15"><a href="03-time.html#cb61-15" aria-hidden="true" tabindex="-1"></a>                           <span class="at">estimator =</span> <span class="st">&quot;ML&quot;</span>,</span>
-<span id="cb61-16"><a href="03-time.html#cb61-16" aria-hidden="true" tabindex="-1"></a>                           <span class="at">missing =</span> <span class="st">&quot;FIML&quot;</span>)</span>
-<span id="cb61-17"><a href="03-time.html#cb61-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-18"><a href="03-time.html#cb61-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-19"><a href="03-time.html#cb61-19" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(initial.status.fit, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">estimates=</span><span class="cn">FALSE</span>)</span></code></pre></div>
-<pre><code>## lavaan 0.6-9 ended normally after 22 iterations
-## 
-##   Estimator                                         ML
-##   Optimization method                           NLMINB
-##   Number of model parameters                         9
-##                                                       
-##   Number of observations                            50
-##   Number of missing patterns                         5
-##                                                       
-## Model Test User Model:
-##                                                       
-##   Test statistic                                12.140
-##   Degrees of freedom                                 5
-##   P-value (Chi-square)                           0.033
-## 
-## Model Test Baseline Model:
-## 
-##   Test statistic                                72.730
-##   Degrees of freedom                                 6
-##   P-value                                        0.000
-## 
-## User Model versus Baseline Model:
-## 
-##   Comparative Fit Index (CFI)                    0.893
-##   Tucker-Lewis Index (TLI)                       0.872
-## 
-## Loglikelihood and Information Criteria:
-## 
-##   Loglikelihood user model (H0)               -248.174
-##   Loglikelihood unrestricted model (H1)       -242.104
-##                                                       
-##   Akaike (AIC)                                 514.347
-##   Bayesian (BIC)                               531.555
-##   Sample-size adjusted Bayesian (BIC)          503.306
-## 
-## Root Mean Square Error of Approximation:
-## 
-##   RMSEA                                          0.169
-##   90 Percent confidence interval - lower         0.045
-##   90 Percent confidence interval - upper         0.293
-##   P-value RMSEA &lt;= 0.05                          0.055
-## 
-## Standardized Root Mean Square Residual:
-## 
-##   SRMR                                           0.113</code></pre>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="03-time.html#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(final.status.fit, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">estimates=</span><span class="cn">FALSE</span>)</span></code></pre></div>
-<pre><code>## lavaan 0.6-9 ended normally after 22 iterations
-## 
-##   Estimator                                         ML
-##   Optimization method                           NLMINB
-##   Number of model parameters                         9
-##                                                       
-##   Number of observations                            50
-##   Number of missing patterns                         5
-##                                                       
-## Model Test User Model:
-##                                                       
-##   Test statistic                                12.140
-##   Degrees of freedom                                 5
-##   P-value (Chi-square)                           0.033
-## 
-## Model Test Baseline Model:
-## 
-##   Test statistic                                72.730
-##   Degrees of freedom                                 6
-##   P-value                                        0.000
-## 
-## User Model versus Baseline Model:
-## 
-##   Comparative Fit Index (CFI)                    0.893
-##   Tucker-Lewis Index (TLI)                       0.872
-## 
-## Loglikelihood and Information Criteria:
-## 
-##   Loglikelihood user model (H0)               -248.174
-##   Loglikelihood unrestricted model (H1)       -242.104
-##                                                       
-##   Akaike (AIC)                                 514.347
-##   Bayesian (BIC)                               531.555
-##   Sample-size adjusted Bayesian (BIC)          503.306
-## 
-## Root Mean Square Error of Approximation:
-## 
-##   RMSEA                                          0.169
-##   90 Percent confidence interval - lower         0.045
-##   90 Percent confidence interval - upper         0.293
-##   P-value RMSEA &lt;= 0.05                          0.055
-## 
-## Standardized Root Mean Square Residual:
-## 
-##   SRMR                                           0.113</code></pre>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="03-time.html#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(initial.status.fit) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div>
-<table>
-<thead>
-<tr>
-<th style="text-align:left;">
-term
-</th>
-<th style="text-align:left;">
-op
-</th>
-<th style="text-align:right;">
-estimate
-</th>
-<th style="text-align:right;">
-std.error
-</th>
-<th style="text-align:right;">
-statistic
-</th>
-<th style="text-align:right;">
-p.value
-</th>
-<th style="text-align:right;">
-std.lv
-</th>
-<th style="text-align:right;">
-std.all
-</th>
-<th style="text-align:right;">
-std.nox
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-int =~ dlpfc1
-</td>
-<td style="text-align:left;">
-=~
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.7940412
-</td>
-<td style="text-align:right;">
-0.8323286
-</td>
-<td style="text-align:right;">
-0.8323286
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-int =~ dlpfc2
-</td>
-<td style="text-align:left;">
-=~
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.7940412
-</td>
-<td style="text-align:right;">
-0.7734266
-</td>
-<td style="text-align:right;">
-0.7734266
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-int =~ dlpfc3
-</td>
-<td style="text-align:left;">
-=~
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.7940412
-</td>
-<td style="text-align:right;">
-0.7718441
-</td>
-<td style="text-align:right;">
-0.7718441
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-int =~ dlpfc4
-</td>
-<td style="text-align:left;">
-=~
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.7940412
-</td>
-<td style="text-align:right;">
-0.6498139
-</td>
-<td style="text-align:right;">
-0.6498139
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-slp =~ dlpfc1
-</td>
-<td style="text-align:left;">
-=~
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-slp =~ dlpfc2
-</td>
-<td style="text-align:left;">
-=~
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.2342260
-</td>
-<td style="text-align:right;">
-0.2281451
-</td>
-<td style="text-align:right;">
-0.2281451
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-slp =~ dlpfc3
-</td>
-<td style="text-align:left;">
-=~
-</td>
-<td style="text-align:right;">
-2.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.4684521
-</td>
-<td style="text-align:right;">
-0.4553567
-</td>
-<td style="text-align:right;">
-0.4553567
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-slp =~ dlpfc4
-</td>
-<td style="text-align:left;">
-=~
-</td>
-<td style="text-align:right;">
-3.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.7026781
-</td>
-<td style="text-align:right;">
-0.5750458
-</td>
-<td style="text-align:right;">
-0.5750458
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-dlpfc1 ~~ dlpfc1
-</td>
-<td style="text-align:left;">
-~~
-</td>
-<td style="text-align:right;">
-0.2796138
-</td>
-<td style="text-align:right;">
-0.1959794
-</td>
-<td style="text-align:right;">
-1.4267507
-</td>
-<td style="text-align:right;">
-0.1536518
-</td>
-<td style="text-align:right;">
-0.2796138
-</td>
-<td style="text-align:right;">
-0.3072290
-</td>
-<td style="text-align:right;">
-0.3072290
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-dlpfc2 ~~ dlpfc2
-</td>
-<td style="text-align:left;">
-~~
-</td>
-<td style="text-align:right;">
-0.4589404
-</td>
-<td style="text-align:right;">
-0.1401353
-</td>
-<td style="text-align:right;">
-3.2749802
-</td>
-<td style="text-align:right;">
-0.0010567
-</td>
-<td style="text-align:right;">
-0.4589404
-</td>
-<td style="text-align:right;">
-0.4354200
-</td>
-<td style="text-align:right;">
-0.4354200
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-dlpfc3 ~~ dlpfc3
-</td>
-<td style="text-align:left;">
-~~
-</td>
-<td style="text-align:right;">
-0.3889671
-</td>
-<td style="text-align:right;">
-0.1280032
-</td>
-<td style="text-align:right;">
-3.0387293
-</td>
-<td style="text-align:right;">
-0.0023758
-</td>
-<td style="text-align:right;">
-0.3889671
-</td>
-<td style="text-align:right;">
-0.3675243
-</td>
-<td style="text-align:right;">
-0.3675243
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-dlpfc4 ~~ dlpfc4
-</td>
-<td style="text-align:left;">
-~~
-</td>
-<td style="text-align:right;">
-0.6397657
-</td>
-<td style="text-align:right;">
-0.2778724
-</td>
-<td style="text-align:right;">
-2.3023728
-</td>
-<td style="text-align:right;">
-0.0213142
-</td>
-<td style="text-align:right;">
-0.6397657
-</td>
-<td style="text-align:right;">
-0.4284626
-</td>
-<td style="text-align:right;">
-0.4284626
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-int ~~ int
-</td>
-<td style="text-align:left;">
-~~
-</td>
-<td style="text-align:right;">
-0.6305014
-</td>
-<td style="text-align:right;">
-0.2074521
-</td>
-<td style="text-align:right;">
-3.0392633
-</td>
-<td style="text-align:right;">
-0.0023716
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-slp ~~ slp
-</td>
-<td style="text-align:left;">
-~~
-</td>
-<td style="text-align:right;">
-0.0548618
-</td>
-<td style="text-align:right;">
-0.0543242
-</td>
-<td style="text-align:right;">
-1.0098967
-</td>
-<td style="text-align:right;">
-0.3125448
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-int ~~ slp
-</td>
-<td style="text-align:left;">
-~~
-</td>
-<td style="text-align:right;">
--0.0451430
-</td>
-<td style="text-align:right;">
-0.0967540
-</td>
-<td style="text-align:right;">
--0.4665746
-</td>
-<td style="text-align:right;">
-0.6408043
-</td>
-<td style="text-align:right;">
--0.2427236
-</td>
-<td style="text-align:right;">
--0.2427236
-</td>
-<td style="text-align:right;">
--0.2427236
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-dlpfc1 ~1
-</td>
-<td style="text-align:left;">
-~1
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-dlpfc2 ~1
-</td>
-<td style="text-align:left;">
-~1
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-dlpfc3 ~1
-</td>
-<td style="text-align:left;">
-~1
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-dlpfc4 ~1
-</td>
-<td style="text-align:left;">
-~1
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-int ~1
-</td>
-<td style="text-align:left;">
-~1
-</td>
-<td style="text-align:right;">
-0.6284401
-</td>
-<td style="text-align:right;">
-0.1320054
-</td>
-<td style="text-align:right;">
-4.7607134
-</td>
-<td style="text-align:right;">
-0.0000019
-</td>
-<td style="text-align:right;">
-0.7914452
-</td>
-<td style="text-align:right;">
-0.7914452
-</td>
-<td style="text-align:right;">
-0.7914452
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-slp ~1
-</td>
-<td style="text-align:left;">
-~1
-</td>
-<td style="text-align:right;">
-0.1139803
-</td>
-<td style="text-align:right;">
-0.0537695
-</td>
-<td style="text-align:right;">
-2.1197937
-</td>
-<td style="text-align:right;">
-0.0340234
-</td>
-<td style="text-align:right;">
-0.4866253
-</td>
-<td style="text-align:right;">
-0.4866253
-</td>
-<td style="text-align:right;">
-0.4866253
-</td>
-</tr>
-</tbody>
-</table>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="03-time.html#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(final.status.fit) <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div>
-<table>
-<thead>
-<tr>
-<th style="text-align:left;">
-term
-</th>
-<th style="text-align:left;">
-op
-</th>
-<th style="text-align:right;">
-estimate
-</th>
-<th style="text-align:right;">
-std.error
-</th>
-<th style="text-align:right;">
-statistic
-</th>
-<th style="text-align:right;">
-p.value
-</th>
-<th style="text-align:right;">
-std.lv
-</th>
-<th style="text-align:right;">
-std.all
-</th>
-<th style="text-align:right;">
-std.nox
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-int =~ dlpfc1
-</td>
-<td style="text-align:left;">
-=~
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.7940412
-</td>
-<td style="text-align:right;">
-0.8323286
-</td>
-<td style="text-align:right;">
-0.8323286
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-int =~ dlpfc2
-</td>
-<td style="text-align:left;">
-=~
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.7940412
-</td>
-<td style="text-align:right;">
-0.7734266
-</td>
-<td style="text-align:right;">
-0.7734266
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-int =~ dlpfc3
-</td>
-<td style="text-align:left;">
-=~
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.7940412
-</td>
-<td style="text-align:right;">
-0.7718441
-</td>
-<td style="text-align:right;">
-0.7718441
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-int =~ dlpfc4
-</td>
-<td style="text-align:left;">
-=~
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.7940412
-</td>
-<td style="text-align:right;">
-0.6498139
-</td>
-<td style="text-align:right;">
-0.6498139
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-slp =~ dlpfc1
-</td>
-<td style="text-align:left;">
-=~
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-slp =~ dlpfc2
-</td>
-<td style="text-align:left;">
-=~
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.2342260
-</td>
-<td style="text-align:right;">
-0.2281451
-</td>
-<td style="text-align:right;">
-0.2281451
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-slp =~ dlpfc3
-</td>
-<td style="text-align:left;">
-=~
-</td>
-<td style="text-align:right;">
-2.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.4684521
-</td>
-<td style="text-align:right;">
-0.4553567
-</td>
-<td style="text-align:right;">
-0.4553567
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-slp =~ dlpfc4
-</td>
-<td style="text-align:left;">
-=~
-</td>
-<td style="text-align:right;">
-3.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.7026781
-</td>
-<td style="text-align:right;">
-0.5750458
-</td>
-<td style="text-align:right;">
-0.5750458
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-dlpfc1 ~~ dlpfc1
-</td>
-<td style="text-align:left;">
-~~
-</td>
-<td style="text-align:right;">
-0.2796138
-</td>
-<td style="text-align:right;">
-0.1959794
-</td>
-<td style="text-align:right;">
-1.4267507
-</td>
-<td style="text-align:right;">
-0.1536518
-</td>
-<td style="text-align:right;">
-0.2796138
-</td>
-<td style="text-align:right;">
-0.3072290
-</td>
-<td style="text-align:right;">
-0.3072290
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-dlpfc2 ~~ dlpfc2
-</td>
-<td style="text-align:left;">
-~~
-</td>
-<td style="text-align:right;">
-0.4589404
-</td>
-<td style="text-align:right;">
-0.1401353
-</td>
-<td style="text-align:right;">
-3.2749802
-</td>
-<td style="text-align:right;">
-0.0010567
-</td>
-<td style="text-align:right;">
-0.4589404
-</td>
-<td style="text-align:right;">
-0.4354200
-</td>
-<td style="text-align:right;">
-0.4354200
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-dlpfc3 ~~ dlpfc3
-</td>
-<td style="text-align:left;">
-~~
-</td>
-<td style="text-align:right;">
-0.3889671
-</td>
-<td style="text-align:right;">
-0.1280032
-</td>
-<td style="text-align:right;">
-3.0387293
-</td>
-<td style="text-align:right;">
-0.0023758
-</td>
-<td style="text-align:right;">
-0.3889671
-</td>
-<td style="text-align:right;">
-0.3675243
-</td>
-<td style="text-align:right;">
-0.3675243
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-dlpfc4 ~~ dlpfc4
-</td>
-<td style="text-align:left;">
-~~
-</td>
-<td style="text-align:right;">
-0.6397657
-</td>
-<td style="text-align:right;">
-0.2778724
-</td>
-<td style="text-align:right;">
-2.3023728
-</td>
-<td style="text-align:right;">
-0.0213142
-</td>
-<td style="text-align:right;">
-0.6397657
-</td>
-<td style="text-align:right;">
-0.4284626
-</td>
-<td style="text-align:right;">
-0.4284626
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-int ~~ int
-</td>
-<td style="text-align:left;">
-~~
-</td>
-<td style="text-align:right;">
-0.6305014
-</td>
-<td style="text-align:right;">
-0.2074521
-</td>
-<td style="text-align:right;">
-3.0392633
-</td>
-<td style="text-align:right;">
-0.0023716
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-slp ~~ slp
-</td>
-<td style="text-align:left;">
-~~
-</td>
-<td style="text-align:right;">
-0.0548618
-</td>
-<td style="text-align:right;">
-0.0543242
-</td>
-<td style="text-align:right;">
-1.0098967
-</td>
-<td style="text-align:right;">
-0.3125448
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-<td style="text-align:right;">
-1.0000000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-int ~~ slp
-</td>
-<td style="text-align:left;">
-~~
-</td>
-<td style="text-align:right;">
--0.0451430
-</td>
-<td style="text-align:right;">
-0.0967540
-</td>
-<td style="text-align:right;">
--0.4665746
-</td>
-<td style="text-align:right;">
-0.6408043
-</td>
-<td style="text-align:right;">
--0.2427236
-</td>
-<td style="text-align:right;">
--0.2427236
-</td>
-<td style="text-align:right;">
--0.2427236
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-dlpfc1 ~1
-</td>
-<td style="text-align:left;">
-~1
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-dlpfc2 ~1
-</td>
-<td style="text-align:left;">
-~1
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-dlpfc3 ~1
-</td>
-<td style="text-align:left;">
-~1
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-dlpfc4 ~1
-</td>
-<td style="text-align:left;">
-~1
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-int ~1
-</td>
-<td style="text-align:left;">
-~1
-</td>
-<td style="text-align:right;">
-0.6284401
-</td>
-<td style="text-align:right;">
-0.1320054
-</td>
-<td style="text-align:right;">
-4.7607134
-</td>
-<td style="text-align:right;">
-0.0000019
-</td>
-<td style="text-align:right;">
-0.7914452
-</td>
-<td style="text-align:right;">
-0.7914452
-</td>
-<td style="text-align:right;">
-0.7914452
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-slp ~1
-</td>
-<td style="text-align:left;">
-~1
-</td>
-<td style="text-align:right;">
-0.1139803
-</td>
-<td style="text-align:right;">
-0.0537695
-</td>
-<td style="text-align:right;">
-2.1197937
-</td>
-<td style="text-align:right;">
-0.0340234
-</td>
-<td style="text-align:right;">
-0.4866253
-</td>
-<td style="text-align:right;">
-0.4866253
-</td>
-<td style="text-align:right;">
-0.4866253
-</td>
-</tr>
-</tbody>
-</table>
-<p><em>Show in the LCM since that”s the easiest to see in the model syntax, also highlight in the MLM</em></p>
+<p>Note that the slope estimates are identical, while estimates involving the intercept change as we saw before.</p>
 </div>
 <div id="additional-considerations" class="section level2">
 <h2>Additional Considerations</h2>
+<p>One thing that has been consistent across all the models that we have fit thus far is that they are structured primarily by the chronological age of the individuals in question. Even when we have used wave of assessment as the nominal variable encoding time, waves have been spaced into yearly assessments and the lack of heterogeneity in ages collapses age and wave (either in reality or in practice when we fix factor loadings). However, nothing stops us from structuring the repeated measures by some other metric of maturation, practice, or anything else (except for pesky things like convention and serious measurement/modeling challenges, but that’s all). For instance, we could plot our repeated measures in the <code>accelerated</code> data again, but instead of chronological age, we could put pubertal status (measured by Tanner stage) on the x-axis. That would result in the plot below.</p>
 <div id="alternative-metrics-of-time" class="section level3">
 <h3>Alternative Metrics of Time</h3>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="03-time.html#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(accelerated, <span class="fu">aes</span>(<span class="at">x =</span> puberty, <span class="at">y =</span> id)) <span class="sc">+</span></span>
-<span id="cb67-2"><a href="03-time.html#cb67-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> id), <span class="at">size =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
-<span id="cb67-3"><a href="03-time.html#cb67-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="fu">as.factor</span>(wave))) <span class="sc">+</span> </span>
-<span id="cb67-4"><a href="03-time.html#cb67-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Age&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Individual&quot;</span>, <span class="at">color =</span> <span class="st">&quot;Wave&quot;</span>, <span class="at">shape =</span> <span class="st">&quot;Cohort&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb67-5"><a href="03-time.html#cb67-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;top&quot;</span>)</span></code></pre></div>
-<pre><code>## Warning: Removed 93 row(s) containing missing values (geom_path).</code></pre>
-<pre><code>## Warning: Removed 93 rows containing missing values (geom_point).</code></pre>
-<p><img src="longitudinal_primer_files/figure-html/alternative%20time%20metric-1.png" width="672" />
-<em>Show data with puberty as the x variable</em></p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="03-time.html#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(accelerated, <span class="fu">aes</span>(<span class="at">x =</span> puberty, <span class="at">y =</span> id)) <span class="sc">+</span></span>
+<span id="cb72-2"><a href="03-time.html#cb72-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> id), <span class="at">size =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb72-3"><a href="03-time.html#cb72-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="fu">as.factor</span>(wave))) <span class="sc">+</span> </span>
+<span id="cb72-4"><a href="03-time.html#cb72-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Tanner Stage&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Individual&quot;</span>, <span class="at">color =</span> <span class="st">&quot;Wave&quot;</span>, <span class="at">shape =</span> <span class="st">&quot;Cohort&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb72-5"><a href="03-time.html#cb72-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;top&quot;</span>)</span></code></pre></div>
+<p><img src="longitudinal_primer_files/figure-html/alternative%20metric%2001-1.png" width="672" /></p>
+<p>In some ways, this roughly resembles the age plot, with some individuals being measured at earlier stages of puberty and other later. However, close inspection starts to uncover some issues. First, we often stop measuring puberty once individual reach a certain age/stage of development, so puberty as a measure of maturation is limited in it’s utility outside of a fairly specific phase of development. We can already see for subjects who are measured first at later ages having missing data for later observations because puberty measures were not taken. There is also the curious case that some subset of individuals seem to move backwards in pubertal development (this should be treated as an error, but it’s amusing nonetheless). However, the key feature of interest in a plot like this is that, unlike age, there is not reason to expect that all individuals “age” at the same rate across puberty, seen by the uneven spacing between waves within individuals. This variation is just one of the exciting opportunities that modeling maturation using metric other than age present (although they do come with their own challenges; there is an admittedly understandable reason that age is the predominate variable in longitudinal models). One other advantage is within-age heterogeneity, which we can see by plotting Tanner Stage by age in the plot below.</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="03-time.html#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(accelerated, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> puberty)) <span class="sc">+</span></span>
+<span id="cb73-2"><a href="03-time.html#cb73-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> id), <span class="at">size =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb73-3"><a href="03-time.html#cb73-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="fu">as.factor</span>(wave))) <span class="sc">+</span> </span>
+<span id="cb73-4"><a href="03-time.html#cb73-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Age&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Tanner Stage&quot;</span>, <span class="at">color =</span> <span class="st">&quot;Wave&quot;</span>, <span class="at">shape =</span> <span class="st">&quot;Cohort&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb73-5"><a href="03-time.html#cb73-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;top&quot;</span>)</span></code></pre></div>
+<p><img src="longitudinal_primer_files/figure-html/alternative%20metric%2002-1.png" width="672" /></p>
+<p>We can see that same-age peers may differ considerable (depending on when we measure them) in their pubertal development. We can also fit puberty-related trajectories to the modularity data below.</p>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="03-time.html#cb74-1" aria-hidden="true" tabindex="-1"></a>accel <span class="ot">&lt;-</span> <span class="fu">lmer</span>(<span class="fu">scale</span>(modularity) <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> puberty <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id), </span>
+<span id="cb74-2"><a href="03-time.html#cb74-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">na.action =</span> na.omit,</span>
+<span id="cb74-3"><a href="03-time.html#cb74-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">REML =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb74-4"><a href="03-time.html#cb74-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> accelerated)</span>
+<span id="cb74-5"><a href="03-time.html#cb74-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb74-6"><a href="03-time.html#cb74-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(accel, <span class="at">correlation =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## Linear mixed model fit by REML. t-tests use Satterthwaite&#39;s method [
+## lmerModLmerTest]
+## Formula: scale(modularity) ~ 1 + puberty + (1 | id)
+##    Data: accelerated
+## 
+## REML criterion at convergence: 417.9
+## 
+## Scaled residuals: 
+##      Min       1Q   Median       3Q      Max 
+## -2.49262 -0.65415  0.04191  0.58260  2.43878 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev.
+##  id       (Intercept) 0.3322   0.5763  
+##  Residual             0.6698   0.8184  
+## Number of obs: 150, groups:  id, 67
+## 
+## Fixed effects:
+##              Estimate Std. Error        df t value Pr(&gt;|t|)    
+## (Intercept)  -0.96653    0.28495 133.98649  -3.392 0.000913 ***
+## puberty       0.34156    0.09681 145.04845   3.528 0.000561 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Of course, we might wish to model age and puberty simultaneously. That may present practical challenges in this data, since age and puberty are highly correlated <span class="math inline">\(r = 0.796\)</span>, but some strategies for modeling multiple growth processes have been suggested elsewhere (see the relevant portion of the main text for details).</p>
 </div>
 <div id="residual-estimates" class="section level3">
 <h3>Residual Estimates</h3>
-<p><em>Show LCM and MLM specifications of both homo- and heteroscedastic</em></p>
+<p>The final consideration we will explore in our discussion of time is the structure of the residuals of our repeated measures. This is often not of great theoretical importance (I don’t really believe you if you tell me your theory is specific enough to know if residual variance should be constant or not…call me a grinch), but it can be really important for model results. Essentially, an overly restrictive assumption about residual variances at the individual observation level can radiate out into the random effects structure and bias your effects. Here we will show how to specify both forms of a model in a mixed effect and structural equation model, and test which one is a better fit to the data.</p>
+<p>We can start with the LCM, where heteroscedasticity (i.e., unique residual estimates across) is the default. To obtain this model, we use the same syntax we have seen repeatedly so far.</p>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="03-time.html#cb76-1" aria-hidden="true" tabindex="-1"></a>lcm.het <span class="ot">&lt;-</span> <span class="st">&quot;int =~ 1*dlpfc1 + 1*dlpfc2 + 1*dlpfc3 + 1*dlpfc4</span></span>
+<span id="cb76-2"><a href="03-time.html#cb76-2" aria-hidden="true" tabindex="-1"></a><span class="st">            slp =~ 0*dlpfc1 + 1*dlpfc2 + 2*dlpfc3 + 3*dlpfc4&quot;</span></span>
+<span id="cb76-3"><a href="03-time.html#cb76-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-4"><a href="03-time.html#cb76-4" aria-hidden="true" tabindex="-1"></a>lcm.het.fit <span class="ot">&lt;-</span> <span class="fu">growth</span>(lcm.het, </span>
+<span id="cb76-5"><a href="03-time.html#cb76-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data =</span> single.cohort,</span>
+<span id="cb76-6"><a href="03-time.html#cb76-6" aria-hidden="true" tabindex="-1"></a>                      <span class="at">estimator =</span> <span class="st">&quot;ML&quot;</span>,</span>
+<span id="cb76-7"><a href="03-time.html#cb76-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">missing =</span> <span class="st">&quot;FIML&quot;</span>)</span>
+<span id="cb76-8"><a href="03-time.html#cb76-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-9"><a href="03-time.html#cb76-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lcm.het.fit, <span class="at">fit.measures =</span> <span class="cn">FALSE</span>, <span class="at">estimates =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb76-10"><a href="03-time.html#cb76-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">standardize =</span> <span class="cn">FALSE</span>, <span class="at">rsquare =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## lavaan 0.6-9 ended normally after 22 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                         9
+##                                                       
+##   Number of observations                            50
+##   Number of missing patterns                         5
+##                                                       
+## Model Test User Model:
+##                                                       
+##   Test statistic                                12.140
+##   Degrees of freedom                                 5
+##   P-value (Chi-square)                           0.033
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##   int =~                                              
+##     dlpfc1            1.000                           
+##     dlpfc2            1.000                           
+##     dlpfc3            1.000                           
+##     dlpfc4            1.000                           
+##   slp =~                                              
+##     dlpfc1            0.000                           
+##     dlpfc2            1.000                           
+##     dlpfc3            2.000                           
+##     dlpfc4            3.000                           
+## 
+## Covariances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##   int ~~                                              
+##     slp              -0.045    0.097   -0.467    0.641
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##    .dlpfc1            0.000                           
+##    .dlpfc2            0.000                           
+##    .dlpfc3            0.000                           
+##    .dlpfc4            0.000                           
+##     int               0.628    0.132    4.761    0.000
+##     slp               0.114    0.054    2.120    0.034
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##    .dlpfc1            0.280    0.196    1.427    0.154
+##    .dlpfc2            0.459    0.140    3.275    0.001
+##    .dlpfc3            0.389    0.128    3.039    0.002
+##    .dlpfc4            0.640    0.278    2.302    0.021
+##     int               0.631    0.207    3.039    0.002
+##     slp               0.055    0.054    1.010    0.313</code></pre>
+<p>We can easily see that each residual obtains a unique value with an associated inference test (<code>.dlpfc1 - .dlpfc4</code>). To constrain these residuals equal across time, we have to explicitly write out the residual term (we have been relying on sensible defaults thus far) and then pre-multiply each estimate by the same alpha-numeric label. <strong>Lavaan</strong> will interpret repeated labels as a request for an equality constraint on those parameters. We can see this constraint in action below.</p>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="03-time.html#cb78-1" aria-hidden="true" tabindex="-1"></a>lcm.hom <span class="ot">&lt;-</span> <span class="st">&quot;int =~ 1*dlpfc1 + 1*dlpfc2 + 1*dlpfc3 + 1*dlpfc4</span></span>
+<span id="cb78-2"><a href="03-time.html#cb78-2" aria-hidden="true" tabindex="-1"></a><span class="st">            slp =~ 0*dlpfc1 + 1*dlpfc2 + 2*dlpfc3 + 3*dlpfc4</span></span>
+<span id="cb78-3"><a href="03-time.html#cb78-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-4"><a href="03-time.html#cb78-4" aria-hidden="true" tabindex="-1"></a><span class="st">            dlpfc1 ~~ c1*dlpfc1</span></span>
+<span id="cb78-5"><a href="03-time.html#cb78-5" aria-hidden="true" tabindex="-1"></a><span class="st">            dlpfc2 ~~ c1*dlpfc2</span></span>
+<span id="cb78-6"><a href="03-time.html#cb78-6" aria-hidden="true" tabindex="-1"></a><span class="st">            dlpfc3 ~~ c1*dlpfc3</span></span>
+<span id="cb78-7"><a href="03-time.html#cb78-7" aria-hidden="true" tabindex="-1"></a><span class="st">            dlpfc4 ~~ c1*dlpfc4&quot;</span></span></code></pre></div>
+<p>The choice of constraint (here <code>c1</code>) is somewhat arbitrary, but the point is that it can contain characters and numbers (although it must begin with a character). When we fit the model, we will see those parameters will be held equal.</p>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="03-time.html#cb79-1" aria-hidden="true" tabindex="-1"></a>lcm.hom.fit <span class="ot">&lt;-</span> <span class="fu">growth</span>(lcm.hom, </span>
+<span id="cb79-2"><a href="03-time.html#cb79-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data =</span> single.cohort,</span>
+<span id="cb79-3"><a href="03-time.html#cb79-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">estimator =</span> <span class="st">&quot;ML&quot;</span>,</span>
+<span id="cb79-4"><a href="03-time.html#cb79-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">missing =</span> <span class="st">&quot;FIML&quot;</span>)</span>
+<span id="cb79-5"><a href="03-time.html#cb79-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb79-6"><a href="03-time.html#cb79-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lcm.hom.fit, <span class="at">fit.measures =</span> <span class="cn">FALSE</span>, <span class="at">estimates =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb79-7"><a href="03-time.html#cb79-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">standardize =</span> <span class="cn">FALSE</span>, <span class="at">rsquare =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## lavaan 0.6-9 ended normally after 19 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                         9
+##   Number of equality constraints                     3
+##                                                       
+##   Number of observations                            50
+##   Number of missing patterns                         5
+##                                                       
+## Model Test User Model:
+##                                                       
+##   Test statistic                                14.724
+##   Degrees of freedom                                 8
+##   P-value (Chi-square)                           0.065
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Observed
+##   Observed information based on                Hessian
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##   int =~                                              
+##     dlpfc1            1.000                           
+##     dlpfc2            1.000                           
+##     dlpfc3            1.000                           
+##     dlpfc4            1.000                           
+##   slp =~                                              
+##     dlpfc1            0.000                           
+##     dlpfc2            1.000                           
+##     dlpfc3            2.000                           
+##     dlpfc4            3.000                           
+## 
+## Covariances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##   int ~~                                              
+##     slp              -0.041    0.061   -0.668    0.504
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##    .dlpfc1            0.000                           
+##    .dlpfc2            0.000                           
+##    .dlpfc3            0.000                           
+##    .dlpfc4            0.000                           
+##     int               0.640    0.134    4.761    0.000
+##     slp               0.108    0.055    1.969    0.049
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##    .dlpfc1    (c1)    0.435    0.065    6.732    0.000
+##    .dlpfc2    (c1)    0.435    0.065    6.732    0.000
+##    .dlpfc3    (c1)    0.435    0.065    6.732    0.000
+##    .dlpfc4    (c1)    0.435    0.065    6.732    0.000
+##     int               0.590    0.189    3.129    0.002
+##     slp               0.059    0.032    1.838    0.066</code></pre>
+<p><strong>Lavaan</strong> conveniently includes the labels in the output and we can see that now all of the residuals obtain the <em>exact</em> same value, and <em>exact</em> same inferential test (note how that changes the inference on the residual of <code>dlpfc1</code> from above). However, note how other parameter estimates (namely the factor means and variances) change as well. These changes are small (for reasons we will see) but it is important to note we are making real changes to the model with the introduction of this constraint. We can then get a likelihood-ratio test of difference in fit, using the <code>lavTestLRT()</code> function, because the simplified homoscedastic model is nested within the more complex heteroscedastic model. Note that we list the homoscedastic model first.</p>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="03-time.html#cb81-1" aria-hidden="true" tabindex="-1"></a>lavaan<span class="sc">::</span><span class="fu">lavTestLRT</span>(lcm.hom.fit, lcm.het.fit)</span></code></pre></div>
+<pre><code>## Chi-Squared Difference Test
+## 
+##             Df    AIC    BIC  Chisq Chisq diff Df diff Pr(&gt;Chisq)
+## lcm.het.fit  5 514.35 531.56 12.140                              
+## lcm.hom.fit  8 510.93 522.40 14.724     2.5837       3     0.4604</code></pre>
+<p>However, in the output, the heteroscedastic model is listed first. This is because the more complex model is always the reference and we are testing whether the imposition of model simplifications (i.e., constraints; here homoscedastic residuals) significantly decreases model fit. Here we can see that the chi-square difference test is not significant (<span class="math inline">\(p = 0.460\)</span>), so we could retain the simplification without decreasing the fit of the model to our data. This is the reason that our parameters did not change much. In models where we would reject homoscedasticity, the imposition of the constraint would lead to more pronounced parameter changes elsewhere in the model. While there is not an associated inference test for the AIC/BIC, we could also use those values for model comparisons if we wished.</p>
+<p>To implement heteroscedastic residuals in mixed-effects models, we have to leave our familiar <code>lmer()</code> and travel back in time to the days of <code>lme()</code>. We can first fit the canonical model we know and love, where the default is homoscedasticity.</p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="03-time.html#cb83-1" aria-hidden="true" tabindex="-1"></a>mlm.hom <span class="ot">&lt;-</span> nlme<span class="sc">::</span><span class="fu">lme</span>(dlpfc <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> wave,</span>
+<span id="cb83-2"><a href="03-time.html#cb83-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">random =</span> <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> wave <span class="sc">|</span> id,</span>
+<span id="cb83-3"><a href="03-time.html#cb83-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">na.action =</span> na.omit,</span>
+<span id="cb83-4"><a href="03-time.html#cb83-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">method =</span> <span class="st">&quot;REML&quot;</span>,</span>
+<span id="cb83-5"><a href="03-time.html#cb83-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> single.cohort.long)</span>
+<span id="cb83-6"><a href="03-time.html#cb83-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-7"><a href="03-time.html#cb83-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mlm.hom, <span class="at">correlation =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## Linear mixed-effects model fit by REML
+##   Data: single.cohort.long 
+##        AIC      BIC    logLik
+##   517.3124 536.7629 -252.6562
+## 
+## Random effects:
+##  Formula: ~1 + wave | id
+##  Structure: General positive-definite, Log-Cholesky parametrization
+##             StdDev    Corr  
+## (Intercept) 0.8717474 (Intr)
+## wave        0.2500535 -0.489
+## Residual    0.6595289       
+## 
+## Fixed effects:  dlpfc ~ 1 + wave 
+##                 Value  Std.Error  DF  t-value p-value
+## (Intercept) 0.5321058 0.16886967 140 3.150985  0.0020
+## wave        0.1076007 0.05524678 140 1.947638  0.0535
+##  Correlation: 
+##      (Intr)
+## wave -0.705
+## 
+## Standardized Within-Group Residuals:
+##         Min          Q1         Med          Q3         Max 
+## -2.09037990 -0.49924910 -0.04034052  0.65971936  2.07352349 
+## 
+## Number of Observations: 191
+## Number of Groups: 50</code></pre>
+<p>Note that in the <code>Random effects</code> portion of the output, we obtain a single numerical value for the residual <span class="math inline">\(\sigma^2 = 0.660\)</span>. To fit a heteroscedastic model, we need to make use of a new argument, <code>weights</code>. We can specify the <code>form</code> argument of the <code>varIdent()</code> (“variance identity) function to obtain a unique estimate per <code>wave</code>.</p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="03-time.html#cb85-1" aria-hidden="true" tabindex="-1"></a>mlm.het <span class="ot">&lt;-</span> nlme<span class="sc">::</span><span class="fu">lme</span>(dlpfc <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> wave,</span>
+<span id="cb85-2"><a href="03-time.html#cb85-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">random =</span> <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> wave <span class="sc">|</span> id,</span>
+<span id="cb85-3"><a href="03-time.html#cb85-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">weights =</span> <span class="fu">varIdent</span>(<span class="at">form =</span> <span class="sc">~</span> <span class="dv">1</span> <span class="sc">|</span> wave),</span>
+<span id="cb85-4"><a href="03-time.html#cb85-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">na.action =</span> na.omit,</span>
+<span id="cb85-5"><a href="03-time.html#cb85-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">method =</span> <span class="st">&quot;REML&quot;</span>,</span>
+<span id="cb85-6"><a href="03-time.html#cb85-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> single.cohort.long)</span>
+<span id="cb85-7"><a href="03-time.html#cb85-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb85-8"><a href="03-time.html#cb85-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mlm.het, <span class="at">correlation =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## Linear mixed-effects model fit by REML
+##   Data: single.cohort.long 
+##        AIC      BIC    logLik
+##   520.7754 549.9511 -251.3877
+## 
+## Random effects:
+##  Formula: ~1 + wave | id
+##  Structure: General positive-definite, Log-Cholesky parametrization
+##             StdDev    Corr  
+## (Intercept) 0.8975009 (Intr)
+## wave        0.2413003 -0.495
+## Residual    0.5269518       
+## 
+## Variance function:
+##  Structure: Different standard deviations per stratum
+##  Formula: ~1 | wave 
+##  Parameter estimates:
+##        1        2        3        4 
+## 1.000000 1.287069 1.184203 1.515231 
+## Fixed effects:  dlpfc ~ 1 + wave 
+##                 Value  Std.Error  DF  t-value p-value
+## (Intercept) 0.5144231 0.16258045 140 3.164114  0.0019
+## wave        0.1139612 0.05386346 140 2.115743  0.0361
+##  Correlation: 
+##      (Intr)
+## wave -0.675
+## 
+## Standardized Within-Group Residuals:
+##         Min          Q1         Med          Q3         Max 
+## -2.09852285 -0.47236320 -0.01588848  0.64203216  2.12263672 
+## 
+## Number of Observations: 191
+## Number of Groups: 50</code></pre>
+<p>Looking at the <code>Random effects</code> output, we still only see a single value for the residual. Unfortunately the output structure here leaves something to be desired. We need to look to the <code>Variance function</code> output section where we see for unique values. Well these are not technically the residual estimates, but rather they indicate the relative size of the residual scaled to the first estimate (the one we see in the <code>Random effects</code> section). To extract the actual estimates, we can use the following code.</p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="03-time.html#cb87-1" aria-hidden="true" tabindex="-1"></a>mlm.het<span class="sc">$</span>sigma <span class="sc">*</span> <span class="fu">exp</span>(<span class="fu">as.numeric</span>(mlm.het<span class="sc">$</span>modelStruct<span class="sc">$</span>varStruct))</span></code></pre></div>
+<pre><code>## [1] 0.6782232 0.6240178 0.7984535</code></pre>
+<p>So the first residual can be extracted as <code>model$sigma</code>, but the residual weights from the model are stuck in the <code>varStruct</code> portion of the fitted <code>lme()</code> object and are in the <span class="math inline">\(log(\sigma)\)</span> scale. So we have to extract the values, convert them to numeric format, exponentiate them, and then multiple the weights by the estimated residual to obtain the other three estimates (tired yet?).</p>
+<p>Fortunately, model comparisons are straightforward with the <code>anova()</code> function, which we can use in the same way we used <code>lavTestLRT()</code> to compare LCMs early.</p>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="03-time.html#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mlm.het, mlm.hom)</span></code></pre></div>
+<pre><code>##         Model df      AIC      BIC    logLik   Test  L.Ratio p-value
+## mlm.het     1  9 520.7754 549.9511 -251.3877                        
+## mlm.hom     2  6 517.3124 536.7629 -252.6562 1 vs 2 2.537015  0.4686</code></pre>
+<p>Like before, these results indicate that imposing homoscedasticity does not significantly decrease model fit.</p>
 
 </div>
 </div>

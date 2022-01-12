@@ -1,5 +1,5 @@
 bookdown::gitbook:
-  css: style.css
+  css: style.css 
   number_sections: false
   split_by: rmd
   config:
