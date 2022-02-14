@@ -194,21 +194,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#piecewise-trajectories"><i class="fa fa-check"></i>Piecewise Trajectories</a></li>
 <li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#nonlinear-trajectories"><i class="fa fa-check"></i>Nonlinear Trajectories</a></li>
-<li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#additional-considerations-1"><i class="fa fa-check"></i>Additional Considerations</a>
-<ul>
 <li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#fixed-and-random-effects"><i class="fa fa-check"></i>Fixed and Random Effects</a></li>
-<li class="chapter" data-level="" data-path="04-shape.html"><a href="04-shape.html#generalizability"><i class="fa fa-check"></i>Generalizability</a></li>
-</ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="05-covariates.html"><a href="05-covariates.html"><i class="fa fa-check"></i>Covariates and Distal Outcomes</a>
 <ul>
 <li class="chapter" data-level="" data-path="05-covariates.html"><a href="05-covariates.html#covariates-1"><i class="fa fa-check"></i>Covariates</a>
 <ul>
 <li class="chapter" data-level="" data-path="05-covariates.html"><a href="05-covariates.html#time-invariant-covariates"><i class="fa fa-check"></i>Time Invariant Covariates</a></li>
-<li class="chapter" data-level="" data-path="05-covariates.html"><a href="05-covariates.html#time-varying-covariates"><i class="fa fa-check"></i>Time Varying Covariates</a></li>
 <li class="chapter" data-level="" data-path="05-covariates.html"><a href="05-covariates.html#cross-level-interactions"><i class="fa fa-check"></i>Cross-level Interactions</a></li>
-<li class="chapter" data-level="" data-path="05-covariates.html"><a href="05-covariates.html#within--and-betwen-person-variance"><i class="fa fa-check"></i>Within- and Betwen-Person Variance</a></li>
+<li class="chapter" data-level="" data-path="05-covariates.html"><a href="05-covariates.html#time-varying-covariates"><i class="fa fa-check"></i>Time Varying Covariates</a></li>
 <li class="chapter" data-level="" data-path="05-covariates.html"><a href="05-covariates.html#multivariate-models"><i class="fa fa-check"></i>Multivariate Models</a></li>
+<li class="chapter" data-level="" data-path="05-covariates.html"><a href="05-covariates.html#within--and-betwen-person-variance"><i class="fa fa-check"></i>Within- and Betwen-Person Variance</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="05-covariates.html"><a href="05-covariates.html#distal-outcomes"><i class="fa fa-check"></i>Distal Outcomes</a></li>
 </ul></li>
@@ -247,7 +243,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="01-introduction.html#cb1-1" aria-hidden="true" tabindex="-1"></a>packages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;utils&quot;</span>, <span class="st">&quot;tidyverse&quot;</span>, <span class="st">&quot;downloadthis&quot;</span>,     <span class="co"># packages for data management</span></span>
 <span id="cb1-2"><a href="01-introduction.html#cb1-2" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;foreign&quot;</span>, <span class="st">&quot;MplusAutomation&quot;</span>,             <span class="co"># packages for writing data         </span></span>
 <span id="cb1-3"><a href="01-introduction.html#cb1-3" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;sjPlot&quot;</span>, <span class="st">&quot;broom&quot;</span>, <span class="st">&quot;kableExtra&quot;</span>,          <span class="co"># packages for generating tables</span></span>
-<span id="cb1-4"><a href="01-introduction.html#cb1-4" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;nlme&quot;</span>, <span class="st">&quot;lme4&quot;</span>, <span class="st">&quot;lmerTest&quot;</span>,               <span class="co"># packages for MLMs</span></span>
+<span id="cb1-4"><a href="01-introduction.html#cb1-4" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;nlme&quot;</span>, <span class="st">&quot;lme4&quot;</span>, <span class="st">&quot;lmerTest&quot;</span>, <span class="st">&quot;stats&quot;</span>,               <span class="co"># packages for MLMs</span></span>
 <span id="cb1-5"><a href="01-introduction.html#cb1-5" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;mgcv&quot;</span>, <span class="st">&quot;gamm4&quot;</span>, <span class="st">&quot;itsadug&quot;</span>,               <span class="co"># packages for GAMMs</span></span>
 <span id="cb1-6"><a href="01-introduction.html#cb1-6" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;lavaan&quot;</span>,                                 <span class="co"># packages for SEMs</span></span>
 <span id="cb1-7"><a href="01-introduction.html#cb1-7" aria-hidden="true" tabindex="-1"></a>              <span class="st">&quot;ggplot2&quot;</span>, <span class="st">&quot;semPlot&quot;</span>, <span class="st">&quot;ggeffects&quot;</span>,        <span class="co"># packages for visualization   </span></span>

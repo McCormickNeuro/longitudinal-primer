@@ -398,6 +398,8 @@ ggplot(data.frame(id=two.rate.fit@Data@case.idx[[1]],
   theme(legend.position = "none") 
 ```
 
+The second approach is the added-rate approach where the second slope is defined as the deflection from the original trajectory. We can see this approach below.
+
 ```{r piecewise 02, message = FALSE, warning = FALSE, error = FALSE}
 add.rate <- "int  =~ 1*fmin4 + 1*fmin5 + 1*fmin6 + 1*fmin7 + 
                      1*fmin8 + 1*fmin9 + 1*fmin10 + 1*fmin11
@@ -415,6 +417,10 @@ add.rate.fit <- growth(add.rate,
 summary(add.rate.fit, fit.measures = FALSE, estimates = TRUE,
         standardize = TRUE, rsquare = FALSE)
 ```
+
+Note that whichever approach we take, the models fit the data identically. This means that the choice between these two specifications should be guided by theoretical considerations of which type of effect you would prefer to interpret.
+
+Of course, the models we have seen thus far in this section are the simplest linear-linear piecewise functions we can specify. We could even better specify these linear pieces with additional time points, or we could potentially increase the polynomial order of one or more of the pieces. This could be a great way to model nonlinear growth followed by a plateau for instance. Below, we demonstrate a quadratic-linear piecewise function that could capture this type of growth pattern. To identify this model, we can use trial-level data from the `feedback.learning` dataset, with 4 trials specifying the quadratic initial piece, and the remaining trials specifying the second linear slope. Below we show the code to fit and visualize this model.
 
 ```{r piecewise 03, message = FALSE, warning = FALSE, error = FALSE}
 trials <- read.csv("data/trials.csv")
@@ -449,12 +455,14 @@ ggplot(data.frame(id=quad.rate.fit@Data@case.idx[[1]],
                     group = id, 
                     color = factor(id))) +
   geom_line() + 
-  labs(title = "Inverse LCM Trajectories",
+  labs(title = "Quadradic-Linear Piecewise LCM Trajectories",
        x = "Age",
        y = "Predicted Externalizing Behavior") +
   theme(legend.position = "none") 
 
 ```
+
+To fit piecewise models in the MLM, we simply create observed variables that correspond to the factor loadings we specified in the LCM code. Below we show how to generate these observed varaiables and the syntax to fit the two-rate version of the linear-linear model.
 
 ```{r piecewise 04, message = FALSE, warning = FALSE, error = FALSE}
 adversity.long <- adversity %>% 
@@ -474,6 +482,8 @@ two.rate.mlm <- lmer(fmin ~ 1 + slp1 + slp2 + (1 + slp1 + slp2 | id),
                                            optCtrl = list(maxfun = 2e5)))
 summary(two.rate.mlm)
 ```
+
+Fitting the piecewise model in the LCSM framework requires some additional work and unless we wish to include the dual-change effects, these models could be more-simply implemented as LCMs. This is due to a general complication in LCSMs if we wish to place the intercept anywhere except at the initial timepoint. If we look below at the `Regressions Between Adjacent Observations` section of the code below, we can see that for timepoints that come before the intercept (here before the knot point) we actually regression *earlier* timepoints on *later* timepoints. This reversal of the intuitive temporal order allows the LCSM to mimic the negative factor loadings in the LCM. Note also that the intercept timepoint (here `pfmin7`) appears twice, predicting the timepoint both before and after it. Finally, the loadings of the timepoints prior to the intercept load at a $-1$ on the delta factors rather than a $1$ as usual. The remainder of the model follows the conventions we are accustomed, but we comment below on the specific changes needed here.
 
 ```{r piecewise 05, message = FALSE, warning = FALSE, error = FALSE}
 two.rate.lcsm <- "
@@ -529,6 +539,8 @@ summary(two.rate.lcsm.fit, fit.measures = FALSE, estimates = TRUE,
         standardize = TRUE, rsquare = FALSE)
 ```
 
+If we wish to include proportional change into this model, there is another additional oddity. For the beta parameters prior to the intercept, we actually create a cycle in our model (in technical terms the model is non-recursive), where the delta factor that a given phantom loads on is then regressed on that same phantom variable. The model remains identified, however, because the loading is fixed to $-1$ while the proportional effect is freely estimated. The relevant syntax is below.
+
 ```{r piecewise 06, message = FALSE, warning = FALSE, error = FALSE}
 two.rate.prop.lcsm <- "
             # Define Phantom Variables (p = phantom)
@@ -563,7 +575,7 @@ two.rate.prop.lcsm <- "
             delta87 =~ 1*pfmin11;  delta87 ~~ 0*delta87
             
             # Define Proportional Change Regressions (beta = equality constraint)
-            # Nonrecursive Proportional Paths
+            # Non-recursive Proportional Paths
             delta21 ~ beta*pfmin4
             delta32 ~ beta*pfmin5
             delta43 ~ beta*pfmin6
@@ -594,20 +606,154 @@ two.rate.prop.lcsm.fit <- sem(two.rate.prop.lcsm,
 summary(two.rate.prop.lcsm.fit, fit.measures = FALSE, estimates = TRUE, 
         standardize = TRUE, rsquare = FALSE)
 ```
+
 ## Nonlinear Trajectories
-*MLM: show negatively accelerated exponential*
-*GAMM: full GAMM with b-splines*
-*LCM: Show 2 free-loading forms*
-*LCSM: dual-change model*
 
+However, we sometimes need to move beyond well-defined polynomial models in order to capture the complexity of developmental change over time and consider truly nonlinear trajectories. This is most common in applications with dense observations within-person or that cover wide (i.e., decades) age-ranges between-person, although we can model true nonlinearities in standard applications with 4-6 timepoints. GAMMs will shine in the former case, while LCMs and LCSMs offer some options for the latter.
 
-## Additional Considerations
+We can start with the GAMM syntax we are familiar with to specify a nonlinear trend across ages $8-28$ in the `feedback.learning` data.
 
-### Fixed and Random Effects
-*show in accelerated (braintime) data that we can estimate a quadratic overall trend even though no one has 4 observations*
+```{r nonlinear 01, message = FALSE, warning = FALSE, error = FALSE}
+gamm <- gamm4(scale(modularity) ~ 1 + s(age),
+              random = ~ (1 | id),
+              data = feedback.learning)
 
-### Generalizability
-*Code for cross-validiation?*
+gamtabs(gamm$gam, type = "html",
+        pnames = c("Intercept"), snames = c("s(Age)"),
+        caption = "Modularity as a Function of Age")
+
+plot.gam(gamm$gam, se = TRUE, rug = TRUE, shade = TRUE,
+         xlab = "Age", ylab = "Fitted Modularity Values")
+```
+
+Nothing as changed about this model from what we have seen previously because the GAMM intrinsically captures non-linearities through the use of the splines. In principle, given the functional form that is revealed, these data might also be fit with a quadratic polynomial (indeed in McCormick et al., 2021, *NeuroImage*: see main analyses versus supplemental GAMMs as a sensitivity check). Indeed these models might be a nice tool for this purpose to check the reasonableness of the functional form specified in more restrictive polynomial models, even if we retain the polynomials for interpretability. With expanding age ranges, this type of sensitivity check becomes increasingly important, since the non-linearities of the GAMM are a better theoretical match for the complex patterns of growth across the lifespan. While deceptively simple in their implementation (indeed this is the exact same model we keep fitting), GAMMS are a powerful and flexible tool for fitting developmental trajectories.
+
+The SEMs also allow for the inclusion of some nonlinear terms. Like the GAMM, we have already seen the most common nonlinearity through the proportional change parameter of the LCSM. We include the code and output for this model below but otherwise will not explore it further here.
+
+```{r nonlinear 02, message = FALSE, warning = FALSE, error = FALSE}
+executive.function <- read.csv("data/executive-function.csv", header = TRUE) %>%
+  select(id, dlpfc1:dlpfc4)
+
+proportional.lcsm <- "
+               # Define Phantom Variables (p = phantom)
+               pdlpfc1 =~ 1*dlpfc1; dlpfc1 ~ 0; dlpfc1 ~~ dlpfc1; pdlpfc1 ~~ 0*pdlpfc1
+               pdlpfc2 =~ 1*dlpfc2; dlpfc2 ~ 0; dlpfc2 ~~ dlpfc2; pdlpfc2 ~~ 0*pdlpfc2
+               pdlpfc3 =~ 1*dlpfc3; dlpfc3 ~ 0; dlpfc3 ~~ dlpfc3; pdlpfc3 ~~ 0*pdlpfc3
+               pdlpfc4 =~ 1*dlpfc4; dlpfc4 ~ 0; dlpfc4 ~~ dlpfc4; pdlpfc4 ~~ 0*pdlpfc4
+        
+               # Regressions Between Adjacent Observations
+               pdlpfc2 ~ 1*pdlpfc1
+               pdlpfc3 ~ 1*pdlpfc2
+               pdlpfc4 ~ 1*pdlpfc3
+        
+               # Define Change Latent Variables (delta)
+               delta21 =~ 1*pdlpfc2; delta21 ~~ 0*delta21
+               delta32 =~ 1*pdlpfc3; delta32 ~~ 0*delta32
+               delta43 =~ 1*pdlpfc4; delta43 ~~ 0*delta43
+               
+               # Define Proportional Change Regressions (beta = equality constraint)
+               delta21 ~ beta*pdlpfc1
+               delta32 ~ beta*pdlpfc2
+               delta43 ~ beta*pdlpfc3
+        
+               # Define Intercept and Slope
+               int =~ 1*pdlpfc1
+               slp =~ 1*delta21 + 1*delta32 + 1*delta43
+        
+               int ~ 1
+               slp ~ 1
+               
+               int ~~ slp
+               slp ~~ slp
+"
+
+lcsm.proportional <- sem(proportional.lcsm, 
+                         data = executive.function, 
+                         estimator = "ML",
+                         missing = "FIML")
+
+summary(lcsm.proportional)
+```
+
+However, the LCM offers an unique opportunity to model non-linear trends by throwing back to its roots in confirmatory factor analysis. Instead of specifying factor loadings, as we have done up to this point, we can allow a subset of them to be freely-estimated. This means that equal change is estimated between each timepoint, growth can accelerate and decelerate across different increments. However, to identify the growth model, we have to set at least two of the factor loadings to pre-specified values ($0$ and $1$) to set the scale for the other factor loadings. In general, there are two reasonable specifications. In the first, we set the first loading to $0$ and the second to $1$. This means that the other factor loadings are proportional to the amount of change that occurs between the first and second time point. We can see this specification below.
+
+```{r nonlinear 03, message = FALSE, warning = FALSE, error = FALSE}
+free.load1 <- "int   =~ 1*fmin4 + 1*fmin5 + 1*fmin6 + 1*fmin7 + 
+                        1*fmin8 + 1*fmin9 + 1*fmin10 + 1*fmin11
+               basis =~ 0*fmin4 + 1*fmin5 + l3*fmin6 + l4*fmin7 + 
+                        l5*fmin8 + l6*fmin9 + l7*fmin10 + l8*fmin11
+"
+
+free.load1.fit <- growth(free.load1,
+                         data = adversity,
+                         estimator = "ML",
+                         missing = "FIML")
+
+summary(free.load1.fit, fit.measures = FALSE, estimates = TRUE,
+        standardize = TRUE, rsquare = FALSE)
+```
+
+Here we label the freely-estimated factor loadings for convenient reference. We also specify the second factor as a basis (or sometimes "shape") rather than a "slope" factor to reflect the non-linearity inherent in this model. When we examine the model results, we can see a pretty striking pattern of factor loadings. The third loading (`l3`) is $10.43$, which suggests that more than $9$ times the amount of change occurs between the second and third timepoints as does between the first two (remember we take the difference between adjacent loadings). However, `l4` suggests that then there is a sharp deceleration in growth between the next timepoints. At `l6`, we can see that the factor loading actuall *decreases*, which is how this model fits a negative trend between adjacent timepoints. Finally, `l8` suggests a large increase at the final timepoint, reversing the earlier decreases. One thing to highlight is the increase in complexity just in describing the factor loadings and interpreting adjacent timepoints that do not follow some monotonic trend. Like many non-linear models, visualization of the model-implied trajectories is key for interpreting the effects. We can do so below.
+
+```{r nonlinear 04, message = FALSE, warning = FALSE, error = FALSE}
+ggplot(data.frame(id=free.load1.fit@Data@case.idx[[1]], 
+                           lavPredict(free.load1.fit,type="ov")) %>% 
+                  pivot_longer(cols = starts_with("fmin"), 
+                               names_to = c(".value", "age"), 
+                               names_pattern = "(fmin)(.+)") %>%
+                  dplyr::mutate(age = as.numeric(age)), 
+                aes(x = age, 
+                    y = fmin, 
+                    group = id, 
+                    color = factor(id))) +
+  geom_line() + 
+  labs(title = "Free-loading Model 1 Trajectories",
+       x = "Age",
+       y = "Predicted Forceps Minor Microstructure") +
+  theme(legend.position = "none") 
+```
+
+Here we can see the power, and danger, of these free-loading model. Like a GAMM, we can have complex, localized change, with reversals and highly variable slopes. However, in looking at the first couple of timepoints, we have to wonder if we are overfitting noise in the data when some simpler functional form would (e.g., a line) would describe this trend in a more replicable/generalizable way. Very often, these free-loading models will fit the data better than many alternatives we have discussed elsewhere in this primer, but then be very sample-depenedent in an unsatisfying fashion. Like with the GAMM, one potential use for this model is as a sensitivity check for a more-constrained LCM to ensure we are not completely botching the functional form. 
+
+We can refit this model using a different specification where we set the first loading to $0$ and the *last* loading to $1$. This scales the estimated loadings to be proportions of the total growth realized by that point. We can see this model below.
+
+```{r nonlinear 05, message = FALSE, warning = FALSE, error = FALSE}
+free.load2 <- "int   =~ 1*fmin4 + 1*fmin5 + 1*fmin6 + 1*fmin7 + 
+                        1*fmin8 + 1*fmin9 + 1*fmin10 + 1*fmin11
+               basis =~ 0*fmin4 + l2*fmin5 + l3*fmin6 + l4*fmin7 + 
+                        l5*fmin8 + l6*fmin9 + l7*fmin10 + 1*fmin11
+"
+
+free.load2.fit <- growth(free.load2,
+                         data = adversity,
+                         estimator = "ML",
+                         missing = "FIML")
+
+summary(free.load2.fit, fit.measures = FALSE, estimates = TRUE,
+        standardize = TRUE, rsquare = FALSE)
+```
+
+We can see that the loadings are now all less than $1$ but that they follow the same pattern as in the model (which they should, as they are identically-fitting models). However, now the loadings are expressed as percentages of the total change that occurs between the first and final timepoint. Note one odd thing is that when a trajectory follows a parabolic shape, we can get loadings about $1$ reflecting $>100%$ of the overall change has occurred by that time point. Nothing is wrong, per se, with that interpretation, but given the oddness of language it evokes, the first specification is by far the more common.
+
+## Fixed and Random Effects
+
+Before we move on, we want to highlight the distinction we make between fixed and random effects when we talk about the limitations of the functional form with respect to the number of repeated measures, per person. The oft-repeated mantra is that you need $3$ timepoints for a line, $4$ for a quadratic, and so on ad infinitum. *But*, on the other hand, we can fit a highly complex non-linear developmental trajectory to data where each individual contributes **at most** $2$ timepoints. How do we reconcile these two things? Well it has to do with whether we treat the effect in question as fixed or random. When we treat a parameter as fixed, we obtain a single value that describes all indiviudals in our sample (barring pesky things like interactions), but when we treat an effect as random, we also model individual differences in that "fixed" parameter (note that we estimate a single variance per random effect, not individual effects, but that's a longer discussion and we can calculate individual effects with some well-developed methods). So to estimate these individually-varying random effects, we need more repeated measures *within-person*. However, we can still estimate an overall fixed effect trajectory that takes advantage of greater timepoints *between* individuals than exist for any given individual. This is how we might estimate a GAMM with some highly complex surface, even though we could never estimate a random effect for any individual since they only contribute up to two observations.
+
+We can demonstrate this with our `feedback.learning` data where we can model both the effect of `wave`, which is a fully within-person measure, as well as linear and quadratic `age`. These latter two effects are specified as fixed effects because while `age` between-person ranges from $8 - 29$, no one person contributes more than $3$ time points, so the quadratic random effect would not be estimable. However, we can estimate a random effect of `wave`. We can see these effects below. This distinction highlights some of the advantages of having measurement timing heterogeneity for estimating more complex effect than one could do with single-cohort data with fully consistent assessment schedules.
+
+```{r fixedrandom 01, message = FALSE, warning = FALSE, error = FALSE}
+feedback.learning <- read.csv("data/feedback-learning.csv") %>% 
+  select(id, wave, age, modularity, learning.rate)
+
+fixrand <- lmer(scale(modularity) ~ 1 + wave + age + I(age^2) +
+                  (1 + wave | id),
+                na.action = na.omit,
+                REML = TRUE,
+                data = feedback.learning)
+
+summary(fixrand, correlation = FALSE)
+```
+
 
 ```{r, cleanup shape, message = FALSE, warning = FALSE, error = FALSE, echo = FALSE}
 rm(list = ls(all.names = FALSE))

@@ -155,6 +155,22 @@ summary(mlm.lme4, correlation = FALSE)
 
 The main differences in the output are that `lmer()` gives the variance of the random effects in addition to the standard deviations, and that there are no longer *p*-values associated with the fixed effects. However, all the values are identical to the `lme()` solution (which should make us sigh in relief).
 
+If we wish to extract significance information on the random effect components, we can calculate confidence intervals using the `confint()` function from the [**stats**]() package.
+
+```{r canonical MLM 02.1, warning = FALSE, message = FALSE}
+confint(mlm.lme4)
+```
+
+For each parameter, we want to check if the confidence interval contains $0$. Unfortunately, the standard command labels things in non-specific terms (e.g., `.sig01`). If we want more informative labels, we can include the `oldNames = FALSE` argument.
+
+```{r}
+confint(mlm.lme4,
+        oldNames = TRUE)
+```
+
+As we can see, these labels are much more informative to ensure we are interpreting the correct parameter. Note: `sigma` will always be the level $1$ residual variance and will not have an informative label. The corresponding command for computing confidence intervals in **nlme** is `intervals()`.
+
+
 ### lmerTest
 
 If we wish to retain *p*-values in our solution, we can load the package **lmerTest** and use its version of `lmer()` to fit the model. The syntax is identical to what we used above, and the parameter estimates are as well.
@@ -300,7 +316,8 @@ lcm <- lavaan::growth(linear.lcm,
 We can then summarize the model output using `summary()` with some optional arguments. While we will mostly output all of the available information, including `fit.measures`, raw (`estimates`) and standardized (`standardize`) parameter estimates, and `rsquare`, there might be cases where we are only interested in some subsection of the output. For instance, if we are building a sequence of models, we might only consult fit measures without viewing the parameters and associated inference tests so that our model selection isn"t driven by "peeking" at effects of interest.
 
 ```{r canonical LCM 03}
-summary(lcm, fit.measures = TRUE, estimates = TRUE, standardize = TRUE, rsquare = TRUE)
+summary(lcm, fit.measures = TRUE, estimates = TRUE, 
+        standardize = TRUE, rsquare = TRUE)
 ```
 
 One nice thing about fitting our model to the raw data instead of standardizing beforehand is that with the `standardize = TRUE` argument, we get 3 sets of parameter estimates: the raw scale estimates (under `Estimates`), the estimates when the latent variables are standardized but the indicators remain in the raw scale (under `Std.lv`), and the fully standardized solution (under `Std.all`). In the same spirit of maximizing the information from the model, we can actually re-fit the model using `estimator = "MLR"`. Here we will only output the `fit.measures` to see how the robust estimator changes our model fit information.
@@ -311,13 +328,15 @@ lcm <- lavaan::growth(linear.lcm,
                       estimator = "MLR",
                       missing = "FIML")
 
-summary(lcm, fit.measures = TRUE, estimates = FALSE, standardize = FALSE, rsquare = FALSE)
+summary(lcm, fit.measures = TRUE, estimates = FALSE, 
+        standardize = FALSE, rsquare = FALSE)
 ```
 
 We can see that we get a new column of robust fit statistics to accompany the standard measures which correct for the non-normality in our data. In this case, our data are not too non-normal and so there is little difference. However, this will not always be the case. To vastly over-simplify, we are looking to see if our `Model Test User Model:` test statistic is non-significant. However, be aware that this test is over-powered and will often be significant in large samples, even in a well fitting model. We also tend to look for CFI/TLI $> 0.95$, RMSEA $< 0.05$, and SRMR $< 0.08$ to indicate an excellent model fit. While these cutoff values are somewhat arbitrary, they can serve as a rough huristic, and the linear LCM more than satisfies each of these criteria. For more discussion of fit indices, consult the resources outlined in the main text. We can now jump back and orient to the parameter estimate output.
 
 ```{r canonical LCM 05}
-summary(lcm, fit.measures = FALSE, estimates=  TRUE, standardize = TRUE, rsquare = TRUE)
+summary(lcm, fit.measures = FALSE, estimates=  TRUE, 
+        standardize = TRUE, rsquare = TRUE)
 ```
 
 The first section of parameters `Latent Variables:` is of little interest to us for now since we pre-determined these factor loadings as a part of our model (but maybe check that they are the values you expect) and there are therefore no inferential tests on these parameters. The `Covariances:` section shows us the covariance (and correlation if we asked for standardized results) between the intercept and slope. Here we can see that the correlation is strong and negative ($r = -0.499$) suggesting that those with the lowest initial levels of DLPFC activation tend to show the strongest increases in activation over time. 

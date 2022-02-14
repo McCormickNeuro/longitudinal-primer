@@ -6,7 +6,7 @@ The first thing we can do is run a function that will load the R packages needed
 packages <- c("utils", "tidyverse", "downloadthis",     # packages for data management
               "foreign", "MplusAutomation",             # packages for writing data         
               "sjPlot", "broom", "kableExtra",          # packages for generating tables
-              "nlme", "lme4", "lmerTest",               # packages for MLMs
+              "nlme", "lme4", "lmerTest", "stats",               # packages for MLMs
               "mgcv", "gamm4", "itsadug",               # packages for GAMMs
               "lavaan",                                 # packages for SEMs
               "ggplot2", "semPlot", "ggeffects",        # packages for visualization   

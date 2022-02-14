@@ -1,3 +1,24 @@
 # Datasets {#datasets}
 
 Description of datasets used in the code companion
+
+```{r}
+download_file(
+  path = c("data/accelerated.csv",
+           "data/adversity.csv",
+           "data/executive-function.csv",
+           "data/external-math.csv",
+           "data/feedback-learning.csv",
+           "data/multiple-cohort-long.csv",
+           "data/multiple-cohort.csv",
+           "data/single-cohort.csv",
+           "data/trials.csv"),
+  output_name = "codebook-datasets",
+  button_label = "Download Codebook Datasets",
+  button_type = "default",
+  has_icon = TRUE,
+  icon = "fa fa-save",
+  self_contained = FALSE
+)
+```
+

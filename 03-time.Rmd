@@ -146,6 +146,7 @@ We can then pass the new model object to the `simple_slopes()` function with `ag
 
 ```{r accelerated 06, message = FALSE, warning = FALSE, error = FALSE}
 interactions::sim_slopes(probe.accel, 
+                         data = accelerated,
                          pred = age, 
                          modx = age_temp, 
                          jnplot = TRUE,
