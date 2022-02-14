@@ -162,7 +162,7 @@ obs.tic.fit <- growth(obs.tic,
 summary(obs.tic.fit, fit.measures = FALSE, estimates = TRUE, 
         standardize = TRUE, rsquare = FALSE)
 
-adversity %>% select(-cog)
+adversity <- adversity %>% select(-cog)
 ```
 
 Focusing one the regression of `int ~ cog` in both models, we can compare the standardized coefficients and see that the observed measure reduces the effect quite substantially (latent TIC: $\beta = 0.466$, observed TIC: $\beta = 0.296$). Since we simulated this measure a, we knew that the true standarized effect should be $\beta_{population} = 0.500$, highlighting the utility of latent variables to attenuate the effects of measurement error that often bias effects downwards.
