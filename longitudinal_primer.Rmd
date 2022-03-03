@@ -1,3 +1,97 @@
+--- 
+title: "The Hitchhiker’s Guide to Longitudinal Models"
+subtitle: "Code Companion"
+author: "[Ethan M. McCormick](https://mccormickneuro.github.io/), [Michelle L. Byrne](https://research.monash.edu/en/persons/michelle-byrne), [John C. Flournoy](https://johnflournoy.science/), [Katheryn L. Mills](http://devbrainlab.org/), & [Jennifer H. Pfiefer](https://dsn.uoregon.edu/)"
+date: "Published: `r format(Sys.time(), '%d %B, %Y')`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+#link-citations: yes
+# cover-image: path to the social sharing image like images/cover.jpg
+description: |
+  This is a code companion for The Hitchhiker’s Guide to Longitudinal Models.
+link-citations: yes
+url: https\://https://mccormickneuro.github.io/longitudinal-primer/
+github-repo: "McCormickNeuro/longitudinal-primer"
+---
+
+# cover-image: path to the social sharing image like images/cover.jpg
+
+Placeholder
+
+
+
+<!--chapter:end:index.Rmd-->
+
+
+# Introduction {#intro}
+
+Placeholder
+
+
+
+<!--chapter:end:01-introduction.Rmd-->
+
+
+# Canonical Models {#canon}
+
+Placeholder
+
+
+## Multilevel Model
+### nlme
+### lme4
+### lmerTest
+### MLM Outputs
+### MLM Plotting Model-Implied Trajectories
+## Generalized Additive Mixed Model
+### GAMM Outputs
+## Latent Curve Model
+### LCM Syntax and Model Fitting
+### LCM Outputs
+### LCM Path Diagrams
+### LCM Plotting Model-Implied Trajectories
+## Latent Change Score Model
+### Linear LCSM
+### Linear LCSM with Proportional Change
+
+<!--chapter:end:02-canonical.Rmd-->
+
+
+# Time Structure {#time}
+
+Placeholder
+
+
+## Assessment Schedules
+### Single Cohort Data
+### Multiple Cohort Data 
+### Accelerated Design
+## Time Coding
+## Additional Considerations
+### Alternative Metrics of Time
+### Residual Estimates
+
+<!--chapter:end:03-time.Rmd-->
+
+
+# The Shape of Development {#shape}
+
+Placeholder
+
+
+## Polynomial Trajectories
+### Intercept-Only Model
+### Linear Model
+### Quadratic Model 
+### Inverse Model
+## Piecewise Trajectories
+## Nonlinear Trajectories
+## Fixed and Random Effects
+
+<!--chapter:end:04-shape.Rmd-->
+
 # Covariates and Distal Outcomes {#covariates}
 
 Thus far, we have only considered *unconditional* growth models. This is somewhat of a misnomer because clearly time is included as a predictor but that is considered integral to the growth model so we tend not to count it as a conditional model (as with many terminological things in quant: *shrugs*). What we will do in this section is bring in additional variables to our growth model as predictors. These covariates will either predict the parameters of the growth process (i.e., intercept and slope) or the individual repeated measures directly (some models will allow a single covariate to do both simultaneously). We will read in the relevent data sets below.
@@ -894,29 +988,6 @@ summary(distal.glm)
 ```
 
 ```{r}
-plot.dat <- data.frame(prob = externalizing$incarc,
-                       int = externalizing$int,
-                       slp = externalizing$slp,
-                       fit = predict(distal.glm, externalizing))
-plot.dat$fit_prob <- exp(plot.dat$fit)/(1+exp(plot.dat$fit))
-ggplot(plot.dat, aes(x=slp, y=fit_prob)) +
-  geom_line() + ylim(0, 1)
-
-
-
-
-plot.dat <- data.frame(prob = menarche$Menarche/menarche$Total,
-                       age = menarche$Age,
-                       fit = predict(m, menarche))
-#convert those logit values to probabilities
-plot.dat$fit_prob <- exp(plot.dat$fit)/(1+exp(plot.dat$fit))
-
-library(ggplot2)
-
-```
-
-
-```{r}
 logit2prob <- function(logit){
   odds <- exp(logit)
   prob <- odds / (1 + odds)
@@ -924,8 +995,6 @@ logit2prob <- function(logit){
 }
 
 logit2prob(coef(distal.glm))
-
-externalizing <- externalizing %>% select(-c(int, slp))
 ```
 
 
@@ -933,21 +1002,6 @@ externalizing <- externalizing %>% select(-c(int, slp))
 *LCM: show simultaneous model and 2 step model*
 
 
-```{r}
-lin.lcm <- "int =~ 1*ext6 + 1*ext8 + 1*ext10 + 1*ext12 + 1*ext14
-            slp =~ 0*ext6 + 2*ext8 + 4*ext10 + 6*ext12 + 8*ext14
-  
-            incarc ~ int + slp
-"
-
-lin.lcm.fit <- growth(lin.lcm, 
-                      data = externalizing,
-                      estimator = "ML",
-                      missing = "FIML")
-
-summary(lin.lcm.fit, fit.measures = FALSE, estimates = TRUE, 
-        standardize = FALSE, rsquare = FALSE)
-```
 
 
 
@@ -955,3 +1009,61 @@ summary(lin.lcm.fit, fit.measures = FALSE, estimates = TRUE,
 ```{r, cleanup covariates, message = FALSE, warning = FALSE, error = FALSE, echo = FALSE}
 rm(list = ls(all.names = FALSE))
 ```
+
+<!--chapter:end:05-covariates.Rmd-->
+
+# Nested Data {#nesting}
+
+Different forms of nesting in longitudinal models.
+
+```{r read data nesting, eval=F}
+```
+
+## Categorical Predictors
+*Show with MLM/LCM*
+
+## Multiple Groups Models
+*Show with LCM/LCSM*
+
+## Fixed Effect Approach
+*Show with MLM*
+
+## Random Effect Approach
+*Show with MLM & LCM*
+*ML-SEM*
+
+## Cluster Correction
+*Cluster correction: link to Mplus code*
+
+
+
+
+<!--chapter:end:06-nesting.Rmd-->
+
+# Datasets {#datasets}
+
+Description of datasets used in the code companion
+
+```{r}
+download_file(
+  path = c("data/accelerated.csv",
+           "data/adversity.csv",
+           "data/executive-function.csv",
+           "data/external-math.csv",
+           "data/feedback-learning.csv",
+           "data/multiple-cohort-long.csv",
+           "data/multiple-cohort.csv",
+           "data/single-cohort.csv",
+           "data/trials.csv"),
+  output_name = "codebook-datasets",
+  button_label = "Download Codebook Datasets",
+  button_type = "default",
+  has_icon = TRUE,
+  icon = "fa fa-save",
+  self_contained = FALSE
+)
+```
+
+
+<!--chapter:end:07-datasets.Rmd-->
+

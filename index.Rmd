@@ -1,7 +1,7 @@
 --- 
 title: "The Hitchhiker’s Guide to Longitudinal Models"
 subtitle: "Code Companion"
-author: "[Ethan M. McCormick](https://mccormickneuro.github.io/), [Michelle L. Byrne](https://research.monash.edu/en/persons/michelle-byrne), [John C. Flournoy](https://johnflournoy.science/), [Katheryn L. Mills](http://devbrainlab.org/), & [Jennifer H. Pfiefer](https://dsn.uoregon.edu/)"
+author: "[Ethan M. McCormick](https://mccormickneuro.github.io/), [Michelle L. Byrne](https://research.monash.edu/en/persons/michelle-byrne), [John C. Flournoy](https://johnflournoy.science/), [Kathryn L. Mills](http://devbrainlab.org/), & [Jennifer H. Pfiefer](https://dsn.uoregon.edu/)"
 date: "Published: `r format(Sys.time(), '%d %B, %Y')`"
 site: bookdown::bookdown_site
 documentclass: book
