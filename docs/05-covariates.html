@@ -21,7 +21,7 @@
   <meta name="twitter:description" content="This is a code companion for The Hitchhiker’s Guide to Longitudinal Models." />
   
 
-<meta name="author" content="Ethan M. McCormick, Michelle L. Byrne, John C. Flournoy, Katheryn L. Mills, &amp; Jennifer H. Pfiefer" />
+<meta name="author" content="Ethan M. McCormick, Michelle L. Byrne, John C. Flournoy, Kathryn L. Mills, &amp; Jennifer H. Pfiefer" />
 
 
 
@@ -201,7 +201,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="05-covariates.html"><a href="05-covariates.html#covariates-1"><i class="fa fa-check"></i>Covariates</a>
 <ul>
 <li class="chapter" data-level="" data-path="05-covariates.html"><a href="05-covariates.html#time-invariant-covariates"><i class="fa fa-check"></i>Time Invariant Covariates</a></li>
-<li class="chapter" data-level="" data-path="05-covariates.html"><a href="05-covariates.html#cross-level-interactions"><i class="fa fa-check"></i>Cross-level Interactions</a></li>
+<li class="chapter" data-level="" data-path="05-covariates.html"><a href="05-covariates.html#cross-level-interactions"><i class="fa fa-check"></i>Cross-Level Interactions</a></li>
 <li class="chapter" data-level="" data-path="05-covariates.html"><a href="05-covariates.html#time-varying-covariates"><i class="fa fa-check"></i>Time Varying Covariates</a></li>
 <li class="chapter" data-level="" data-path="05-covariates.html"><a href="05-covariates.html#multivariate-models"><i class="fa fa-check"></i>Multivariate Models</a></li>
 <li class="chapter" data-level="" data-path="05-covariates.html"><a href="05-covariates.html#within--and-betwen-person-variance"><i class="fa fa-check"></i>Within- and Betwen-Person Variance</a></li>
@@ -674,7 +674,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Focusing one the regression of <code>int ~ cog</code> in both models, we can compare the standardized coefficients and see that the observed measure reduces the effect quite substantially (latent TIC: <span class="math inline">\(\beta = 0.466\)</span>, observed TIC: <span class="math inline">\(\beta = 0.296\)</span>). Since we simulated this measure a, we knew that the true standarized effect should be <span class="math inline">\(\beta_{population} = 0.500\)</span>, highlighting the utility of latent variables to attenuate the effects of measurement error that often bias effects downwards.</p>
 </div>
 <div id="cross-level-interactions" class="section level3">
-<h3>Cross-level Interactions</h3>
+<h3>Cross-Level Interactions</h3>
 <p>Up until now, we have limited our discussion of TICs to include only those that predicted the intercept. This is because when we combine level 1 TVC variables with level 2 TIC variables, we can begin generating cross level interactions. We have not yet discussed TVCs in-depth (we do so below), in growth models the most common cross-level interactions are between TICs and our time variable (here <code>age</code>). As such, we will introuce these effects here before going on to explore TVCs in a more general way. Cross-level interactions are easier to see with the MLM, as the interaction is often not immediately apparent in SEMs. Below we will introduce a treatment TIC (<code>tx</code>) to our earlier TIC model. Here we will switch our TIC of interest to be the variable <code>abuse</code> for…reasons (it is a better demonstration). We will first only predict the intercept as we did previously and then we will fit a cross-level interaction model.</p>
 <div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="05-covariates.html#cb180-1" aria-hidden="true" tabindex="-1"></a>tic.mlm <span class="ot">&lt;-</span> <span class="fu">lmer</span>(fmin <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> age <span class="sc">+</span> abuse <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> age <span class="sc">|</span> id),</span>
 <span id="cb180-2"><a href="05-covariates.html#cb180-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">na.action =</span> na.omit,</span>
@@ -2281,7 +2281,7 @@ NA
 ##     int.dlpfc         0.775    0.086    9.020    0.000
 ##     slp.dlpfc         0.081    0.016    5.134    0.000</code></pre>
 <p>This model is quite simple for a SEM approach, and we can examine how different constructs travel together over time by examining the inter-relations among the growth factors. However, this is ultimately cross-sectional correlations because there is no temporal order at the latent level, either between intercepts and slope or between factors of different constructs. If we want to examine cross-lagged relationships among the repeated measures themselves (ala the standard cross-lag panel model we won’t consider here for numerous reasons), we might wish to introduce regression relationships among the repeated measures.</p>
-<p>There are several ways to specify these regression among the repeated measures in a multivariate growth model; however, we will focus on what is known as the random-intercept cross-lag panel model (RI-CLPM) and it’s generalization in the latent curve model with structured residuals (LCM-SR). For an overview of potential alternatives, see <a href="">Usami &amp; Hamaker, 2021</a>. We retain the time-specific residual covariances, but now we include regression coefficients between the residuals of the repeated measures (hence “structured residuals”). Note that for the RI-CLPM, we remove the slope factors. In the LCM-SR, we can include any combination of latent growth factors, so that will be the term we will use to reference this general type of model, with the RI-CLPM being a special case.</p>
+<p>There are several ways to specify these regression among the repeated measures in a multivariate growth model; however, we will focus on what is known as the random-intercept cross-lag panel model (RI-CLPM) and it’s generalization in the latent curve model with structured residuals (LCM-SR). For an overview of potential alternatives, see <a href="https://psycnet.apa.org/fulltext/2019-21491-001.html">Usami &amp; Hamaker, 2019</a>. We retain the time-specific residual covariances, but now we include regression coefficients between the residuals of the repeated measures (hence “structured residuals”). Note that for the RI-CLPM, we remove the slope factors. In the LCM-SR, we can include any combination of latent growth factors, so that will be the term we will use to reference this general type of model, with the RI-CLPM being a special case.</p>
 <div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="05-covariates.html#cb211-1" aria-hidden="true" tabindex="-1"></a>riclpm <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
 <span id="cb211-2"><a href="05-covariates.html#cb211-2" aria-hidden="true" tabindex="-1"></a><span class="st">          # Random Intercept for EF</span></span>
 <span id="cb211-3"><a href="05-covariates.html#cb211-3" aria-hidden="true" tabindex="-1"></a><span class="st">          int.ef =~ 1*ef1 + 1*ef2 + 1*ef3 + 1*ef4</span></span>
@@ -4264,37 +4264,141 @@ DLPFC
 <span id="cb240-9"><a href="05-covariates.html#cb240-9" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(random.effs) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;int&quot;</span>, <span class="st">&quot;slp&quot;</span>)</span>
 <span id="cb240-10"><a href="05-covariates.html#cb240-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb240-11"><a href="05-covariates.html#cb240-11" aria-hidden="true" tabindex="-1"></a>externalizing <span class="ot">&lt;-</span> <span class="fu">cbind</span>(externalizing, random.effs)</span></code></pre></div>
-<p>Now that we have obtained these EB estimates, we can bring them into the secondary regression analysis. Here our outcome of lifetime incarceration (<code>incarc</code>) is binary ($0 = $ “never incarcerated,” $1 = $ “ever incarcerated”), so we will utilize the <code>glm()</code> function (“generalized linear model”) instead of <code>lm()</code> (“general linear model”) to deal with the discrete nature of our outcome.</p>
-<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="05-covariates.html#cb241-1" aria-hidden="true" tabindex="-1"></a>distal.glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(incarc <span class="sc">~</span> int <span class="sc">+</span> slp,</span>
+<p>Now that we have obtained these EB estimates, we can bring them into the secondary regression analysis. Here our outcome of lifetime incarceration (<code>incarc</code>) is binary ($0 = $ “never incarcerated”, $1 = $ “ever incarcerated”), so we will utilize the <code>glm()</code> function (“generalized linear model”) instead of <code>lm()</code> (“general linear model”) to deal with the discrete nature of our outcome. While we won’t spend much time on the distinctions between linear and nonlinear models, see <a href="https://quantdev.ssri.psu.edu/tutorials/regression-continuous-count-and-binary-outcomes">here</a> for a great general review of the topic in R.</p>
+<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="05-covariates.html#cb241-1" aria-hidden="true" tabindex="-1"></a>distal.glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(incarc <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> int <span class="sc">+</span> slp,</span>
 <span id="cb241-2"><a href="05-covariates.html#cb241-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>,</span>
 <span id="cb241-3"><a href="05-covariates.html#cb241-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> externalizing)</span>
 <span id="cb241-4"><a href="05-covariates.html#cb241-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb241-5"><a href="05-covariates.html#cb241-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(distal.glm)</span></code></pre></div>
 <pre><code>## 
 ## Call:
-## glm(formula = incarc ~ int + slp, family = &quot;binomial&quot;, data = externalizing)
+## glm(formula = incarc ~ 1 + int + slp, family = &quot;binomial&quot;, data = externalizing)
 ## 
 ## Deviance Residuals: 
 ##     Min       1Q   Median       3Q      Max  
-## -0.5327  -0.3971  -0.3779  -0.3604   2.4438  
+## -1.7151  -0.3186  -0.2004  -0.1445   2.8305  
 ## 
 ## Coefficients:
 ##             Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)  -2.5737     0.1947 -13.218   &lt;2e-16 ***
-## int          -0.8470     1.3324  -0.636    0.525    
-## slp           2.9215     3.4287   0.852    0.394    
+## (Intercept)   -3.391      0.318 -10.666   &lt;2e-16 ***
+## int            2.875      1.270   2.263   0.0236 *  
+## slp            5.710      3.274   1.744   0.0811 .  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## (Dispersion parameter for binomial family taken to be 1)
 ## 
-##     Null deviance: 208.79  on 404  degrees of freedom
-## Residual deviance: 208.06  on 402  degrees of freedom
-## AIC: 214.06
+##     Null deviance: 203.63  on 404  degrees of freedom
+## Residual deviance: 149.99  on 402  degrees of freedom
+## AIC: 155.99
 ## 
-## Number of Fisher Scoring iterations: 5</code></pre>
-<p><em>MLM: show 2 step model</em>
-<em>LCM: show simultaneous model and 2 step model</em></p>
+## Number of Fisher Scoring iterations: 6</code></pre>
+<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="05-covariates.html#cb243-1" aria-hidden="true" tabindex="-1"></a>externalizing <span class="ot">&lt;-</span> externalizing <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(int, slp))</span></code></pre></div>
+<p>We can see that while the intercept of the trajectory has a significant positive prospective effect on the propensity for individuals to experience lifetime incarceration, the slope is not significant (so close; more on that in a bit). Essentially, those adolescents who show higher initial levels of antisocial behavior are more likely to report being incarcerated at some point in their lifetime. The coefficients we see in this model represent the log-odds parameters. You might see these reported in the odds scale, which just involves the exponentiation of these parameters. We can see this below and generate confidence intervals on the odds parameters.</p>
+<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="05-covariates.html#cb244-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">cbind</span>(<span class="fu">coef</span>(distal.glm), <span class="fu">confint</span>(distal.glm)))</span></code></pre></div>
+<pre><code>##                               2.5 %       97.5 %
+## (Intercept)   0.03366191 0.01685404 5.927967e-02
+## int          17.72246349 1.49556757 2.248848e+02
+## slp         301.85964003 0.51755237 2.085331e+05</code></pre>
+<p>So for a one unit increase in the trajectory intercept, we expect a 17.72 change in the odds of being incarcerated, and a substantial increase of 301.85 in the odds for a per-unit change in the slope of the trajectory (again not significant but we can play out this exercise). One reason we often need to be careful about these “per one unit” changes in the trajectory parameters, especially for the slope, is that often the parameters do not have large ranges. Indeed, often the full range of the slope parameter will not extend over an entire unit because of the way it is scaled (in per time-unit change). We can see this when we plot the predicted probabilities of incarceration against the trajectory parameters. Note that to get the predicted probabilities, we simply divide the odds by <span class="math inline">\(1\)</span> plus the odds. So <span class="math inline">\(P(incarc_{i} = 1) = e^{log-odds} / 1 + e^{log-odds}\)</span>. We can see this below.</p>
+<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="05-covariates.html#cb246-1" aria-hidden="true" tabindex="-1"></a>random.effs <span class="ot">&lt;-</span> random.effs <span class="sc">%&gt;%</span></span>
+<span id="cb246-2"><a href="05-covariates.html#cb246-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">incarc =</span> externalizing<span class="sc">$</span>incarc,</span>
+<span id="cb246-3"><a href="05-covariates.html#cb246-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">pred =</span> stats<span class="sc">::</span><span class="fu">predict.glm</span>(distal.glm)) <span class="sc">%&gt;%</span></span>
+<span id="cb246-4"><a href="05-covariates.html#cb246-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pred.prob =</span> <span class="fu">exp</span>(pred) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(pred)))</span>
+<span id="cb246-5"><a href="05-covariates.html#cb246-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(random.effs)</span></code></pre></div>
+<pre><code>##           int         slp incarc      pred   pred.prob
+## 1 -0.08707305 -0.10376294      0 -4.234191 0.014284520
+## 2 -0.10130152 -0.03397105      0 -3.876587 0.020300771
+## 3 -0.29188615 -0.08666453      0 -4.725364 0.008789548
+## 4  0.42109753  0.13725150      0 -1.397103 0.198276302
+## 5  0.26380031  0.20359046      1 -1.470513 0.186864687
+## 6  0.21702008  0.10030029      0 -2.194781 0.100220132</code></pre>
+<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="05-covariates.html#cb248-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(random.effs, <span class="fu">aes</span>(<span class="at">x =</span> int, <span class="at">y =</span> incarc)) <span class="sc">+</span></span>
+<span id="cb248-2"><a href="05-covariates.html#cb248-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="fu">factor</span>(incarc)), <span class="at">shape =</span> <span class="st">&quot;|&quot;</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span>  </span>
+<span id="cb248-3"><a href="05-covariates.html#cb248-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> random.effs, </span>
+<span id="cb248-4"><a href="05-covariates.html#cb248-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> int, <span class="at">y =</span> pred.prob, <span class="at">color =</span> <span class="fu">factor</span>(incarc))) <span class="sc">+</span>  </span>
+<span id="cb248-5"><a href="05-covariates.html#cb248-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb248-6"><a href="05-covariates.html#cb248-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">&quot;glm&quot;</span>, <span class="at">method.args =</span> <span class="fu">list</span>(<span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>), <span class="at">se =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb248-7"><a href="05-covariates.html#cb248-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Plotting Predicted Probabilities of Lifetime Incarceration&quot;</span>,</span>
+<span id="cb248-8"><a href="05-covariates.html#cb248-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Intercept (Wave 1) of Adolescent Antisocial Behavior&quot;</span>,</span>
+<span id="cb248-9"><a href="05-covariates.html#cb248-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Predicted Probability of Incarceration&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb248-10"><a href="05-covariates.html#cb248-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<p><img src="longitudinal_primer_files/figure-html/outcomes%2004-1.png" width="672" /></p>
+<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="05-covariates.html#cb249-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(random.effs, <span class="fu">aes</span>(<span class="at">x =</span> slp, <span class="at">y =</span> incarc)) <span class="sc">+</span></span>
+<span id="cb249-2"><a href="05-covariates.html#cb249-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="fu">factor</span>(incarc)), <span class="at">shape =</span> <span class="st">&quot;|&quot;</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span>  </span>
+<span id="cb249-3"><a href="05-covariates.html#cb249-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> random.effs, </span>
+<span id="cb249-4"><a href="05-covariates.html#cb249-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> slp, <span class="at">y =</span> pred.prob, <span class="at">color =</span> <span class="fu">factor</span>(incarc))) <span class="sc">+</span>  </span>
+<span id="cb249-5"><a href="05-covariates.html#cb249-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb249-6"><a href="05-covariates.html#cb249-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">&quot;glm&quot;</span>, <span class="at">method.args =</span> <span class="fu">list</span>(<span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>), <span class="at">se =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb249-7"><a href="05-covariates.html#cb249-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Plotting Predicted Probabilities of Lifetime Incarceration&quot;</span>,</span>
+<span id="cb249-8"><a href="05-covariates.html#cb249-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Slope of Adolescent Antisocial Behavior&quot;</span>,</span>
+<span id="cb249-9"><a href="05-covariates.html#cb249-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Predicted Probability of Incarceration&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb249-10"><a href="05-covariates.html#cb249-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<p><img src="longitudinal_primer_files/figure-html/outcomes%2004-2.png" width="672" /></p>
+<p>As we can see, the slope parameter in particular does not cover a full 1 unit range, and most of the observations are between <span class="math inline">\(-0.2\)</span> and <span class="math inline">\(0.2\)</span>. Here we have plotted the predicted probabilities of incarceration (dots) against each of the parameters, color-coded by their observed response on the incarceration item (red = “No”, green = “Yes”). Note that there is some mismatch, especially in the middle-zones of the plots, where some of those who have <em>actually</em> experienced incarceration have low model-implied probabilities, and vice versa. This is perfectly normal and means we simply haven’t included all of the multitude of relevant predictors for lifetime incarceration (which is completely unsurprising given what we know about incarceration patterns in the population). We will not go much further on diagnostics here, but just to note: there is a single point at the very high end of the graph that seems to be anchoring the curve fairly strongly. It would be a great idea to test the model sensitivity to excluding this person from the analysis.</p>
+<p>Of course, it was a bit of a bummer that the slope term wasn’t quite significant (and yes of course we shouldn’t care, but <strong>of course</strong> we do). Slope effects are often very interesting from an intervention perspective, with the idea that if we could just bend those curves down during adolescence, perhaps we could avoid some of these negative life outcomes. Well tough cookies in this model, but one of the reasons that we do not get a slope effect for this data in particular is because of the high degree of correlation between the EB estimates of the random effects, which is quite high (<span class="math inline">\(r =\)</span> 0.847). Similar to the ideas outlined in <a href="https://mccormickneuro.github.io/publication/2021-multilevel-multigrowth/">multi-growth models</a>, the correlation in predictors here isn’t doing us any favors. We can check the variance inflation factor for this model below using the <code>vif()</code> function from the <a href="https://cran.r-project.org/web/packages/car/index.html"><strong>car</strong></a> package.</p>
+<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="05-covariates.html#cb250-1" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">vif</span>(distal.glm)</span></code></pre></div>
+<pre><code>##      int      slp 
+## 2.772259 2.772259</code></pre>
+<p>Which indicates that our standard errors are approximately <span class="math inline">\(2.77\)</span> larger than if we had uncorrelated predictors. While this isn’t enormous, it likely contributes to a non-significant slope effect. This type of correlation between the random effects is not uncommon and is one of the challenges associated with these kinds of questions (although there are some developments that I am currently working on that might help with this, so stay tuned if interested).</p>
+<p>We can do a very similar 2-step approach with the LCM by generating factor scores. Here we will use the <code>lavPredict()</code> function from <strong>lavaan</strong> with <code>method = "regression"</code>. The other option is to use <code>method = "Bartlett"</code>. In general, regression factor scores perform better as predictors (which is what we want here), while Bartlett scores are better as outcomes (<a href="https://psycnet.apa.org/record/2001-10245-007">Skrondal &amp; Laak, 2001</a>).</p>
+<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="05-covariates.html#cb252-1" aria-hidden="true" tabindex="-1"></a>lin.lcm <span class="ot">&lt;-</span> <span class="st">&quot;int =~ 1*ext6 + 1*ext8 + 1*ext10 + 1*ext12 + 1*ext14</span></span>
+<span id="cb252-2"><a href="05-covariates.html#cb252-2" aria-hidden="true" tabindex="-1"></a><span class="st">            slp =~ 0*ext6 + 2*ext8 + 4*ext10 + 6*ext12 + 8*ext14</span></span>
+<span id="cb252-3"><a href="05-covariates.html#cb252-3" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span>
+<span id="cb252-4"><a href="05-covariates.html#cb252-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb252-5"><a href="05-covariates.html#cb252-5" aria-hidden="true" tabindex="-1"></a>lin.lcm.fit <span class="ot">&lt;-</span> <span class="fu">growth</span>(lin.lcm, </span>
+<span id="cb252-6"><a href="05-covariates.html#cb252-6" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data =</span> externalizing,</span>
+<span id="cb252-7"><a href="05-covariates.html#cb252-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">estimator =</span> <span class="st">&quot;ML&quot;</span>,</span>
+<span id="cb252-8"><a href="05-covariates.html#cb252-8" aria-hidden="true" tabindex="-1"></a>                      <span class="at">missing =</span> <span class="st">&quot;FIML&quot;</span>)</span>
+<span id="cb252-9"><a href="05-covariates.html#cb252-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb252-10"><a href="05-covariates.html#cb252-10" aria-hidden="true" tabindex="-1"></a>factor.scores <span class="ot">&lt;-</span> <span class="fu">lavPredict</span>(lin.lcm.fit, </span>
+<span id="cb252-11"><a href="05-covariates.html#cb252-11" aria-hidden="true" tabindex="-1"></a>                            <span class="at">type =</span> <span class="st">&quot;lv&quot;</span>,</span>
+<span id="cb252-12"><a href="05-covariates.html#cb252-12" aria-hidden="true" tabindex="-1"></a>                            <span class="at">method =</span> <span class="st">&quot;regression&quot;</span>)</span>
+<span id="cb252-13"><a href="05-covariates.html#cb252-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb252-14"><a href="05-covariates.html#cb252-14" aria-hidden="true" tabindex="-1"></a>externalizing <span class="ot">&lt;-</span> <span class="fu">cbind</span>(externalizing, factor.scores)</span></code></pre></div>
+<p>We can then perform the same regression for step <span class="math inline">\(2\)</span>.</p>
+<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="05-covariates.html#cb253-1" aria-hidden="true" tabindex="-1"></a>distal.glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(incarc <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> int <span class="sc">+</span> slp,</span>
+<span id="cb253-2"><a href="05-covariates.html#cb253-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>,</span>
+<span id="cb253-3"><a href="05-covariates.html#cb253-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> externalizing)</span>
+<span id="cb253-4"><a href="05-covariates.html#cb253-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb253-5"><a href="05-covariates.html#cb253-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(distal.glm)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = incarc ~ 1 + int + slp, family = &quot;binomial&quot;, data = externalizing)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.7234  -0.3135  -0.1990  -0.1407   2.8590  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)  -6.3940     0.9079  -7.043 1.89e-12 ***
+## int           1.9245     0.5964   3.227  0.00125 ** 
+## slp          -3.0144     4.4679  -0.675  0.49988    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 203.63  on 404  degrees of freedom
+## Residual deviance: 149.13  on 402  degrees of freedom
+## AIC: 155.13
+## 
+## Number of Fisher Scoring iterations: 6</code></pre>
+<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="05-covariates.html#cb255-1" aria-hidden="true" tabindex="-1"></a>externalizing <span class="ot">&lt;-</span> externalizing <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(int, slp))</span></code></pre></div>
+<p>Now our slope effect is no-where near significance. The correlation between the factor scores here is even higher (<span class="math inline">\(r =\)</span> 0.929) so our VIF is 5.8170724, 5.8170724 which might contribute to that. However, part of it is that factor scores and EM estimates are different ways of estimating an unobserved quantity so we will get different results depending on our approach. One common alternative in SEMs is to go ahead and include the distal outcome into the same model that estimates the trajectory and estimate everything simultaneously we can see the syntax for this model below. The inclusion of the new parameters are trivial from a syntax perspective; we just add the regression directly. However, because <code>incarc</code> is a binary variable, we need to include new options in the <code>growth()</code> function. Specifically, we change the estimator to <code>"WLSMV"</code> (see <a href="https://lavaan.ugent.be/tutorial/est.html">here</a> for details on different estimator options) and indicate that <code>incarc</code> is a categorical variable with <code>ordered = "incarc"</code>.</p>
+<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="05-covariates.html#cb256-1" aria-hidden="true" tabindex="-1"></a>sim.lcm <span class="ot">&lt;-</span> <span class="st">&quot;int =~ 1*ext6 + 1*ext8 + 1*ext10 + 1*ext12 + 1*ext14</span></span>
+<span id="cb256-2"><a href="05-covariates.html#cb256-2" aria-hidden="true" tabindex="-1"></a><span class="st">            slp =~ 0*ext6 + 2*ext8 + 4*ext10 + 6*ext12 + 8*ext14</span></span>
+<span id="cb256-3"><a href="05-covariates.html#cb256-3" aria-hidden="true" tabindex="-1"></a><span class="st">            </span></span>
+<span id="cb256-4"><a href="05-covariates.html#cb256-4" aria-hidden="true" tabindex="-1"></a><span class="st">            incarc ~ 1 + int + slp</span></span>
+<span id="cb256-5"><a href="05-covariates.html#cb256-5" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span>
+<span id="cb256-6"><a href="05-covariates.html#cb256-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb256-7"><a href="05-covariates.html#cb256-7" aria-hidden="true" tabindex="-1"></a>sim.lcm.fit <span class="ot">&lt;-</span> <span class="fu">growth</span>(sim.lcm, </span>
+<span id="cb256-8"><a href="05-covariates.html#cb256-8" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data =</span> externalizing,</span>
+<span id="cb256-9"><a href="05-covariates.html#cb256-9" aria-hidden="true" tabindex="-1"></a>                      <span class="at">estimator =</span> <span class="st">&quot;WLSMV&quot;</span>,</span>
+<span id="cb256-10"><a href="05-covariates.html#cb256-10" aria-hidden="true" tabindex="-1"></a>                      <span class="at">ordered =</span> <span class="st">&quot;incarc&quot;</span>)</span></code></pre></div>
+<p>Unfortunately, when we try to estimate this model, we get an error message <code>lavaan ERROR: data contains no observations</code>, which should be slighly concerning… What is happening here is that in this dataset, because no one person is observed on adjacent measures (e.g., <code>ext6</code> &amp; <code>ext7</code>), everyone has missing data. This was not an issue in the linear versions of the model because we could use Maximum Likelihood, however, currently <strong>lavaan</strong> does not support categorical ML, and WLSMV will listwise delete individuals with missing data. Unfortunately for us, that’s <span class="math inline">\(100 %\)</span> of adolescents in our sample. We would need to turn to <strong>Mplus</strong> or another program for results from this model.</p>
+<p>As we mentioned, this area of methodological research is still relatively under-developed and awaits solutions to many of the limitations we have run into here.</p>
 
 </div>
 </div>

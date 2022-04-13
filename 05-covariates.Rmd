@@ -195,7 +195,7 @@ cross.mlm <- lmer(fmin ~ 1 + age + abuse + age:abuse + (1 + age | id),
 summary(cross.mlm, correlation = FALSE)
 ```
 
-The interaction nature of the second effect is immediately apparent given the construction of the syntax. We can even plot these effects using the `interact_plot()` function from the **interactions** package. 
+The interaction nature of the second effect is immediately apparent given the construction of the syntax. We can even plot these effects using the `interact_plot()` function from the **interactions** package.
 
 ```{r crosslevel 03, message = FALSE, warning = FALSE, error = FALSE}
 interact_plot(model = cross.mlm, 
@@ -364,7 +364,7 @@ summary(tvc.lcm.fit, fit.measures = FALSE, estimates = TRUE,
         standardize = FALSE, rsquare = FALSE)
 ```
 
-The striking thing here, compared with the MLM results, is that we get $4$ regression coefficients for the relationship between `ef` and `dlpfc` instead of $1$. These individual time-specific effects are one of the unique strengths of the SEM approaches, and would be essentially impossible to achieve with most MLMs (**Mplus** is a bit of a potential exception, but that's because it specifies MLMs more like SEMs), since this is a weird form of nonlinear interaction between the overall TVC effect and time. However, we could also impose simpler functional forms on these regressions. The simplest is to constrain all of them to be equal. This constraint is the one imposed in the MLM, so we should get a single overall TVC effect with this approach. We can see this below. 
+The striking thing here, compared with the MLM results, is that we get $4$ regression coefficients for the relationship between `ef` and `dlpfc` instead of $1$. These individual time-specific effects are one of the unique strengths of the SEM approaches, and would be essentially impossible to achieve with most MLMs (**Mplus** is a bit of a potential exception, but that's because it specifies MLMs more like SEMs), since this is a weird form of nonlinear interaction between the overall TVC effect and time. However, we could also impose simpler functional forms on these regressions. The simplest is to constrain all of them to be equal. This constraint is the one imposed in the MLM, so we should get a single overall TVC effect with this approach. We can see this below.
 
 ```{r tvc 07, message = FALSE, warning = FALSE, error = FALSE}
 tvc.lcm <- "int =~ 1*ef1 + 1*ef2 + 1*ef3 + 1*ef4
@@ -490,7 +490,7 @@ summary(multivar.lcm.fit, fit.measures = FALSE, estimates = TRUE,
 
 This model is quite simple for a SEM approach, and we can examine how different constructs travel together over time by examining the inter-relations among the growth factors. However, this is ultimately cross-sectional correlations because there is no temporal order at the latent level, either between intercepts and slope or between factors of different constructs. If we want to examine cross-lagged relationships among the repeated measures themselves (ala the standard cross-lag panel model we won't consider here for numerous reasons), we might wish to introduce regression relationships among the repeated measures.
 
-There are several ways to specify these regression among the repeated measures in a multivariate growth model; however, we will focus on what is known as the random-intercept cross-lag panel model (RI-CLPM) and it's generalization in the latent curve model with structured residuals (LCM-SR). For an overview of potential alternatives, see [Usami & Hamaker, 2021](). We retain the time-specific residual covariances, but now we include regression coefficients between the residuals of the repeated measures (hence "structured residuals"). Note that for the RI-CLPM, we remove the slope factors. In the LCM-SR, we can include any combination of latent growth factors, so that will be the term we will use to reference this general type of model, with the RI-CLPM being a special case.
+There are several ways to specify these regression among the repeated measures in a multivariate growth model; however, we will focus on what is known as the random-intercept cross-lag panel model (RI-CLPM) and it's generalization in the latent curve model with structured residuals (LCM-SR). For an overview of potential alternatives, see [Usami & Hamaker, 2019](https://psycnet.apa.org/fulltext/2019-21491-001.html). We retain the time-specific residual covariances, but now we include regression coefficients between the residuals of the repeated measures (hence "structured residuals"). Note that for the RI-CLPM, we remove the slope factors. In the LCM-SR, we can include any combination of latent growth factors, so that will be the term we will use to reference this general type of model, with the RI-CLPM being a special case.
 
 ```{r multivar 03, message = FALSE, warning = FALSE, error = FALSE}
 riclpm <- "
@@ -771,7 +771,6 @@ summary(uncens.mlm, correlation = FALSE)
 
 So now we know that the coefficient associated with the `dlpfc` predictor is a weighted combination of the within- and between-person effect. We can apply well-known principles of variable centering in the MLM in order to separate out these effects. For a more in-depth treatment of these approaches, see [Curran & Bauer (2011)](). The first approach is called **grand-mean** centering. Here we do something relatively intuitive and simply subtract the mean of all of the observations of `dlpfc` across individuals to create `dlpfc.grdcent`. This simply makes the zero-point of `dlpfc` represent the mean of the variable. Unsurprisingly, this simple linear transformation of our model will not change the model results except to change the interpretation of the intercept (i.e., the expected value of the outcome when all predictors are zero will change because the zero-point of `dlpfc.grdcent` has changed). However, the effect of `dlpfc.grdcent` will still confound the within- and between-person effects.
 
-
 ```{r withbetw 02, message = FALSE, warning = FALSE, error = FALSE}
 executive.function.long <- executive.function.long %>%
   mutate(dlpfc.grdcent = dlpfc - 
@@ -853,7 +852,7 @@ Fortunately for us, we have already seen one of the primary methods for separati
 
 ## Distal Outcomes
 
-Up until this point, we have considered how to include predictors in our growth models to explain individual differences in patterns of change over time. However, if we think that these differences in developmental trajectories *mean anything* (and we'd like to think they do), we might wish to predict some future outcome that is meaningful for our theoretical question of interest. For instance, do greater increases in executive function scores during adolescence predict greater education attainment, lifetime earnings, or reduced contact with  criminal-legal institutions? Such questions are uncomfortably rare in developmental cognitive neuroscience, leaving a big opening for questions of "**so what?**" for our programs of research. Commensurate with their relative scarcity in substantive research, much less work has gone into the development of quantitative methods and best-practices for distal outcome prediction. As such, readers should take the methods presented in this section as a work-in-progress, awaiting further developments (some of which we can confidently say are in the works).
+Up until this point, we have considered how to include predictors in our growth models to explain individual differences in patterns of change over time. However, if we think that these differences in developmental trajectories *mean anything* (and we'd like to think they do), we might wish to predict some future outcome that is meaningful for our theoretical question of interest. For instance, do greater increases in executive function scores during adolescence predict greater education attainment, lifetime earnings, or reduced contact with criminal-legal institutions? Such questions are uncomfortably rare in developmental cognitive neuroscience, leaving a big opening for questions of "**so what?**" for our programs of research. Commensurate with their relative scarcity in substantive research, much less work has gone into the development of quantitative methods and best-practices for distal outcome prediction. As such, readers should take the methods presented in this section as a work-in-progress, awaiting further developments (some of which we can confidently say are in the works).
 
 For this section, we will draw the `externalizing` data from our `external.math` data set. However, here we have included data from a follow-up study on lifetime incarceration as of age $35$. As such, we can predict the likelihood of an individual experiencing incarceration as an adult based on trajectory information from when they were in early adolescence.
 
@@ -883,61 +882,70 @@ names(random.effs) <- c("int", "slp")
 externalizing <- cbind(externalizing, random.effs)
 ```
 
-Now that we have obtained these EB estimates, we can bring them into the secondary regression analysis. Here our outcome of lifetime incarceration (`incarc`) is binary ($0 = $ "never incarcerated", $1 = $ "ever incarcerated"), so we will utilize the `glm()` function ("generalized linear model") instead of `lm()` ("general linear model") to deal with the discrete nature of our outcome.
+Now that we have obtained these EB estimates, we can bring them into the secondary regression analysis. Here our outcome of lifetime incarceration (`incarc`) is binary (\$0 = \$ "never incarcerated", \$1 = \$ "ever incarcerated"), so we will utilize the `glm()` function ("generalized linear model") instead of `lm()` ("general linear model") to deal with the discrete nature of our outcome. While we won't spend much time on the distinctions between linear and nonlinear models, see [here](https://quantdev.ssri.psu.edu/tutorials/regression-continuous-count-and-binary-outcomes) for a great general review of the topic in R.
 
 ```{r outcomes 02, message = FALSE, warning = FALSE, error = FALSE}
-distal.glm <- glm(incarc ~ int + slp,
+distal.glm <- glm(incarc ~ 1 + int + slp,
                   family = "binomial",
                   data = externalizing)
 
 summary(distal.glm)
-```
-
-```{r}
-plot.dat <- data.frame(prob = externalizing$incarc,
-                       int = externalizing$int,
-                       slp = externalizing$slp,
-                       fit = predict(distal.glm, externalizing))
-plot.dat$fit_prob <- exp(plot.dat$fit)/(1+exp(plot.dat$fit))
-ggplot(plot.dat, aes(x=slp, y=fit_prob)) +
-  geom_line() + ylim(0, 1)
-
-
-
-
-plot.dat <- data.frame(prob = menarche$Menarche/menarche$Total,
-                       age = menarche$Age,
-                       fit = predict(m, menarche))
-#convert those logit values to probabilities
-plot.dat$fit_prob <- exp(plot.dat$fit)/(1+exp(plot.dat$fit))
-
-library(ggplot2)
-
-```
-
-
-```{r}
-logit2prob <- function(logit){
-  odds <- exp(logit)
-  prob <- odds / (1 + odds)
-  return(prob)
-}
-
-logit2prob(coef(distal.glm))
-
 externalizing <- externalizing %>% select(-c(int, slp))
 ```
 
+We can see that while the intercept of the trajectory has a significant positive prospective effect on the propensity for individuals to experience lifetime incarceration, the slope is not significant (so close; more on that in a bit). Essentially, those adolescents who show higher initial levels of antisocial behavior are more likely to report being incarcerated at some point in their lifetime. The coefficients we see in this model represent the log-odds parameters. You might see these reported in the odds scale, which just involves the exponentiation of these parameters. We can see this below and generate confidence intervals on the odds parameters.
 
-*MLM: show 2 step model*
-*LCM: show simultaneous model and 2 step model*
+```{r outcomes 03, message = FALSE, warning = FALSE, error = FALSE}
+exp(cbind(coef(distal.glm), confint(distal.glm)))
+```
 
+So for a one unit increase in the trajectory intercept, we expect a 17.72 change in the odds of being incarcerated, and a substantial increase of 301.85 in the odds for a per-unit change in the slope of the trajectory (again not significant but we can play out this exercise). One reason we often need to be careful about these "per one unit" changes in the trajectory parameters, especially for the slope, is that often the parameters do not have large ranges. Indeed, often the full range of the slope parameter will not extend over an entire unit because of the way it is scaled (in per time-unit change). We can see this when we plot the predicted probabilities of incarceration against the trajectory parameters. Note that to get the predicted probabilities, we simply divide the odds by $1$ plus the odds. So $P(incarc_{i} = 1) = e^{log-odds} / 1 + e^{log-odds}$. We can see this below.
 
-```{r}
+```{r outcomes 04, message = FALSE, warning = FALSE, error = FALSE}
+random.effs <- random.effs %>%
+  mutate(incarc = externalizing$incarc,
+         pred = stats::predict.glm(distal.glm)) %>%
+  mutate(pred.prob = exp(pred) / (1 + exp(pred)))
+head(random.effs)
+
+ggplot(random.effs, aes(x = int, y = incarc)) +
+  geom_point(aes(color = factor(incarc)), shape = "|", size = 3) +  
+  geom_point(data = random.effs, 
+             mapping = aes(x = int, y = pred.prob, color = factor(incarc))) +  
+  ylim(0, 1) + 
+  stat_smooth(method = "glm", method.args = list(family = "binomial"), se = TRUE) +
+  labs(title = "Plotting Predicted Probabilities of Lifetime Incarceration",
+       x = "Intercept (Wave 1) of Adolescent Antisocial Behavior",
+       y = "Predicted Probability of Incarceration") + 
+  theme(legend.position = "none")
+
+ggplot(random.effs, aes(x = slp, y = incarc)) +
+  geom_point(aes(color = factor(incarc)), shape = "|", size = 3) +  
+  geom_point(data = random.effs, 
+             mapping = aes(x = slp, y = pred.prob, color = factor(incarc))) +  
+  ylim(0, 1) + 
+  stat_smooth(method = "glm", method.args = list(family = "binomial"), se = TRUE) +
+  labs(title = "Plotting Predicted Probabilities of Lifetime Incarceration",
+       x = "Slope of Adolescent Antisocial Behavior",
+       y = "Predicted Probability of Incarceration") + 
+  theme(legend.position = "none")
+```
+
+As we can see, the slope parameter in particular does not cover a full 1 unit range, and most of the observations are between $-0.2$ and $0.2$. Here we have plotted the predicted probabilities of incarceration (dots) against each of the parameters, color-coded by their observed response on the incarceration item (red = "No", green = "Yes"). Note that there is some mismatch, especially in the middle-zones of the plots, where some of those who have *actually* experienced incarceration have low model-implied probabilities, and vice versa. This is perfectly normal and means we simply haven't included all of the multitude of relevant predictors for lifetime incarceration (which is completely unsurprising given what we know about incarceration patterns in the population). We will not go much further on diagnostics here, but just to note: there is a single point at the very high end of the graph that seems to be anchoring the curve fairly strongly. It would be a great idea to test the model sensitivity to excluding this person from the analysis.
+
+Of course, it was a bit of a bummer that the slope term wasn't quite significant (and yes of course we shouldn't care, but **of course** we do). Slope effects are often very interesting from an intervention perspective, with the idea that if we could just bend those curves down during adolescence, perhaps we could avoid some of these negative life outcomes. Well tough cookies in this model, but one of the reasons that we do not get a slope effect for this data in particular is because of the high degree of correlation between the EB estimates of the random effects, which is quite high ($r =$ `r round(cor(random.effs[,1:2])[2,1], 3)`). Similar to the ideas outlined in [multi-growth models](https://mccormickneuro.github.io/publication/2021-multilevel-multigrowth/), the correlation in predictors here isn't doing us any favors. We can check the variance inflation factor for this model below using the `vif()` function from the [**car**](https://cran.r-project.org/web/packages/car/index.html) package.
+
+```{r outcomes 05, message = FALSE, warning = FALSE, error = FALSE}
+car::vif(distal.glm)
+```
+
+Which indicates that our standard errors are approximately $2.77$ larger than if we had uncorrelated predictors. While this isn't enormous, it likely contributes to a non-significant slope effect. This type of correlation between the random effects is not uncommon and is one of the challenges associated with these kinds of questions (although there are some developments that I am currently working on that might help with this, so stay tuned if interested).
+
+We can do a very similar 2-step approach with the LCM by generating factor scores. Here we will use the `lavPredict()` function from **lavaan** with `method = "regression"`. The other option is to use `method = "Bartlett"`. In general, regression factor scores perform better as predictors (which is what we want here), while Bartlett scores are better as outcomes ([Skrondal & Laak, 2001](https://psycnet.apa.org/record/2001-10245-007)).
+
+```{r outcomes 06, message = FALSE, warning = FALSE, error = FALSE}
 lin.lcm <- "int =~ 1*ext6 + 1*ext8 + 1*ext10 + 1*ext12 + 1*ext14
             slp =~ 0*ext6 + 2*ext8 + 4*ext10 + 6*ext12 + 8*ext14
-  
-            incarc ~ int + slp
 "
 
 lin.lcm.fit <- growth(lin.lcm, 
@@ -945,12 +953,41 @@ lin.lcm.fit <- growth(lin.lcm,
                       estimator = "ML",
                       missing = "FIML")
 
-summary(lin.lcm.fit, fit.measures = FALSE, estimates = TRUE, 
-        standardize = FALSE, rsquare = FALSE)
+factor.scores <- lavPredict(lin.lcm.fit, 
+                            type = "lv",
+                            method = "regression")
+
+externalizing <- cbind(externalizing, factor.scores)
 ```
 
+We can then perform the same regression for step $2$.
 
+```{r outcomes 07, message = FALSE, warning = FALSE, error = FALSE}
+distal.glm <- glm(incarc ~ 1 + int + slp,
+                  family = "binomial",
+                  data = externalizing)
 
+summary(distal.glm)
+externalizing <- externalizing %>% select(-c(int, slp))
+```
+Now our slope effect is no-where near significance. The correlation between the factor scores here is even higher ($r =$ `r round(cor(factor.scores)[2,1], 3)`) so our VIF is `r car::vif(distal.glm)` which might contribute to that. However, part of it is that factor scores and EM estimates are different ways of estimating an unobserved quantity so we will get different results depending on our approach. One common alternative in SEMs is to go ahead and include the distal outcome into the same model that estimates the trajectory and estimate everything simultaneously we can see the syntax for this model below. The inclusion of the new parameters are trivial from a syntax perspective; we just add the regression directly. However, because `incarc` is a binary variable, we need to include new options in the `growth()` function. Specifically, we change the estimator to `"WLSMV"` (see [here](https://lavaan.ugent.be/tutorial/est.html) for details on different estimator options) and indicate that `incarc` is a categorical variable with `ordered = "incarc"`.
+
+```{r outcomes 08, message = FALSE, warning = FALSE, error = FALSE, eval = FALSE}
+sim.lcm <- "int =~ 1*ext6 + 1*ext8 + 1*ext10 + 1*ext12 + 1*ext14
+            slp =~ 0*ext6 + 2*ext8 + 4*ext10 + 6*ext12 + 8*ext14
+            
+            incarc ~ 1 + int + slp
+"
+
+sim.lcm.fit <- growth(sim.lcm, 
+                      data = externalizing,
+                      estimator = "WLSMV",
+                      ordered = "incarc")
+```
+
+Unfortunately, when we try to estimate this model, we get an error message `lavaan ERROR: data contains no observations`, which should be slighly concerning... What is happening here is that in this dataset, because no one person is observed on adjacent measures (e.g., `ext6` & `ext7`), everyone has missing data. This was not an issue in the linear versions of the model because we could use Maximum Likelihood, however, currently **lavaan** does not support categorical ML, and WLSMV will listwise delete individuals with missing data. Unfortunately for us, that's $100 %$ of adolescents in our sample. We would need to turn to **Mplus** or another program for results from this model.
+
+As we mentioned, this area of methodological research is still relatively under-developed and awaits solutions to many of the limitations we have run into here.
 
 ```{r, cleanup covariates, message = FALSE, warning = FALSE, error = FALSE, echo = FALSE}
 rm(list = ls(all.names = FALSE))
