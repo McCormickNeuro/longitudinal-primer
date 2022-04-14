@@ -3,6 +3,7 @@
 Different forms of nesting in longitudinal models.
 
 ```{r read data nesting, eval=F}
+neighborhoods <- read.csv("data/neighborhoods.csv", header = TRUE)
 ```
 
 ## Categorical Predictors
